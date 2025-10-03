@@ -1,15 +1,33 @@
+
 <?php
 session_start();
 require 'db.php';
 
+// Generate CSRF token if not exists
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 $errors = [
-    'name' => '',
     'email' => '',
     'password' => '',
     'general' => ''
 ];
 
+
 $name = $email = '';
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    if (empty($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        die("⛔ Security token invalid.");
+    }
+
+    $name = trim($_POST['name'] ?? '');
+    $email = trim($_POST['email'] ?? '');
+    $password = trim($_POST['password'] ?? '');
+
+    // ... rest of validation/registration logic
+}
+
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $name = trim($_POST['name'] ?? '');
@@ -85,6 +103,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <?php endif; ?>
 
     <form method="POST" action="register.php">
+        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
+
       <div class="input-group">
         <label>Name</label><br>
         <input type="text" name="name" value="<?= htmlspecialchars($name ?? '') ?>"

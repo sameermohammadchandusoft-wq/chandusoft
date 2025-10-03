@@ -32,7 +32,8 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
 <body>
   <div class="container">
     <h2>Welcome,  <?= htmlspecialchars($user['name']) ?> 👋</h2>
-     
+    
+
 
     <a href="logout.php" class="logout">Logout</a>
   </div>
