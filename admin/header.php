@@ -1,7 +1,7 @@
 
 <header class="navbar">
     <a href="index.php" class="logo">
-        <img src="images\chandusoft_logo.png" title="Chandusoft Technologies" width="350" height="100" style="vertical-align:middle">
+        <img src="images/chandusoft_logo.png" title="Chandusoft Technologies" width="350" height="100" style="vertical-align:middle">
     </a>
     <nav>
         <a href="index.php" class="btn">Home</a>

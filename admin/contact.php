@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
   <meta charset="UTF-8" />
   <title>Chandusoft</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="Style.css" />
 </head>
 <body>
   <div id="header"></div>

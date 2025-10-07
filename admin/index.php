@@ -1,15 +1,18 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <title>Chandusoft</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="Style.css" />
    
 </head>
  
+
  <div id="header"></div>
- <script src="include.js"></script>
+    
+
  
 <body>
  
@@ -51,14 +54,13 @@
 </section>
  
 </main>
- 
+  <script src="include.js"></script>
 </body>
 <button id="backToTop" title="Go to top">↑</button>
 
  
- <div id="footer"></div>
- <?php include("footer.php"); ?>
- 
+  <div id="footer"></div>
+      <?php include("footer.php"); ?>
  
     </body>
 </html>
