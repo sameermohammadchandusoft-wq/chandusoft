@@ -10,6 +10,9 @@
 </head>
 <body>
   <div id="header"></div>
+  <?php include("header.php"); ?>
+    
+  
    
 
  

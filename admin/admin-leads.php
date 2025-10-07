@@ -1,38 +1,13 @@
 <?php
 session_start();
+require __DIR__ . '/../app/auth.php';
+require_auth();
 
-// Change this to your desired password
-define('ADMIN_PASSWORD', 'admin123');
+$user = current_user();
 
-// Handle login POST
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!empty($_POST['password']) && $_POST['password'] === ADMIN_PASSWORD) {
-        $_SESSION['admin_logged_in'] = true;
-    } else {
-        $error = "Incorrect password.";
-    }
-}
-
-// ✅ Stop here if not logged in
-if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
-    ?>
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <title>Admin Login</title>
-    </head>
-    <body>
-        <h2>Admin Login</h2>
-        <?php if (isset($error)) echo "<p style='color:red;'>$error</p>"; ?>
-        <form method="POST">
-            <label>Password:</label>
-            <input type="password" name="password" required>
-            <button type="submit">Login</button>
-        </form>
-    </body>
-    </html>
-    <?php
-    exit; // ❗ Prevent rest of page from loading
+// ✅ Restrict access based on role
+if (!in_array($user['role'], ['admin', 'editor'])) {
+    die("⛔ Access denied.");
 }
 
 // ✅ Database connection
@@ -46,77 +21,82 @@ if ($conn->connect_error) {
     die("DB connection failed: " . $conn->connect_error);
 }
 
-// Fetch latest 5 leads
-$resultLatest = $conn->query("SELECT * FROM leads ORDER BY id DESC LIMIT 5");
- 
-// Fetch odd ID leads ordered by id ASC (ascending)
-$resultOdd = $conn->query("SELECT * FROM leads WHERE id % 2 = 1 ORDER BY id ASC");
- 
-// Fetch even ID leads ordered by id ASC (ascending)
-$resultEven = $conn->query("SELECT * FROM leads WHERE id % 2 = 0 ORDER BY id ASC");
+// Handle search
+$search = $_GET['search'] ?? '';
+$search_sql = "";
+$params = [];
+
+if (!empty($search)) {
+    $search_sql = "WHERE Name LIKE ? OR Email LIKE ? OR Message LIKE ?";
+    $likeSearch = "%$search%";
+    $params = [$likeSearch, $likeSearch, $likeSearch];
+}
+
+// Prepare query
+$stmt = $conn->prepare("SELECT * FROM leads $search_sql ORDER BY id DESC");
+if (!empty($params)) {
+    $stmt->bind_param("sss", ...$params);
+}
+$stmt->execute();
+$resultLatest = $stmt->get_result();
 ?>
 <!DOCTYPE html>
 <html>
 <head>
 <title>Leads - Admin Panel</title>
+<div id="header1"></div>
+<?php include __DIR__ . '/header1.php';
+
+?>
 <style>
-body { font-family: Arial; padding: 20px; background:#f7f7f7; }
-h2 { margin-top: 40px; }
-table { border-collapse: collapse; width: 100%; margin-bottom: 30px; }
-th, td { border:1px solid #ccc; padding:10px; text-align:left; }
-th { background-color:#4CAF50; color:white; }
-tr:nth-child(even){background:#f2f2f2;}
-tr:nth-child(odd){background:#ffffff;}
-tr:hover{background:#e6f7ff;}
-.logout { margin-bottom: 20px; }
-.logout a { color:#d9534f; font-weight:bold; text-decoration:none; }
-.logout a:hover{text-decoration:underline;}
+ 
+ 
+ .search-form input[type="text"] {
+        padding: 6px 10px;
+        border-radius: 5px;
+        border:1px solid #ccc;
+    }
+
+    .search-form input[type="submit"] {
+        padding: 6px 12px;
+        border-radius:5px;
+        background:#1690e8;
+        color:#fff;
+        border:none;
+        cursor:pointer;
+    }
+
+input[type="text"] { padding:5px; font-size:14px; }
+input[type="submit"] { padding:5px 10px; font-size:14px; cursor:pointer; }
+
+
 </style>
 </head>
 <body>
-<div class="logout"><a href="logout.php">Logout</a></div>
- 
-<h2>Latest 5 Leads</h2>
+
+<div class="dashboard-container">
+<h1>Leads</h1>
+<form method="get" class="search-form">
+    <input type="text" name="search" placeholder="Search leads..." value="<?= htmlspecialchars($search) ?>">
+    <input type="submit" value="Search">
+</form>
+
 <table>
 <tr><th>ID</th><th>Name</th><th>Email</th><th>Message</th><th>Submitted At</th></tr>
-<?php while($row = $resultLatest->fetch_assoc()): ?>
-<tr>
-  <td><?= $row['id'] ?></td>
-  <td><?= htmlspecialchars($row['Name']) ?></td>
-  <td><?= htmlspecialchars($row['Email']) ?></td>
-  <td><?= htmlspecialchars($row['Message']) ?></td>
-  <td><?= htmlspecialchars($row['created_at']) ?></td>
-</tr>
-<?php endwhile; ?>
+<?php if($resultLatest->num_rows > 0): ?>
+    <?php while($row = $resultLatest->fetch_assoc()): ?>
+    <tr>
+        <td><?= $row['id'] ?></td>
+        <td><?= htmlspecialchars($row['Name']) ?></td>
+        <td><?= htmlspecialchars($row['Email']) ?></td>
+        <td><?= htmlspecialchars($row['Message']) ?></td>
+        <td><?= htmlspecialchars($row['created_at']) ?></td>
+    </tr>
+    <?php endwhile; ?>
+<?php else: ?>
+    <tr><td colspan="5" style="text-align:center;">No leads found</td></tr>
+<?php endif; ?>
 </table>
- 
-<h2>Odd ID Leads</h2>
-<table>
-<tr><th>ID</th><th>Name</th><th>Email</th><th>Message</th><th>Submitted At</th></tr>
-<?php while($row = $resultOdd->fetch_assoc()): ?>
-<tr>
-  <td><?= $row['id'] ?></td>
-  <td><?= htmlspecialchars($row['Name']) ?></td>
-  <td><?= htmlspecialchars($row['Email']) ?></td>
-  <td><?= htmlspecialchars($row['Message']) ?></td>
-  <td><?= htmlspecialchars($row['created_at']) ?></td>
-</tr>
-<?php endwhile; ?>
-</table>
- 
-<h2>Even ID Leads</h2>
-<table>
-<tr><th>ID</th><th>Name</th><th>Email</th><th>Message</th><th>Submitted At</th></tr>
-<?php while($row = $resultEven->fetch_assoc()): ?>
-<tr>
-  <td><?= $row['id'] ?></td>
-  <td><?= htmlspecialchars($row['Name']) ?></td>
-  <td><?= htmlspecialchars($row['Email']) ?></td>
-  <td><?= htmlspecialchars($row['Message']) ?></td>
-  <td><?= htmlspecialchars($row['created_at']) ?></td>
-</tr>
-<?php endwhile; ?>
-</table>
- 
+
 </body>
 </html>

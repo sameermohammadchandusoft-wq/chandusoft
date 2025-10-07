@@ -1,75 +1,127 @@
 <?php
 // app/auth.php
- 
+
+// Start session safely
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 /**
- * Login: store user session + regenerate session ID
+ * ------------------------------------------------------
+ * login($id, $name, $role)
+ * Stores user info in session and regenerates session ID.
+ * ------------------------------------------------------
  */
-function login($id, $name, $role) {
-    session_regenerate_id(true); // prevent fixation
+function login($id, $name, $role = 'user') {
+    session_regenerate_id(true);
 
     $_SESSION['user'] = [
         'id'   => $id,
-        'name' => $name,
+        'name' => htmlspecialchars($name, ENT_QUOTES, 'UTF-8'),
         'role' => $role
     ];
 }
 
 /**
- * Logout: destroy session
+ * ------------------------------------------------------
+ * logout()
+ * Clears session and destroys session data.
+ * ------------------------------------------------------
  */
 function logout() {
+    // Clear session data
     $_SESSION = [];
-    if (ini_get("session.use_cookies")) {
+
+    // Destroy session cookie
+    if (ini_get('session.use_cookies')) {
         $params = session_get_cookie_params();
         setcookie(session_name(), '', time() - 42000,
-            $params["path"], $params["domain"],
-            $params["secure"], $params["httponly"]
+            $params['path'], $params['domain'],
+            $params['secure'], $params['httponly']
         );
     }
+
+    // Finally destroy session
     session_destroy();
 }
 
 /**
- * current_user: return logged-in user info (or null)
+ * ------------------------------------------------------
+ * current_user()
+ * Returns the currently logged-in user or null.
+ * ------------------------------------------------------
  */
 function current_user() {
     return $_SESSION['user'] ?? null;
 }
 
 /**
- * is_auth: check if user is logged in
+ * ------------------------------------------------------
+ * is_auth()
+ * Returns true if user is logged in.
+ * ------------------------------------------------------
  */
 function is_auth() {
     return isset($_SESSION['user']);
 }
 
 /**
- * require_auth: gatekeeper for protected pages
+ * ------------------------------------------------------
+ * require_auth()
+ * Protects pages that need authentication.
+ * ------------------------------------------------------
  */
 function require_auth() {
     if (!is_auth()) {
-        header("Location: /admin/login.php");
+        // Redirect to admin login form
+        header("Location: /admin/login_form.php");
         exit;
     }
 }
 
 /**
- * Role-based permission check (with hierarchy)
+ * ------------------------------------------------------
+ * can($roles)
+ * Role-based permission check.
+ * Example:
+ *   can('admin')
+ *   can(['admin', 'editor'])
+ * ------------------------------------------------------
  */
-function can($role) {
-    if (!isset($_SESSION['user'])) {
-        return false;
-    }
-
-    $hierarchy = [
-        'guest'  => 0,
-        'user'   => 1,
-        'editor' => 2,
-        'admin'  => 3
-    ];
-
-    $userRole = $_SESSION['user']['role'] ?? 'guest';
-
-    return $hierarchy[$userRole] >= $hierarchy[$role];
+function can($roles) {
+    if (!is_auth()) return false;
+    $user_role = $_SESSION['user']['role'] ?? 'user';
+    return is_array($roles)
+        ? in_array($user_role, $roles)
+        : $user_role === $roles;
 }
+
+/**
+ * ------------------------------------------------------
+ * redirect($url)
+ * Simple helper for redirection.
+ * ------------------------------------------------------
+ */
+function redirect($url) {
+    header("Location: $url");
+    exit;
+}
+
+/**
+ * Set a flash message
+ */
+function set_flash($key, $message) {
+    $_SESSION['flash_messages'][$key] = $message;
+}
+
+/**
+ * Get a flash message and remove it
+ */
+function get_flash($key) {
+    if (!isset($_SESSION['flash_messages'][$key])) return null;
+    $msg = $_SESSION['flash_messages'][$key];
+    unset($_SESSION['flash_messages'][$key]);
+    return $msg;
+}
+
+?>

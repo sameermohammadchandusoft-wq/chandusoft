@@ -1,4 +1,8 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+require '../vendor/autoload.php';  // Path to autoload.php from the vendor directory
+
 $success = "";
 $name = "";
 $email = "";
@@ -20,9 +24,40 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!empty($name) && !empty($email) && !empty($message) && filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $sql = "INSERT INTO leads (name, email, message) VALUES ('$name', '$email', '$message')";
         if ($conn->query($sql) === TRUE) {
-            $success = "✅ Message sent successfully!";
-            // clear form values after success
-            $name = $email = $message = "";
+
+            // ✅ Send email with PHPMailer
+            $mail = new PHPMailer(true);
+            try {
+                $mail->isSMTP();
+                $mail->Host = 'smtp.gmail.com';
+                $mail->SMTPAuth = true;
+                $mail->Username = 'cstltest4@gmail.com';
+                $mail->Password = 'vwrs cubq qpqg wfcg';
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                $mail->Port = 587;
+
+            $mail->setFrom('cstltest4@gmail.com', 'Chandusoft Contact Form');               
+            $mail->addAddress('sameer.mohammad.chandusoft@gmail.com', 'Sameer');
+            $mail->addReplyTo($email, $name);
+                $mail->isHTML(true);
+                $mail->Subject = 'New Lead Submission';
+                $mail->Body = "
+                    <h3>New Lead Details</h3>
+                    <p><strong>Name:</strong> {$name}</p>
+                    <p><strong>Email:</strong> {$email}</p>
+                    <p><strong>Message:</strong><br>" . nl2br($message) . "</p>
+                ";
+
+                $mail->send();
+                $success = "✅ Message sent successfully!";
+
+                // ✅ Now clear the form values after sending email
+                $name = $email = $message = "";
+
+            } catch (Exception $e) {
+                $success = "❌ Error sending email: " . htmlspecialchars($mail->ErrorInfo);
+            }
+
         } else {
             $success = "❌ Error saving message.";
         }
@@ -33,6 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $conn->close();
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

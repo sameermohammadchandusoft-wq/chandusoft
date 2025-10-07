@@ -1,37 +1,93 @@
 <?php
-session_start();
+require __DIR__ . '/auth.php';
+require_auth();
 
-// ✅ check if user is logged in
-if (!isset($_SESSION['user_id'])) {
-    header("Location: /admin/login.php");
-    exit;
+$user = current_user();
+
+// -----------------------
+// Database connection
+// -----------------------
+$host = '127.0.0.1';
+$db   = 'chandusoft';    // Replace with your DB name
+$dbUser = 'root';         // Replace with your DB username
+$dbPass = '';             // Replace with your DB password
+$charset = 'utf8mb4';
+
+$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+$options = [
+    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+    PDO::ATTR_EMULATE_PREPARES   => false,
+];
+
+try {
+    $pdo = new PDO($dsn, $dbUser, $dbPass, $options);
+} catch (PDOException $e) {
+    die("Database connection failed: " . $e->getMessage());
 }
 
-// Fetch user details
-require __DIR__ . '/db.php';
-$stmt = $pdo->prepare("SELECT name, email FROM users WHERE id = ?");
-$stmt->execute([$_SESSION['user_id']]);
-$user = $stmt->fetch(PDO::FETCH_ASSOC);
+// -----------------------
+// Fetch stats
+// -----------------------
+$total_leads = $pdo->query("SELECT COUNT(*) FROM leads")->fetchColumn();
+$pages_published = $pdo->query("SELECT COUNT(*) FROM pages WHERE status = 'published'")->fetchColumn();
+$pages_draft = $pdo->query("SELECT COUNT(*) FROM pages WHERE status = 'draft'")->fetchColumn();
+
+// Fetch last 5 leads
+$stmt = $pdo->prepare("SELECT name, email, message, created_at AS created, ip FROM leads ORDER BY created_at DESC LIMIT 5");
+$stmt->execute();
+$last_leads = $stmt->fetchAll();
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>User Dashboard</title>
-  <style>
-    body { font-family: Arial, sans-serif; margin: 40px; background: #f8f9fa; }
-    .container { max-width: 600px; margin: auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-    h2 { color: #1690e8; }
-    .logout { display: inline-block; margin-top: 20px; padding: 10px 15px; background: #dc3545; color: white; text-decoration: none; border-radius: 5px; }
-    .logout:hover { background: #b52a36; }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h2>Welcome, <?= htmlspecialchars($user['name']) ?> 👋</h2>
-    <p>Email: <?= htmlspecialchars($user['email']) ?></p>
+<meta charset="UTF-8">
+<title>Dashboard</title>
+    <div id="header1"></div>
+  <?php include __DIR__ . '/../admin/header1.php';
+?>
 
-    <a href="/admin/logout.php" class="logout">Logout</a>
-  </div>
+
+    <div class="dashboard-container">
+    <h1>Dashboard</h1>
+
+    <div class="stats">
+        <ul>
+            <li>Total Leads: <?= htmlspecialchars($total_leads) ?></li>
+            <li>Pages Published: <?= htmlspecialchars($pages_published) ?></li>
+            <li>Pages Draft: <?= htmlspecialchars($pages_draft) ?></li>
+        </ul>
+    </div>
+
+        <div class="table-section">
+            <h3>Last 5 Leads</h3>
+            <?php if(count($last_leads) > 0): ?>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Message</th>
+                        <th>Created</th>
+                        <th>IP</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach($last_leads as $lead): ?>
+                    <tr>
+                        <td><?= htmlspecialchars($lead['name']) ?></td>
+                        <td><?= htmlspecialchars($lead['email']) ?></td>
+                        <td><?= htmlspecialchars($lead['message']) ?></td>
+                        <td><?= htmlspecialchars($lead['created']) ?></td>
+                        <td><?= htmlspecialchars($lead['ip'] ?? '-') ?></td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+            <?php else: ?>
+                <p>No leads found.</p>
+            <?php endif; ?>
+        </div>
+    </div>
 </body>
 </html>
