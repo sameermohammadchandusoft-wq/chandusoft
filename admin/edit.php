@@ -24,14 +24,14 @@ if (!$page) {
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $title = trim($_POST['title'] ?? '');
     $slug = trim($_POST['slug'] ?? '');
-    $content = trim($_POST['content'] ?? '');
+    $content_html = trim($_POST['content_html'] ?? '');
     $status = trim($_POST['status'] ?? 'draft');
 
     if (empty($title) || empty($slug)) {
         $error = "Title and slug are required.";
     } else {
-        $stmt = $pdo->prepare("UPDATE pages SET title=?, slug=?, content=?, status=?, updated_at=NOW() WHERE id=?");
-        $stmt->execute([$title, $slug, $content, $status, $id]);
+        $stmt = $pdo->prepare("UPDATE pages SET title=?, slug=?, content_html=?, status=?, updated_at=NOW() WHERE id=?");
+        $stmt->execute([$title, $slug, $content_html, $status, $id]);
         header("Location: pages.php");
         exit;
     }
@@ -55,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <input type="text" name="slug" value="<?= htmlspecialchars($page['slug'] ?? '') ?>">
 
         <label>Content</label>
-        <textarea name="content" rows="6"><?= htmlspecialchars($page['content'] ?? '') ?></textarea>
+        <textarea name="content_html" rows="6"><?= htmlspecialchars($page['content_html'] ?? '') ?></textarea>
 
         <label>Status</label>
         <select name="status">
