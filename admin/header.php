@@ -5,7 +5,11 @@ require __DIR__ . '/../app/db.php'; // ✅ Database connection
 // ✅ Fetch published pages for navbar
 $navStmt = $pdo->query("SELECT title, slug FROM pages WHERE status = 'published' ORDER BY id ASC");
 $navPages = $navStmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+$currentPage = $_GET['page'] ?? '';
 ?>
+ 
 
 <header class="navbar">
     <a href="index.php" class="logo">

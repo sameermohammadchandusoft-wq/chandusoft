@@ -47,7 +47,7 @@ if ($conn->query($sql) === TRUE) {
         $mail->CharSet = 'UTF-8'; // Ensure body handles emojis
 
         // Encode subject with UTF-8 + Base64 for emojis
-        $subject = "New Lead Submission 🌟";
+        $subject = "🚀 New Lead Submission";
         $mail->Subject = "=?UTF-8?B?" . base64_encode($subject) . "?=";
 
         // Encode body safely
