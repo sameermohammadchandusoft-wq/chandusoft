@@ -3,47 +3,85 @@ session_start();
 require __DIR__ . '/../app/db.php';
 require __DIR__ . '/../app/auth.php';
 
-if (empty($_SESSION['csrf_token'])) {
-    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-}
 
-$errors = ['name'=>'','email'=>'','password'=>'','general'=>''];
-$name = $email = '';
+setup_error_handling('production'); // or 'development'
 
+$errors = [];
+$name = $email = $password = '';
+
+ 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (empty($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
-        die("⛔ Security token invalid.");
-    }
-
-    $name = trim($_POST['name'] ?? '');
-    $email = trim($_POST['email'] ?? '');
+    $name     = trim($_POST['name'] ?? '');
+    $email    = trim($_POST['email'] ?? '');
     $password = trim($_POST['password'] ?? '');
 
-    if (empty($name)) $errors['name'] = "Name is required";
-    if (empty($email)) $errors['email'] = "Email is required";
-    elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) $errors['email'] = "Enter a valid email";
-    if (empty($password)) $errors['password'] = "Password is required";
-    elseif (strlen($password) < 6) $errors['password'] = "Password must be at least 6 characters";
+    // --------------------------
+    // Validation
+    // --------------------------
+    if ($name === '') {
+        $errors['name'] = "Name is required.";
+    }
+    if ($email === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errors['email'] = "Valid email is required.";
+    }
+    if (strlen($password) < 6) {
+        $errors['password'] = "Password must be at least 6 characters.";
+    }
 
-    if (empty($errors['name']) && empty($errors['email']) && empty($errors['password'])) {
-        $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
-        $stmt->execute([$email]);
-        if ($stmt->fetch()) $errors['general'] = "Email is already registered";
-        else {
-            $hashed = password_hash($password, PASSWORD_DEFAULT);
-            $role = 'user';
-            $stmt = $pdo->prepare("INSERT INTO users (name,email,password,role) VALUES (?,?,?,?)");
-            $stmt->execute([$name,$email,$hashed,$role]);
+    // --------------------------
+    // Proceed if no validation errors
+    // --------------------------
+    if (empty($errors)) {
+        try {
+            $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
+            $stmt->execute([$email]);
 
-            $user_id = $pdo->lastInsertId();
-            login($user_id, $name, $role);
+            if ($stmt->fetch()) {
+                $errors['general'] = "Email is already registered.";
+                log_error("Registration Error: Duplicate email attempt - {$email}");
+            } else {
+                $hashed = password_hash($password, PASSWORD_DEFAULT);
+                $role = 'editor';
 
-            // ✅ Flash welcome message
-            set_flash('welcome', "Welcome, {$name}! Your account has been created.");
+                $stmt = $pdo->prepare("INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)");
+                $stmt->execute([$name, $email, $hashed, $role]);
 
-            redirect('/app/dashboard.php');
+                $user_id = $pdo->lastInsertId();
+                // ✅ Don't auto-login — just show success message on login page
+set_flash('success', 'Your account has been created successfully! Please log in.');
+redirect('/admin/login.php');
+exit;
+
+                /*log_error("Registration Success: User {$name} ({$email}) created with role {$role}");*/
+            }
+        } catch (PDOException $e) {
+            log_error("Registration Error: " . $e->getMessage());
+            $errors['general'] = "Something went wrong. Please try again later.";
+        } catch (Exception $e) {
+            log_error("General Error: " . $e->getMessage());
+            $errors['general'] = "Unexpected error. Please contact support.";
         }
     }
+
+    // --------------------------
+    // Force a page refresh to clear form fields
+    // --------------------------
+    if (!empty($errors)) {
+        // Optional: keep error messages via session flash if you want to show them after reload
+        $_SESSION['form_errors'] = $errors;
+
+        // 🔁 Redirect to same page to avoid resubmission and clear inputs
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit;
+    }
+}
+
+// --------------------------
+// Restore errors if redirected after failure
+// --------------------------
+if (isset($_SESSION['form_errors'])) {
+    $errors = $_SESSION['form_errors'];
+    unset($_SESSION['form_errors']);
 }
 ?>
 <!DOCTYPE html>

@@ -72,6 +72,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
+
+
 // contact //
 
 /*
@@ -151,3 +153,4 @@ document.addEventListener("DOMContentLoaded", () => {
   validateForm();
 });
 */
+ 

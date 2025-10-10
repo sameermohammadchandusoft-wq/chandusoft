@@ -17,6 +17,9 @@ $currentPage = $_GET['page'] ?? '';
     </a>
     <nav>
         <a href="index.php" class="btn">Home</a>
+         <a href="about.php">About</a>
+          <a href="services.php">Services</a>
+          
 
         <?php foreach ($navPages as $p): ?>
             <a href="index.php?page=<?= htmlspecialchars($p['slug']) ?>" class="btn">

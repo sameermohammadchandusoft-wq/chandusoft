@@ -155,7 +155,7 @@ if ($conn->query($sql) === TRUE) {
     }
 
     button {
-      background: linear-gradient(90deg, #007bff, #00b4d8);
+      background: linear-gradient(90deg, #63a6eeff, #9ed5e0ff);
       color: #fff;
       border: none;
       padding: 14px;
@@ -208,7 +208,9 @@ if ($conn->query($sql) === TRUE) {
   </style>
 </head>
 <body>
-  <div id="header"></div>
+  <div id="header">
+        <?php include("header.php"); ?>
+  </div>
   <script src="include.js"></script>
 
   <main>
@@ -235,106 +237,111 @@ if ($conn->query($sql) === TRUE) {
     </section>
   </main>
 
-  <div id="footer"></div>
+  <div id="footer">
   <?php include("footer.php"); ?>
+  </div>
 
   <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const form = document.getElementById("contactForm");
-    const sendBtn = document.getElementById("sendBtn");
-    const responseBox = document.getElementById("responseMessage");
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("contactForm");
+  const sendBtn = document.getElementById("sendBtn");
+  const responseBox = document.getElementById("responseMessage");
 
-    const nameInput = document.getElementById("name");
-    const emailInput = document.getElementById("email");
-    const messageInput = document.getElementById("message");
+  const nameInput = document.getElementById("name");
+  const emailInput = document.getElementById("email");
+  const messageInput = document.getElementById("message");
 
-    const nameError = document.getElementById("nameError");
-    const emailError = document.getElementById("emailError");
-    const messageError = document.getElementById("messageError");
+  const nameError = document.getElementById("nameError");
+  const emailError = document.getElementById("emailError");
+  const messageError = document.getElementById("messageError");
 
-    const nameRegex = /^[A-Za-z\s]+$/;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const nameRegex = /^[A-Za-z\s]+$/;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    function validateName() {
-      if (!nameInput.value.trim()) {
-        nameError.textContent = "Name is required.";
-        return false;
-      } else if (!nameRegex.test(nameInput.value.trim())) {
-        nameError.textContent = "Only letters and spaces allowed.";
-        return false;
-      }
-      nameError.textContent = "";
-      return true;
+  function validateName() {
+    if (!nameInput.value.trim()) {
+      nameError.textContent = "Name is required.";
+      return false;
+    } else if (!nameRegex.test(nameInput.value.trim())) {
+      nameError.textContent = "Only letters and spaces allowed.";
+      return false;
     }
+    nameError.textContent = "";
+    return true;
+  }
 
-    function validateEmail() {
-      if (!emailInput.value.trim()) {
-        emailError.textContent = "Email is required.";
-        return false;
-      } else if (!emailRegex.test(emailInput.value.trim())) {
-        emailError.textContent = "Enter a valid email address.";
-        return false;
-      }
-      emailError.textContent = "";
-      return true;
+  function validateEmail() {
+    if (!emailInput.value.trim()) {
+      emailError.textContent = "Email is required.";
+      return false;
+    } else if (!emailRegex.test(emailInput.value.trim())) {
+      emailError.textContent = "Enter a valid email address.";
+      return false;
     }
+    emailError.textContent = "";
+    return true;
+  }
 
-    function validateMessage() {
-      if (!messageInput.value.trim()) {
-        messageError.textContent = "Message cannot be empty.";
-        return false;
-      }
-      messageError.textContent = "";
-      return true;
+  function validateMessage() {
+    if (!messageInput.value.trim()) {
+      messageError.textContent = "Message cannot be empty.";
+      return false;
     }
+    messageError.textContent = "";
+    return true;
+  }
 
-    function validateForm() {
-      const valid = validateName() && validateEmail() && validateMessage();
-      sendBtn.disabled = !valid;
-      return valid;
-    }
+  function validateForm() {
+    const valid = validateName() && validateEmail() && validateMessage();
+    sendBtn.disabled = !valid; // ✅ Enable only if all valid
+    return valid;
+  }
 
-    [nameInput, emailInput, messageInput].forEach(input => {
-      input.addEventListener("input", validateForm);
-    });
-
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      if (!validateForm()) return;
-
-      sendBtn.disabled = true;
-      responseBox.style.display = "none";
-
-      const formData = new FormData(form);
-
-      try {
-        const res = await fetch("contact.php", { method: "POST", body: formData });
-        const text = await res.text();
-
-        responseBox.style.display = "block";
-
-        if (text.trim() === "success") {
-          responseBox.className = "message-box success";
-          responseBox.textContent = "✅ Message sent successfully!";
-          form.reset();
-          sendBtn.disabled = true;
-        } else {
-          responseBox.className = "message-box error";
-          responseBox.textContent = "❌ " + text;
-        }
-
-        setTimeout(() => responseBox.style.display = "none", 5000);
-
-      } catch (error) {
-        responseBox.className = "message-box error";
-        responseBox.textContent = "❌ Network error. Please try again.";
-        responseBox.style.display = "block";
-      }
-
-      sendBtn.disabled = false;
-    });
+  // Re-validate on each input
+  [nameInput, emailInput, messageInput].forEach(input => {
+    input.addEventListener("input", validateForm);
   });
-  </script>
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (!validateForm()) return;
+
+    sendBtn.disabled = true;
+    responseBox.style.display = "none";
+
+    const formData = new FormData(form);
+
+    try {
+      const res = await fetch("contact.php", { method: "POST", body: formData });
+      const text = await res.text();
+
+      responseBox.style.display = "block";
+
+      if (text.trim() === "success") {
+        responseBox.className = "message-box success";
+        responseBox.textContent = "✅ Message sent successfully!";
+
+        // ✅ Reset form and keep button disabled
+        form.reset();
+        sendBtn.disabled = true;
+      } else {
+        responseBox.className = "message-box error";
+        responseBox.textContent = "❌ " + text;
+        sendBtn.disabled = false; // allow retry
+      }
+
+      // Hide message after 5 seconds
+      setTimeout(() => responseBox.style.display = "none", 5000);
+
+    } catch (error) {
+      responseBox.className = "message-box error";
+      responseBox.textContent = "❌ Network error. Please try again.";
+      responseBox.style.display = "block";
+      sendBtn.disabled = false;
+    }
+  });
+});
+</script>
 </body>
 </html>
 

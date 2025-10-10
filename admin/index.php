@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -77,14 +78,12 @@
 }
 ?>
 
-  <!-- ✅ Back to Top Button -->
-  <button id="backToTop" title="Go to top">↑</button>
 
   <!-- ✅ Footer -->
   <div id="footer">
-    <?php include("footer.php"); ?>
-  </div>
+    <?php include("footer.php"); ?></div>
 
-  <script src="include.js"></script>
+     <button id="back-to-top" title="Back to Top">↑</button>
+      <script src="include.js"></script>
 </body>
 </html>

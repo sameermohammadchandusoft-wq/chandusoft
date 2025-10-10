@@ -123,5 +123,16 @@ function get_flash($key) {
     unset($_SESSION['flash_messages'][$key]);
     return $msg;
 }
-
+// ✅ Log login attempts
+/* function log_login_attempt($email, $success)
+{
+    $status = $success ? 'SUCCESS' : 'FAILED';
+    log_error("Login {$status} for email: {$email}");
+}*/
+function log_login_attempt($email, $success)
+{
+    if (!$success) { // only log failures
+        log_error("Login FAILED for email: {$email}");
+    }
+}
 ?>

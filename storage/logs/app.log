@@ -1,0 +1,81 @@
+[09-Oct-2025 06:57:20 UTC] PHP Fatal error:  Cannot redeclare log_error() (previously declared in C:\laragon\www\chandusoft\app\logger.php:10) in C:\laragon\www\chandusoft\app\logger.php on line 10
+[2025-10-09 06:57:20] Fatal Error: Cannot redeclare log_error() (previously declared in C:\laragon\www\chandusoft\app\logger.php:10) in C:\laragon\www\chandusoft\app\logger.php:10
+[09-Oct-2025 06:57:22 UTC] PHP Fatal error:  Cannot redeclare log_error() (previously declared in C:\laragon\www\chandusoft\app\logger.php:10) in C:\laragon\www\chandusoft\app\logger.php on line 10
+[2025-10-09 06:57:22] Fatal Error: Cannot redeclare log_error() (previously declared in C:\laragon\www\chandusoft\app\logger.php:10) in C:\laragon\www\chandusoft\app\logger.php:10
+[09-Oct-2025 06:57:24 UTC] PHP Fatal error:  Cannot redeclare log_error() (previously declared in C:\laragon\www\chandusoft\app\logger.php:10) in C:\laragon\www\chandusoft\app\logger.php on line 10
+[2025-10-09 06:57:24] Fatal Error: Cannot redeclare log_error() (previously declared in C:\laragon\www\chandusoft\app\logger.php:10) in C:\laragon\www\chandusoft\app\logger.php:10
+[2025-10-09 07:03:42] Registration Error: SQLSTATE[01000]: Warning: 1265 Data truncated for column 'role' at row 1
+[2025-10-09 07:05:44] Registration Error: SQLSTATE[01000]: Warning: 1265 Data truncated for column 'role' at row 1
+[2025-10-09 07:24:42] Login FAILED for email: saleem@gmail.com
+[2025-10-09 07:28:36] Registration Error: SQLSTATE[01000]: Warning: 1265 Data truncated for column 'role' at row 1
+[2025-10-09 07:41:00] Registration Error: SQLSTATE[01000]: Warning: 1265 Data truncated for column 'role' at row 1
+[2025-10-09 07:52:46] Login FAILED for email: saleema@gmail.com
+[2025-10-09 07:53:56] Database Connection Failed: SQLSTATE[HY000] [1049] Unknown database 'csoft'
+[2025-10-09 07:53:58] Database Connection Failed: SQLSTATE[HY000] [1049] Unknown database 'csoft'
+[2025-10-09 07:54:04] Database Connection Failed: SQLSTATE[HY000] [1049] Unknown database 'csoft'
+[2025-10-09 07:54:12] Database Connection Failed: SQLSTATE[HY000] [1049] Unknown database 'csoft'
+[2025-10-09 08:35:21] Login FAILED for email: jaisaiy@gmail.com
+[2025-10-09 08:35:26] Login FAILED for email: jaisaiy@gmail.com
+[2025-10-09 08:35:33] Login FAILED for email: jaisaiy@gmail.com
+[2025-10-09 09:27:15] Login FAILED for email: jaisaiy@gmail.com
+[2025-10-09 09:27:19] Login FAILED for email: jaisaiy@gmail.com
+[2025-10-09 09:27:26] Login FAILED for email: jaisaiy@gmail.com
+[2025-10-09 09:27:30] Login FAILED for email: jaisaiy@gmail.com
+[2025-10-09 09:27:42] Login FAILED for email: jaisaiy@gmail.com
+[2025-10-09 09:29:05] Login SUCCESS for email: Sameer.Mohammed@chandusoft.com
+[2025-10-09 09:30:03] Login FAILED for email: saleem@gmail.com
+[2025-10-09 09:30:07] Login FAILED for email: saleem@gmail.com
+[09-Oct-2025 09:42:12 UTC] PHP Fatal error:  Cannot redeclare log_error() (previously declared in C:\laragon\www\chandusoft\app\logger.php:10) in C:\laragon\www\chandusoft\app\logger.php on line 10
+[2025-10-09 09:42:12] Fatal Error: Cannot redeclare log_error() (previously declared in C:\laragon\www\chandusoft\app\logger.php:10) in C:\laragon\www\chandusoft\app\logger.php:10
+[09-Oct-2025 09:42:16 UTC] PHP Fatal error:  Cannot redeclare log_error() (previously declared in C:\laragon\www\chandusoft\app\logger.php:10) in C:\laragon\www\chandusoft\app\logger.php on line 10
+[2025-10-09 09:42:16] Fatal Error: Cannot redeclare log_error() (previously declared in C:\laragon\www\chandusoft\app\logger.php:10) in C:\laragon\www\chandusoft\app\logger.php:10
+[2025-10-09 09:44:58] Registration Success: User fdgdfbg (sameera@gmail.com) created with role editor
+[2025-10-09 09:45:33] Registration Success: User Md (md@gmail.com) created with role editor
+[2025-10-09 09:46:31] Registration Error: Duplicate email attempt - siva@gmail.com
+[2025-10-09 09:46:59] Registration Success: User sameer (md1@gmail.com) created with role editor
+[2025-10-09 09:48:19] Login FAILED for email: saleem@gmail.com
+[2025-10-09 09:48:22] Login FAILED for email: saleem@gmail.com
+[2025-10-09 09:48:25] Login FAILED for email: saleem@gmail.com
+[2025-10-09 10:51:02] Login FAILED for email: narayan122@gmail.com
+[2025-10-09 10:51:34] Login FAILED for email: narayan122@gmail.com
+[2025-10-09 11:04:46] Login FAILED for email: asasa@gmail.com
+[2025-10-10 05:25:54] Uncaught Exception: Cannot access offset of type string on string in C:\laragon\www\chandusoft\admin\index.php:94
+[2025-10-10 05:29:22] Login FAILED for email: saleem@gmail.com
+[2025-10-10 05:29:28] Login FAILED for email: saleem@gmail.com
+[2025-10-10 05:44:55] Uncaught Exception: Cannot access offset of type string on string in C:\laragon\www\chandusoft\admin\index.php:94
+[2025-10-10 05:45:27] Uncaught Exception: Cannot access offset of type string on string in C:\laragon\www\chandusoft\admin\index.php:94
+[2025-10-10 05:45:57] Uncaught Exception: Cannot access offset of type string on string in C:\laragon\www\chandusoft\admin\index.php:94
+[2025-10-10 05:46:35] Uncaught Exception: Cannot access offset of type string on string in C:\laragon\www\chandusoft\admin\index.php:94
+[2025-10-10 05:53:47] Uncaught Exception: Cannot access offset of type string on string in C:\laragon\www\chandusoft\admin\index.php:94
+[2025-10-10 05:54:41] Uncaught Exception: Cannot access offset of type string on string in C:\laragon\www\chandusoft\admin\index.php:94
+[2025-10-10 07:48:04] Uncaught Exception: Cannot access offset of type string on string in C:\laragon\www\chandusoft\admin\index.php:94
+[2025-10-10 07:54:13] Uncaught Exception: Cannot access offset of type string on string in C:\laragon\www\chandusoft\admin\index.php:94
+[2025-10-10 07:57:11] Uncaught Exception: Cannot access offset of type string on string in C:\laragon\www\chandusoft\admin\index.php:94
+[10-Oct-2025 08:00:57 UTC] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\admin\index.php on line 49
+[10-Oct-2025 08:00:57 UTC] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\admin\index.php on line 49
+[10-Oct-2025 08:00:57 UTC] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\admin\index.php on line 50
+[10-Oct-2025 08:00:57 UTC] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\admin\index.php on line 51
+[10-Oct-2025 08:03:18 UTC] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\admin\index.php on line 49
+[10-Oct-2025 08:03:18 UTC] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\admin\index.php on line 49
+[10-Oct-2025 08:03:18 UTC] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\admin\index.php on line 50
+[10-Oct-2025 08:03:18 UTC] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\admin\index.php on line 51
+[10-Oct-2025 08:04:10 UTC] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\admin\index.php on line 49
+[10-Oct-2025 08:04:10 UTC] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\admin\index.php on line 49
+[10-Oct-2025 08:04:10 UTC] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\admin\index.php on line 50
+[10-Oct-2025 08:04:10 UTC] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\admin\index.php on line 51
+[10-Oct-2025 08:47:54 UTC] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\admin\index.php on line 49
+[10-Oct-2025 08:47:54 UTC] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\admin\index.php on line 49
+[10-Oct-2025 08:47:54 UTC] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\admin\index.php on line 50
+[10-Oct-2025 08:47:54 UTC] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\admin\index.php on line 51
+[10-Oct-2025 08:47:59 UTC] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\admin\index.php on line 49
+[10-Oct-2025 08:47:59 UTC] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\admin\index.php on line 49
+[10-Oct-2025 08:47:59 UTC] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\admin\index.php on line 50
+[10-Oct-2025 08:47:59 UTC] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\admin\index.php on line 51
+[10-Oct-2025 08:53:08 UTC] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\admin\index.php on line 49
+[10-Oct-2025 08:53:08 UTC] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\admin\index.php on line 49
+[10-Oct-2025 08:53:08 UTC] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\admin\index.php on line 50
+[10-Oct-2025 08:53:08 UTC] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\admin\index.php on line 51
+[10-Oct-2025 08:57:31 UTC] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\admin\index.php on line 49
+[10-Oct-2025 08:57:31 UTC] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\admin\index.php on line 49
+[10-Oct-2025 08:57:31 UTC] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\admin\index.php on line 50
+[10-Oct-2025 08:57:31 UTC] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\admin\index.php on line 51

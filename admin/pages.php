@@ -3,9 +3,10 @@ session_start();
 require __DIR__ . '/../app/auth.php';
 require_auth();
 require __DIR__ . '/../app/db.php';    // ✅ uses $pdo
+$user = current_user();
 require __DIR__ . '/header1.php';      // ✅ Navbar
 
-$user = current_user();
+
 
 // Handle search and filter
 $search = $_GET['search'] ?? '';

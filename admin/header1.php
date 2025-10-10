@@ -108,7 +108,7 @@ tr:hover {
         <div class="navbar-right">
         <?php if (!empty($user['role'])): ?>
         <span style="margin-right:15px; font-weight:bold;">
-            Welcome <?= htmlspecialchars($user['role']) ?>
+            Welcome <?= htmlspecialchars($user['role']) ?>!
         </span>
         <?php endif; ?>
 

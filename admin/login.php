@@ -12,6 +12,7 @@ if (empty($_SESSION['csrf_token'])) {
 }
 
 // ✅ Handle form submission
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (empty($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
         die("⛔ Security token invalid.");
@@ -37,7 +38,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         if (!$user || !password_verify($password, $user['password'])) {
             $errors['general'] = "Invalid email or password";
-        } else {
+               log_login_attempt($email, false); // Log failed login
+} else {
+    /*log_login_attempt($email, true); // Log successful login
+        } else { */
             // ✅ Log in user
             login($user['id'], $user['name'], $user['role'] ?? 'user');
 
@@ -48,7 +52,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             redirect('/app/dashboard.php');
         }
     }
+    // 🧹 If there are validation errors → store them temporarily and redirect
+    if (!empty($errors['email']) || !empty($errors['password']) || !empty($errors['general'])) {
+        $_SESSION['form_errors'] = $errors;
+        $_SESSION['old_email'] = $email; // optional, keep email value
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit;
+    }
 }
+
+// 🔁 On page load (GET), restore and clear errors
+if (isset($_SESSION['form_errors'])) {
+    $errors = $_SESSION['form_errors'];
+    unset($_SESSION['form_errors']);
+}
+$email = $_SESSION['old_email'] ?? '';
+unset($_SESSION['old_email']);
 ?>
 <?php if(isset($_SESSION['logout_message'])): ?>
     <div class="notification" id="logoutMessage">
@@ -112,6 +131,11 @@ endif;
   </style>
 </head>
 <body>
+  <?php if ($msg = get_flash('success')): ?>
+    <div style="background:#d4edda; color:#155724; padding:12px; border-radius:5px; margin-bottom:15px; text-align:center; border:1px solid #c3e6cb;">
+        <?= htmlspecialchars($msg) ?>
+    </div>
+<?php endif; ?>
   <div class="container">
     <h2>Login</h2>
 

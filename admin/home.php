@@ -13,8 +13,6 @@
   <?php include("header.php"); ?>
     
   
-   
-
  
 <main>
     
@@ -22,7 +20,12 @@
         <h2>Home</h2>
         <p style="color:royalblue;">Welcome to our website. We provide innovative tech solutions.</p>    </section>
 </main>
-     <div id="footer"></div>
+      
+     <div id="footer">
+    <?php include("footer.php"); ?>
+    
+  </div>
+
       <script src="include.js"></script>
 
 </body>
