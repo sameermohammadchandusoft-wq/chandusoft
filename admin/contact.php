@@ -32,7 +32,7 @@ if ($conn->query($sql) === TRUE) {
         $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
-        $mail->Username = 'sameer.mohammad.chandusoft@gmail.com'; // your Gmail
+        $mail->Username = 'sameer.mohammad121.chandusoft@gmail.com'; // your Gmail
         $mail->Password = 'lomb nugc ispb owij'; // Gmail App password
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
@@ -73,7 +73,7 @@ if ($conn->query($sql) === TRUE) {
             mkdir($logDir, 0777, true);
         }
 
-        $logFile = $logDir . '/mail-fail.log';
+        $logFile = $logDir . '/app.log';
         $timestamp = date('Y-m-d H:i:s');
         $errorMessage = "[$timestamp] Mail send failed for {$email} ({$name}). Error: {$mail->ErrorInfo}\nMessage: {$message}\n\n";
         file_put_contents($logFile, $errorMessage, FILE_APPEND);

@@ -3,11 +3,11 @@
  * ------------------------------------------------------
  * Global Logger Utility
  * ------------------------------------------------------
- * Handles application-wide error and event logging.
+ * Handles application-wide error, mail, and event logging.
  * Works safely in both development and production environments.
  */
 
-function log_error($message)
+function log_message($type, $message)
 {
     $logDir = __DIR__ . '/../storage/logs';
     $logFile = $logDir . '/app.log';
@@ -17,9 +17,24 @@ function log_error($message)
     }
 
     $timestamp = date('Y-m-d H:i:s');
-    $formatted = "[$timestamp] $message" . PHP_EOL;
+    $formatted = "[$timestamp] [$type] $message" . PHP_EOL;
 
     file_put_contents($logFile, $formatted, FILE_APPEND);
+}
+
+/**
+ * Shortcut functions for common log types
+ */
+function log_error($message) {
+    log_message('ERROR', $message);
+}
+
+function log_info($message) {
+    log_message('INFO', $message);
+}
+
+function log_mail_failure($message) {
+    log_message('MAIL', $message);
 }
 
 /**

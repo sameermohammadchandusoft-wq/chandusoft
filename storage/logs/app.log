@@ -79,3 +79,11 @@
 [10-Oct-2025 08:57:31 UTC] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\admin\index.php on line 49
 [10-Oct-2025 08:57:31 UTC] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\admin\index.php on line 50
 [10-Oct-2025 08:57:31 UTC] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\admin\index.php on line 51
+[2025-10-10 11:02:57] [ERROR] Login FAILED for email: siva@gmail.com
+[2025-10-10 11:33:25] Mail send failed for Sameer.Mohammed@chandusoft.com (asas). Error: SMTP Error: Could not authenticate.
+Message: asasas asas
+
+[2025-10-10 11:34:18] Mail send failed for sudheer@gmail.com (qwqwq). Error: SMTP Error: Could not authenticate.
+Message: this is not correct
+
+[2025-10-10 11:34:50] [ERROR] Login FAILED for email: saleem@gmail.com
