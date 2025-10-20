@@ -1,0 +1,12 @@
+# Enable URL rewriting
+RewriteEngine On
+
+# Set the base directory (important for local testing)
+RewriteBase /chandusoft/
+
+# If the request is for an existing file or directory, allow it
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Remove .php extension
+RewriteRule ^(.*)$ $1.php [L,QSA]

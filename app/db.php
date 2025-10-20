@@ -1,7 +1,10 @@
 <?php
 require_once __DIR__ . '/logger.php';
+
 setup_error_handling('production'); // Change to 'production' on live server
- 
+  ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
 $host = 'localhost';
 $db   = 'chandusoft';
 $user = 'root';
@@ -14,7 +17,7 @@ $options = [
     PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
 ];
- 
+
 try {
     $pdo = new PDO($dsn, $user, $pass, $options);
 } catch (PDOException $e) {

@@ -74,7 +74,7 @@ function is_auth() {
 function require_auth() {
     if (!is_auth()) {
         // Redirect to admin login form
-        header("Location: /admin/login_form.php");
+        header("Location: /login_form.php");
         exit;
     }
 }
@@ -103,9 +103,10 @@ function can($roles) {
  * ------------------------------------------------------
  */
 function redirect($url) {
-    header("Location: $url");
+    header("Location: $url"); // ✅ Correct header function
     exit;
 }
+
 
 /**
  * Set a flash message

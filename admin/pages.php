@@ -19,7 +19,6 @@ if (!empty($search)) {
     $whereClauses[] = "(title LIKE ? OR status LIKE ?)";
     $likeSearch = "%$search%";
     $params[] = $likeSearch;
-    $params[] = $likeSearch;
 }
 
 // Filter by status

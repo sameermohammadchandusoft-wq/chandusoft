@@ -52,25 +52,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-document.addEventListener("DOMContentLoaded", () => {
-  const backToTop = document.getElementById("backToTop");
+document.addEventListener("DOMContentLoaded", function () {
+  const backToTopBtn = document.getElementById("back-to-top");
 
-  // Show button on scroll
-  window.addEventListener("scroll", () => {
-    if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
-      backToTop.style.display = "block";
+  // ✅ Show/hide button when scrolling
+  window.addEventListener("scroll", function () {
+    if (window.scrollY > 300) {
+      backToTopBtn.classList.add("show");
     } else {
-      backToTop.style.display = "none";
+      backToTopBtn.classList.remove("show");
     }
   });
 
-  // Smooth scroll to top on click
-  backToTop.addEventListener("click", () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+  // ✅ Smooth scroll to top
+  backToTopBtn.addEventListener("click", function () {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
   });
 });
-
-
 
 
 

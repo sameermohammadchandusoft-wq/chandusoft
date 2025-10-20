@@ -1,93 +1,172 @@
 <?php
-require __DIR__ . '/auth.php';
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+session_start();
+require __DIR__ . '/../app/auth.php';
 require_auth();
 
-$user = current_user();
+require __DIR__ . '/../app/db.php';
+require __DIR__ . '/../admin/header1.php'; // ✅ Navbar with Welcome + role
+$user = current_user(); // ✅ logged-in user
 
-// -----------------------
-// Database connection
-// -----------------------
-$host = '127.0.0.1';
-$db   = 'chandusoft';    // Replace with your DB name
-$dbUser = 'root';         // Replace with your DB username
-$dbPass = '';             // Replace with your DB password
-$charset = 'utf8mb4';
+// -----------------------------
+// Fetch dashboard stats
+// -----------------------------
+$totalLeads = $pdo->query("SELECT COUNT(*) FROM leads")->fetchColumn();
+$publishedPages = $pdo->query("SELECT COUNT(*) FROM pages WHERE status='published'")->fetchColumn();
+$draftPages = $pdo->query("SELECT COUNT(*) FROM pages WHERE status='draft'")->fetchColumn();
 
-$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
-$options = [
-    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    PDO::ATTR_EMULATE_PREPARES   => false,
-];
-
+// ✅ Fetch latest 5 leads (safe fallback)
 try {
-    $pdo = new PDO($dsn, $dbUser, $dbPass, $options);
+    $stmt = $pdo->query("SELECT name, email, message, created_at, ip_address FROM leads ORDER BY id DESC LIMIT 5");
 } catch (PDOException $e) {
-    die("Database connection failed: " . $e->getMessage());
+    $stmt = $pdo->query("SELECT name, email, message, created_at FROM leads ORDER BY id DESC LIMIT 5");
 }
-
-// -----------------------
-// Fetch stats
-// -----------------------
-$total_leads = $pdo->query("SELECT COUNT(*) FROM leads")->fetchColumn();
-$pages_published = $pdo->query("SELECT COUNT(*) FROM pages WHERE status = 'published'")->fetchColumn();
-$pages_draft = $pdo->query("SELECT COUNT(*) FROM pages WHERE status = 'draft'")->fetchColumn();
-
-// Fetch last 5 leads
-$stmt = $pdo->prepare("SELECT name, email, message, created_at AS created, ip FROM leads ORDER BY created_at DESC LIMIT 5");
-$stmt->execute();
-$last_leads = $stmt->fetchAll();
+$leads = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dashboard</title>
-    <div id="header1"></div>
-  <?php include __DIR__ . '/../admin/header1.php';
-?>
 
+<style>
+/* ======== DASHBOARD STYLES ======== */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f4f6f8;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
 
-    <div class="dashboard-container">
+.dashboard-container {
+  max-width: 1000px;
+  margin: 60px auto;
+  padding: 30px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.dashboard-container h1 {
+  font-size: 28px;
+  margin-bottom: 25px;
+  border-bottom: 3px solid #007bff;
+  display: inline-block;
+  padding-bottom: 6px;
+}
+
+.stats {
+  background: #f9fafc;
+  padding: 15px 20px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+}
+
+.stats ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 30px;
+}
+
+.stats li {
+  font-size: 16px;
+  background: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  border-left: 4px solid #007bff;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+table th, table td {
+  padding: 12px 15px;
+  text-align: left;
+}
+
+table th {
+  background: #007bff;
+  color: #fff;
+  font-weight: 600;
+}
+
+table tr:nth-child(even) {
+  background: #f2f5f9;
+}
+
+table tr:hover {
+  background: #e8f0fe;
+  transition: background 0.3s;
+}
+
+table td {
+  font-size: 15px;
+}
+
+@media (max-width: 768px) {
+  .stats ul {
+    flex-direction: column;
+    gap: 15px;
+  }
+  table th, table td {
+    font-size: 14px;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="dashboard-container">
     <h1>Dashboard</h1>
 
     <div class="stats">
         <ul>
-            <li>Total Leads: <?= htmlspecialchars($total_leads) ?></li>
-            <li>Pages Published: <?= htmlspecialchars($pages_published) ?></li>
-            <li>Pages Draft: <?= htmlspecialchars($pages_draft) ?></li>
+            <li>Total Leads: <?= $totalLeads ?></li>
+            <li>Pages Published: <?= $publishedPages ?></li>
+            <li>Pages Draft: <?= $draftPages ?></li>
         </ul>
     </div>
 
-        <div class="table-section">
-            <h3>Last 5 Leads</h3>
-            <?php if(count($last_leads) > 0): ?>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Message</th>
-                        <th>Created</th>
-                        <th>IP</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach($last_leads as $lead): ?>
-                    <tr>
-                        <td><?= htmlspecialchars($lead['name']) ?></td>
-                        <td><?= htmlspecialchars($lead['email']) ?></td>
-                        <td><?= htmlspecialchars($lead['message']) ?></td>
-                        <td><?= htmlspecialchars($lead['created']) ?></td>
-                        <td><?= htmlspecialchars($lead['ip'] ?? '-') ?></td>
-                    </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-            <?php else: ?>
-                <p>No leads found.</p>
-            <?php endif; ?>
-        </div>
-    </div>
+    <h3>Last 5 Leads</h3>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Message</th>
+            <th>Created</th>
+            <th>IP</th>
+        </tr>
+
+        <?php if ($leads): ?>
+            <?php foreach ($leads as $lead): ?>
+                <tr>
+                    <td><?= htmlspecialchars($lead['name']) ?></td>
+                    <td><?= htmlspecialchars($lead['email']) ?></td>
+                    <td><?= htmlspecialchars(substr($lead['message'], 0, 25)) ?><?= strlen($lead['message']) > 25 ? '...' : '' ?></td>
+                    <td><?= htmlspecialchars($lead['created_at']) ?></td>
+                    <td><?= htmlspecialchars($lead['ip_address'] ?? '-') ?></td>
+                </tr>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <tr><td colspan="5" style="text-align:center;">No leads found.</td></tr>
+        <?php endif; ?>
+    </table>
+</div>
+
 </body>
 </html>

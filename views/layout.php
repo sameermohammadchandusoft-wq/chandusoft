@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title><?= htmlspecialchars($page['title'] ?? 'Home') ?></title>
-    <link rel="stylesheet" href="/admin/Style.css">
+    <link rel="stylesheet" href="Style.css">
 </head>
 <body>
 
