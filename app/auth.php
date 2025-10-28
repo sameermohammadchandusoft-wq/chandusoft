@@ -115,15 +115,13 @@ function set_flash($key, $message) {
     $_SESSION['flash_messages'][$key] = $message;
 }
 
-/**
- * Get a flash message and remove it
- */
 function get_flash($key) {
     if (!isset($_SESSION['flash_messages'][$key])) return null;
     $msg = $_SESSION['flash_messages'][$key];
     unset($_SESSION['flash_messages'][$key]);
     return $msg;
 }
+
 // ✅ Log login attempts
 /* function log_login_attempt($email, $success)
 {
@@ -134,6 +132,31 @@ function log_login_attempt($email, $success)
 {
     if (!$success) { // only log failures
         log_error("Login FAILED for email: {$email}");
+    }
+}
+
+// ------------------------------------------------------
+// Logging Helpers (used by register.php, login, etc.)
+// ------------------------------------------------------
+if (!function_exists('log_info')) {
+    function log_info($message) {
+        $file = __DIR__ . '/../storage/logs/app.log';
+        if (!is_dir(dirname($file))) {
+            mkdir(dirname($file), 0777, true);
+        }
+        $entry = sprintf("[%s] INFO: %s\n", date('Y-m-d H:i:s'), $message);
+        file_put_contents($file, $entry, FILE_APPEND);
+    }
+}
+
+if (!function_exists('log_error')) {
+    function log_error($message) {
+        $file = __DIR__ . '/../storage/logs/app.log';
+        if (!is_dir(dirname($file))) {
+            mkdir(dirname($file), 0777, true);
+        }
+        $entry = sprintf("[%s] ERROR: %s\n", date('Y-m-d H:i:s'), $message);
+        file_put_contents($file, $entry, FILE_APPEND);
     }
 }
 ?>

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,22 +9,30 @@
 
 <body>
   <!-- ✅ Header -->
-  <div id="header">
-    <?php include("header.php"); ?>
-  </div>
+  <div id="header"><?php include "header.php"; ?></div>
 
   <?php
-  require __DIR__ . '/app/db.php'; // ✅ Database connection
+  require __DIR__ . '/app/db.php';
 
-  // -----------------------
-  // Determine which page to show
-  // -----------------------
-  $pageSlug = $_GET['page'] ?? 'home';
+  // -----------------------------
+  // Detect current page / slug
+  // -----------------------------
+  $uri = strtok($_SERVER['REQUEST_URI'], '?');
+  $uri = trim($uri, '/');
+  $pageSlug = $uri ?: 'home'; // default = home
 
-  // -----------------------
-  // Show home page (with hero + testimonials)
-  // -----------------------
-  if ($pageSlug === 'home') {
+$excludedSlugs = ['register', 'login', 'logout', 'about', 'services', 'contact'];
+$uri = strtok($_SERVER['REQUEST_URI'], '?');
+$uri = trim($uri, '/');
+
+if (in_array($uri, $excludedSlugs)) {
+    return; // stop index.php from hijacking static/auth pages
+}
+
+  // -----------------------------
+  // 1️⃣ Home Page
+  // -----------------------------
+  if ($pageSlug === 'home' || $pageSlug === 'index' || $pageSlug === 'index.php') {
       ?>
       <section class="hero">
         <div class="hero-content">
@@ -57,33 +64,44 @@
       </section>
       <?php
   }
-  // -----------------------
-  // Show dynamic page content (from DB)
-  // -----------------------
- else {
-    $stmt = $pdo->prepare("SELECT * FROM pages WHERE slug = ? AND status = 'published'");
-    $stmt->execute([$pageSlug]);
-    $page = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($page) {
-        echo "<div class='page-wrapper'>";
-        echo "<div class='page-content'>";
-        echo "<h1>" . htmlspecialchars($page['title']) . "</h1>";
-        echo $page['content_html']; // HTML content from database
-        echo "</div>";
-        echo "</div>";
-    } else {
-        include __DIR__ . '/views/404.php';
-    }
-}
-?>
+  // -----------------------------
+  // 2️⃣ Static pages (about, services, contact)
+  // -----------------------------
+  elseif (in_array($pageSlug, ['about', 'services', 'contact'])) {
+      $staticPage = __DIR__ . "/{$pageSlug}.php";
+      if (file_exists($staticPage)) {
+          include $staticPage;
+      } else {
+          include __DIR__ . '/views/404.php';
+      }
+  }
 
+  // -----------------------------
+  // 3️⃣ Dynamic pages (from DB)
+  // -----------------------------
+  else {
+      $stmt = $pdo->prepare("SELECT * FROM pages WHERE slug = ? AND status = 'published'");
+      $stmt->execute([$pageSlug]);
+      $page = $stmt->fetch(PDO::FETCH_ASSOC);
+
+      if ($page) {
+          echo "<div class='page-wrapper'><div class='page-content'>";
+          echo "<h1>" . htmlspecialchars($page['title']) . "</h1>";
+          echo $page['content_html'];
+          echo "</div></div>";
+      } else {
+          include __DIR__ . '/views/404.php';
+      }
+  }
+  ?>
 
   <!-- ✅ Footer -->
   <div id="footer">
-    <?php include("footer.php"); ?></div>
+    <?php include "footer.php"; ?>
+  </div>
 
-     <button id="back-to-top" title="Back to Top">↑</button>
-      <script src="include.js"></script>
+  <button id="back-to-top" title="Back to Top">↑</button>
+  <script src="include.js"></script>
 </body>
 </html>

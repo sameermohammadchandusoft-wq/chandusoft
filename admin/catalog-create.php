@@ -1,12 +1,15 @@
 <?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
 session_start();
 require __DIR__ . '/../app/auth.php';
 require_auth();
 require __DIR__ . '/../app/db.php';
 
 $user = current_user();
+$turnstile_sitekey = getenv('TURNSTILE_SITEKEY') ?: ''; // Optional site key
 ?>
-
 <?php include __DIR__ . '/header1.php'; ?>
 
 <div class="dashboard-container">
@@ -15,62 +18,11 @@ $user = current_user();
     <?php if (!empty($_GET['error'])): ?>
         <div class="message error"><?= htmlspecialchars($_GET['error']) ?></div>
     <?php endif; ?>
+    <?php if (!empty($_GET['success'])): ?>
+        <div class="message success"><?= htmlspecialchars($_GET['success']) ?></div>
+    <?php endif; ?>
 
-    <?php
-    // Add image upload validation (file size and type)
-    $error = '';
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Collect form data
-        $title = trim($_POST['title'] ?? '');
-        $slug = trim($_POST['slug'] ?? '');
-        $price = $_POST['price'] ?? 0;
-        $short_desc = trim($_POST['short_desc'] ?? '');
-        $status = $_POST['status'] ?? 'draft';
-
-        // File upload validation
-        if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-            $fileTmpPath = $_FILES['image']['tmp_name'];
-            $fileName = $_FILES['image']['name'];
-            $fileSize = $_FILES['image']['size'];
-            $fileType = $_FILES['image']['type'];
-
-            // Allowed image types
-            $allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-
-            // Check file type
-            if (!in_array($fileType, $allowedTypes)) {
-                $error = "Only JPG, PNG, GIF, and WEBP images are allowed.";
-            } 
-            // Check file size (max 2MB)
-            elseif ($fileSize > 2 * 1024 * 1024) {
-                $error = "Image must be smaller than 2MB.";
-            }
-
-            // If no errors, process image upload
-            if (!$error) {
-                $ext = pathinfo($fileName, PATHINFO_EXTENSION);
-                $newFileName = uniqid() . '.' . $ext;
-                $uploadDir = __DIR__ . '/../uploads/catalog/';
-                if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
-                $destPath = $uploadDir . $newFileName;
-
-                if (move_uploaded_file($fileTmpPath, $destPath)) {
-                    // Add leading slash here to make path root-relative
-                    $image_path = '/uploads/catalog/' . $newFileName;
-                } else {
-                    $error = "Failed to move uploaded image.";
-                }
-            }
-        }
-    }
-
-    // Handle error or success
-    if ($error) {
-        echo "<div class='message error'>{$error}</div>";
-    }
-    ?>
-
-    <form method="POST" action="catalog-store.php" enctype="multipart/form-data">
+    <form method="POST" action="/catalog-store" enctype="multipart/form-data" class="catalog-form">
         <label for="title">Title *</label>
         <input type="text" id="title" name="title" required>
 
@@ -92,9 +44,17 @@ $user = current_user();
             <option value="published">Published</option>
         </select>
 
+        <!-- Show Turnstile widget only if sitekey is configured -->
+        <?php if (!empty($turnstile_sitekey)): ?>
+            <div class="cf-turnstile" data-sitekey="<?= htmlspecialchars($turnstile_sitekey) ?>"></div>
+        <?php endif; ?>
+
         <button type="submit">Create Item</button>
     </form>
 </div>
+
+<!-- Cloudflare Turnstile script -->
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
 <style>
 .dashboard-container {
@@ -111,15 +71,15 @@ $user = current_user();
     color: #244157;
     margin-bottom: 20px;
 }
-form label {
+.catalog-form label {
     font-weight: bold;
     margin-top: 15px;
     display: block;
 }
-form input[type="text"],
-form input[type="number"],
-form textarea,
-form select {
+.catalog-form input[type="text"],
+.catalog-form input[type="number"],
+.catalog-form textarea,
+.catalog-form select {
     width: 100%;
     padding: 10px;
     margin-top: 5px;
@@ -128,11 +88,11 @@ form select {
     border: 1px solid #ccc;
     box-sizing: border-box;
 }
-form textarea {
+.catalog-form textarea {
     resize: vertical;
 }
-form button {
-    margin-top: 20px;
+.catalog-form button {
+    margin-top: 25px;
     padding: 12px;
     background: #1690e8;
     color: white;
@@ -141,15 +101,22 @@ form button {
     border-radius: 6px;
     cursor: pointer;
 }
-form button:hover {
+.catalog-form button:hover {
     background: #0f6dbf;
+}
+.message {
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 15px;
 }
 .message.error {
     background: #ffe6e6;
     color: #d8000c;
     border: 1px solid #d8000c;
-    padding: 12px;
-    border-radius: 6px;
-    margin-bottom: 15px;
+}
+.message.success {
+    background: #e6ffea;
+    color: #007a00;
+    border: 1px solid #00a000;
 }
 </style>

@@ -1,43 +1,109 @@
 <?php
-header('Content-Type: application/json');
 require __DIR__ . '/db.php';
 
-// ✅ Turnstile verification
+// ----------------------
+// CONFIG
+// ----------------------
+$TURNSTILE_SECRET = '0x4AAAAAAB7ii73wAJ7ecUp7fBr4RTvr5N8';
+
+// Enable PDO exceptions
+$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+// ----------------------
+// ONLY POST REQUESTS
+// ----------------------
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(405);
+    echo json_encode(['success' => false, 'error' => 'Method not allowed.']);
+    exit;
+}
+
+// ----------------------
+// GET POST DATA
+// ----------------------
+$product_id = $_POST['product_id'] ?? '';
+$name = trim($_POST['name'] ?? '');
+$email = trim($_POST['email'] ?? '');
+$message = trim($_POST['message'] ?? '');
 $token = $_POST['cf-turnstile-response'] ?? '';
-$secret = '0x4AAAAAAB7ii73wAJ7ecUp7fBr4RTvr5N8';
 
-$verify = curl_init();
-curl_setopt_array($verify, [
-  CURLOPT_URL => "https://challenges.cloudflare.com/turnstile/v0/siteverify",
-  CURLOPT_POST => true,
-  CURLOPT_RETURNTRANSFER => true,
-  CURLOPT_POSTFIELDS => http_build_query([
-    'secret' => $secret,
-    'response' => $token
-  ])
-]);
-$response = json_decode(curl_exec($verify), true);
-curl_close($verify);
+header('Content-Type: application/json');
 
-if (!$response['success']) {
-  echo json_encode(["success" => false, "error" => "Turnstile verification failed."]);
-  exit;
+// ----------------------
+// BASIC VALIDATIONS
+// ----------------------
+if (!$product_id || !$name || !$email || !$message) {
+    echo json_encode(['success' => false, 'error' => 'Please fill in all required fields.']);
+    exit;
 }
 
-// ✅ Basic validation
-if (empty($_POST['name']) || empty($_POST['email']) || empty($_POST['message'])) {
-  echo json_encode(["success" => false, "error" => "All fields are required."]);
-  exit;
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    echo json_encode(['success' => false, 'error' => 'Invalid email address.']);
+    exit;
 }
 
-// ✅ Save enquiry
-$stmt = $pdo->prepare("INSERT INTO enquiries (product_id, name, email, message) VALUES (?, ?, ?, ?)");
-$stmt->execute([
-  $_POST['product_id'],
-  $_POST['name'],
-  $_POST['email'],
-  $_POST['message']
+if (empty($token)) {
+    echo json_encode(['success' => false, 'error' => 'CAPTCHA response missing.']);
+    exit;
+}
+
+// ----------------------
+// VERIFY TURNSTILE
+// ----------------------
+$verifyUrl = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
+$data = http_build_query([
+    'secret' => $TURNSTILE_SECRET,
+    'response' => $token,
+    'remoteip' => $_SERVER['REMOTE_ADDR'],
 ]);
 
-echo json_encode(["success" => true]);
-?>
+$options = [
+    'http' => [
+        'header' => "Content-type: application/x-www-form-urlencoded\r\n",
+        'method' => 'POST',
+        'content' => $data,
+        'timeout' => 10,
+    ],
+];
+
+$context = stream_context_create($options);
+$result = @file_get_contents($verifyUrl, false, $context);
+
+if ($result === false) {
+    echo json_encode(['success' => false, 'error' => 'Unable to verify CAPTCHA. Try again later.']);
+    exit;
+}
+
+$resp = json_decode($result, true);
+
+if (empty($resp['success']) || !$resp['success']) {
+    echo json_encode(['success' => false, 'error' => 'CAPTCHA verification failed.']);
+    exit;
+}
+
+// ----------------------
+// VALIDATE PRODUCT EXISTS
+// ----------------------
+$stmt = $pdo->prepare("SELECT id FROM catalog_items WHERE id = ?");
+$stmt->execute([$product_id]);
+
+if (!$stmt->fetch()) {
+    echo json_encode(['success' => false, 'error' => 'Invalid product selected.']);
+    exit;
+}
+
+// ----------------------
+// INSERT ENQUIRY
+// ----------------------
+try {
+    $stmt = $pdo->prepare("
+        INSERT INTO enquiries (product_id, name, email, message, created_at) 
+        VALUES (?, ?, ?, ?, NOW())
+    ");
+    $stmt->execute([$product_id, $name, $email, $message]);
+
+    echo json_encode(['success' => true]);
+} catch (PDOException $ex) {
+    // For debugging: return the exact PDO error
+    echo json_encode(['success' => false, 'error' => $ex->getMessage()]);
+}

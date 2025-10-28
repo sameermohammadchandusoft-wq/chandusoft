@@ -75,11 +75,11 @@ body {
                 </span>
             <?php endif; ?>
 
-            <a href="/app/dashboard.php">Dashboard</a>
-            <a href="/admin/leads.php">Leads</a>
-            <a href="/admin/pages.php">Pages</a>
-             <a href="/admin/catalog-list.php">Catalog</a>
-            <a href="/logout.php">Logout</a>
+            <a href="/app/dashboard">Dashboard</a>
+            <a href="/admin/leads">Leads</a>
+            <a href="/admin/pages">Pages</a>
+             <a href="/admin/catalog-list">Catalog</a>
+            <a href="/logout">Logout</a>
            
         </div>
     </div>

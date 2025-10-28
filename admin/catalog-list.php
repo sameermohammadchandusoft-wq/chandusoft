@@ -28,8 +28,31 @@ if (isset($_GET['action'], $_GET['id'])) {
     }
 }
 
-// Fetch all non-archived items (status != archived)
-$stmt = $pdo->prepare("SELECT * FROM catalog_items WHERE status!='archived' ORDER BY updated_at DESC");
+// ---------------------------
+// Filter counts
+// ---------------------------
+$stmtCounts = $pdo->query("SELECT 
+    COUNT(*) AS total, 
+    SUM(status='published') AS published, 
+    SUM(status='archived') AS archived 
+    FROM catalog_items");
+$counts = $stmtCounts->fetch(PDO::FETCH_ASSOC);
+
+// ---------------------------
+// Filter logic
+// ---------------------------
+$filter = $_GET['filter'] ?? 'all';
+switch ($filter) {
+    case 'published':
+        $stmt = $pdo->prepare("SELECT * FROM catalog_items WHERE status='published' ORDER BY updated_at DESC");
+        break;
+    case 'archived':
+        $stmt = $pdo->prepare("SELECT * FROM catalog_items WHERE status='archived' ORDER BY updated_at DESC");
+        break;
+    default:
+        $stmt = $pdo->prepare("SELECT * FROM catalog_items ORDER BY updated_at DESC");
+        break;
+}
 $stmt->execute();
 $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -45,67 +68,235 @@ include __DIR__ . '/../admin/header1.php';
         <div class="message success"><?= htmlspecialchars($success) ?></div>
     <?php endif; ?>
 
-    <a href="catalog-create.php" style="display:inline-block; margin-bottom: 15px; background:#1690e8; color:#fff; padding:10px 15px; border-radius:6px; text-decoration:none;">
-        + Create New Item
-    </a>
+    <!-- ✅ Top Actions -->
+    <div class="top-bar">
+        <div class="filter-links">
+            <a href="?filter=all" class="<?= $filter === 'all' ? 'active' : '' ?>">
+                All (<?= $counts['total'] ?>)
+            </a>
+            <a href="?filter=published" class="<?= $filter === 'published' ? 'active' : '' ?>">
+                Published (<?= $counts['published'] ?>)
+            </a>
+            <a href="?filter=archived" class="<?= $filter === 'archived' ? 'active' : '' ?>">
+                Archived (<?= $counts['archived'] ?>)
+            </a>
+        </div>
+        <a href="/catalog-create" class="btn-create">+ Create New Item</a>
+    </div>
 
     <?php if (count($items) > 0): ?>
-    <table class="catalog-table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Image</th>
-                <th>Title</th>
-                <th>Price</th>
-                <th>Status</th>
-                <th>Updated</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($items as $item): ?>
+    <div class="table-wrapper">
+        <table class="catalog-table">
+            <thead>
                 <tr>
-                    <td><?= htmlspecialchars($item['id']) ?></td>
-                    <td>
-                        <?php
-                        // Show uploaded image if exists, else placeholder
-                        $imgPath = !empty($item['image_path']) ? $item['image_path'] : '/path/to/default-placeholder.png';
-                        ?>
-                        <img src="<?= htmlspecialchars($imgPath) ?>" alt="<?= htmlspecialchars($item['title']) ?>" style="max-width:80px; max-height:80px; border-radius:4px;">
-                    </td>
-                    <td><?= htmlspecialchars($item['title']) ?></td>
-                    <td>₹<?= number_format($item['price'], 2) ?></td>
-                    <td><?= htmlspecialchars($item['status']) ?></td>
-                    <td><?= htmlspecialchars(date('d M Y', strtotime($item['updated_at']))) ?></td>
-                    <td class="actions">
-                        <a href="catalog-edit.php?id=<?= $item['id'] ?>" class="btn edit">Edit</a>
-                        <a href="?action=archive&id=<?= $item['id'] ?>" class="btn archive" 
-                           onclick="return confirm('Are you sure you want to archive this item?');">
-                           Archive
-                        </a>
-                    </td>
+                    <th>ID</th>
+                    <th>Image</th>
+                    <th>Title</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                    <th>Updated</th>
+                    <th>Actions</th>
                 </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <?php foreach ($items as $item): ?>
+                    <tr>
+                        <td><?= htmlspecialchars($item['id']) ?></td>
+                        <td>
+                            <?php
+                            $imgPath = !empty($item['image_path']) ? $item['image_path'] : 'https://via.placeholder.com/80x80?text=No+Img';
+                            ?>
+                            <img src="<?= htmlspecialchars($imgPath) ?>" alt="<?= htmlspecialchars($item['title']) ?>" class="table-img">
+                        </td>
+                        <td><?= htmlspecialchars($item['title']) ?></td>
+                        <td>₹<?= number_format($item['price'], 2) ?></td>
+                        <td>
+                            <span class="status <?= htmlspecialchars($item['status']) ?>">
+                                <?= htmlspecialchars(ucfirst($item['status'])) ?>
+                            </span>
+                        </td>
+                        <td><?= htmlspecialchars(date('d M Y', strtotime($item['updated_at']))) ?></td>
+                        <td class="actions">
+                            <a href="/catalog-edit?id=<?= $item['id'] ?>" class="btn edit">Edit</a>
+                            <a href="?action=archive&id=<?= $item['id'] ?>" class="btn archive"
+                               onclick="return confirm('Are you sure you want to archive this item?');">Archive</a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
 
     <?php else: ?>
-        <p>No active items found. All items might be archived.</p>
+        <p class="no-items">No items found for this filter.</p>
     <?php endif; ?>
 </div>
 
+<!-- ========== YOUR ORIGINAL CSS ========== -->
 <style>
-/* same styles as before */
-.dashboard-container { max-width:1000px; margin:40px auto; padding:25px; background:#fff; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.1); font-family:Arial,sans-serif; }
-.dashboard-container h1 { text-align:center; color:#244157; margin-bottom:25px; }
-.catalog-table { width:100%; border-collapse:collapse; }
-.catalog-table th, .catalog-table td { padding:12px 10px; border-bottom:1px solid #ddd; vertical-align:middle; }
-.catalog-table th { background:#f1f1f1; text-align:left; }
-.actions { display:flex; gap:6px; }
-.btn { padding:6px 12px; border-radius:4px; text-decoration:none; font-weight:bold; font-size:13px; color:#fff; }
-.btn.edit { background:#1690e8; } .btn.edit:hover { background:#0f6dbf; }
-.btn.archive { background:#ffc107; color:#000; } .btn.archive:hover { background:#e0a800; }
-.message { padding:12px; border-radius:6px; margin-bottom:15px; font-weight:bold; text-align:center; }
-.message.error { background:#ffe6e6; color:#d8000c; border:1px solid #d8000c; }
-.message.success { background:#e6ffea; color:#138d02; border:1px solid #138d02; }
+/* ---------- CONTAINER ---------- */
+.dashboard-container {
+    max-width: 1100px;
+    margin: 50px auto;
+    padding: 30px 25px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* ---------- HEADING ---------- */
+.dashboard-container h1 {
+    text-align: center;
+    color: #22374c;
+    margin-bottom: 30px;
+    font-size: 28px;
+}
+
+/* ---------- TOP BAR ---------- */
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+/* ---------- FILTER LINKS ---------- */
+.filter-links a {
+    margin-right: 12px;
+    text-decoration: none;
+    color: #555;
+    font-weight: 600;
+    font-size: 15px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    transition: 0.2s ease;
+}
+
+.filter-links a:hover {
+    color: #1690e8;
+    background: #eef6ff;
+}
+
+.filter-links a.active {
+    background: #1690e8;
+    color: #fff;
+}
+
+/* ---------- CREATE BUTTON ---------- */
+.btn-create {
+    display: inline-block;
+    background: #1690e8;
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+    transition: background 0.25s ease, transform 0.2s ease;
+}
+.btn-create:hover {
+    background: #1175c2;
+    transform: translateY(-2px);
+}
+
+/* ---------- TABLE ---------- */
+.table-wrapper {
+    overflow-x: auto;
+}
+
+.catalog-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+}
+
+.catalog-table th, .catalog-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid #e0e0e0;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.catalog-table th {
+    background: #f4f8fb;
+    color: #244157;
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 0.3px;
+}
+
+.catalog-table tr:hover {
+    background: #f9fcff;
+}
+
+.table-img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+/* ---------- STATUS LABEL ---------- */
+.status {
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.status.published {
+    background: #e6ffea;
+    color: #168821;
+    border: 1px solid #b1f0b9;
+}
+
+.status.draft {
+    background: #fff4e0;
+    color: #d17a00;
+    border: 1px solid #ffd28a;
+}
+
+.status.archived {
+    background: #f4f4f4;
+    color: #777;
+    border: 1px solid #ddd;
+}
+
+/* ---------- ACTION BUTTONS ---------- */
+.btn {
+    padding: 6px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 13px;
+    transition: 0.2s ease;
+    margin-right: 5px;
+}
+
+.btn.edit {
+    background: #1690e8;
+    color: #fff;
+}
+
+.btn.edit:hover {
+    background: #1175c2;
+}
+
+.btn.archive {
+    background: #f4f4f4;
+    color: #777;
+    border: 1px solid #ddd;
+}
+
+.btn.archive:hover {
+    background: #e0e0e0;
+}
+
+.no-items {
+    text-align: center;
+    padding: 20px;
+    color: #555;
+}
 </style>

@@ -14,7 +14,7 @@
       </a>
       <a href="https://www.instagram.com/" target="_blank" class="instagram">
         <i class="fab fa-instagram"></i>
-      </a>
+      </a></div>
   </footer>
-  
+
  

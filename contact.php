@@ -95,10 +95,11 @@ if ($conn->query($sql) === TRUE) {
 <head>
   <meta charset="UTF-8" />
   <title>Contact Us - Chandusoft</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="Style.css" />
   <style>
     body {
-      background: linear-gradient(135deg, #007bff, #00b4d8);
+      background: linear-gradient(135deg, #e8f7f3b7, #00b4d8);
       font-family: "Poppins", sans-serif;
       margin: 0;
       padding: 0;
@@ -106,7 +107,7 @@ if ($conn->query($sql) === TRUE) {
     }
 
     #Contact {
-      max-width: 600px;
+      max-width: 500px;
       margin: 80px auto;
       background: #fff;
       padding: 40px;

@@ -71,7 +71,7 @@ if (!empty($params)) {
             <?php endif; ?>
         </form>
 
-        <a class="create-btn" href="create.php">+ Create New Page</a>
+        <a class="create-btn" href="create">+ Create New Page</a>
     </div>
 
     <table>
@@ -91,10 +91,10 @@ if (!empty($params)) {
                     <td><?= ucfirst($page['status']) ?></td>
                     <td><?= htmlspecialchars($page['updated_at']) ?></td>
                     <td class="actions">
-                        <a class="btn" href="edit.php?id=<?= $page['id'] ?>">Edit</a>
+                        <a class="btn" href="edit?id=<?= $page['id'] ?>">Edit</a>
                         
                         <?php if($user['role'] === 'admin'): ?>
-                             <a class="btn2" href="archive.php?id=<?= $page['id'] ?>">Archive</a>
+                             <a class="btn2" href="archive?id=<?= $page['id'] ?>">Archive</a>
                              <a class="btn3 disabled" href="javascript:void(0)" onclick="return false;">Delete</a>
                         <?php endif; ?>
                     </td>

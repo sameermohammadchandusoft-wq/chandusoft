@@ -1,0 +1,61 @@
+[2025-10-23 09:54:30] Warning: Unreadable image directory: /../uploads/2025/10
+[2025-10-23 09:54:30] Warning: Unreadable image directory: /../uploads
+[2025-10-23 09:54:30] Warning: Unreadable image directory: /../uploads
+[2025-10-23 09:54:30] Warning: Unreadable image directory: /../uploads
+[2025-10-23 09:54:30] Warning: Unreadable image directory: /../uploads
+[2025-10-23 09:54:30] Warning: Unreadable image directory: /../uploads/2025/10
+[2025-10-23 09:54:49] Warning: Unreadable image directory: /../uploads/2025/10
+[2025-10-23 09:54:49] Warning: Unreadable image directory: /../uploads
+[2025-10-23 09:54:49] Warning: Unreadable image directory: /../uploads
+[2025-10-23 09:54:49] Warning: Unreadable image directory: /../uploads
+[2025-10-23 09:54:49] Warning: Unreadable image directory: /../uploads
+[2025-10-23 09:54:49] Warning: Unreadable image directory: /../uploads/2025/10
+[2025-10-23 10:02:24] Warning: Unreadable image directory: /../uploads/2025/10
+[2025-10-23 10:02:24] Warning: Unreadable image directory: /../uploads
+[2025-10-23 10:02:24] Warning: Unreadable image directory: /../uploads
+[2025-10-23 10:02:24] Warning: Unreadable image directory: /../uploads
+[2025-10-23 10:02:24] Warning: Unreadable image directory: /../uploads
+[2025-10-23 10:02:24] Warning: Unreadable image directory: /../uploads/2025/10
+[2025-10-23 11:25:58] Updated catalog item 29 by user 52
+[2025-10-23 11:27:36] Deleted old image for item 29
+[2025-10-23 11:27:39] Uploaded new image for item 29: /uploads/2025/10/img_68fa11283467e6.32182015.jpg
+[2025-10-23 11:27:39] Updated catalog item 29 by user 52
+[2025-10-23 11:28:17] Updated catalog item 29 by user 52
+[2025-10-23 11:28:21] Updated catalog item 29 by user 52
+[2025-10-23 11:28:22] Updated catalog item 29 by user 52
+[2025-10-23 11:28:51] Deleted old image for item 29
+[2025-10-23 11:28:54] Uploaded new image for item 29: /uploads/2025/10/img_68fa11731a39b9.70350903.jpg
+[2025-10-23 11:28:54] Updated catalog item 29 by user 52
+[2025-10-23 11:29:11] Validation error on item 29: Image must be smaller than 2MB.
+[2025-10-23 11:29:13] Updated catalog item 29 by user 52
+[2025-10-23 11:29:21] Validation error on item 29: Image must be smaller than 2MB.
+[2025-10-23 11:33:26] [error] Upload failed - file too large by user 52
+[2025-10-23 11:33:34] [info] File uploaded successfully by admin: img_68fa128e600752.04334092.jpg
+[2025-10-23 11:33:34] [info] Deleted old image for item 29
+[2025-10-23 11:33:34] [info] Updated catalog item 29 by user 52
+[2025-10-23 11:33:44] [error] Upload failed - file too large by user 52
+[2025-10-23 12:26:11] [info] File uploaded successfully by root: img_68fa1ee339b387.31338855.jfif
+[2025-10-23 12:27:34] [info] File uploaded successfully by root: img_68fa1f3660cdc9.71530793.jpg
+[2025-10-23 12:29:59] [info] File uploaded successfully by root: img_68fa1fc6de18f1.51691259.jpg
+[2025-10-23 13:27:34] [error] Upload failed - directory not writable: C:\laragon\www\chandusoft\admin/../uploads/2025/10/
+[2025-10-23 13:40:03] [info] File uploaded successfully by root: img_68fa3033abc990.84330085.png
+[2025-10-23 14:17:39] [error] Server captcha secret not configured.
+[2025-10-24 04:26:50] [error] Upload failed - file too large by user 52
+[2025-10-24 04:27:33] [error] Upload failed - invalid file type by user 52
+[2025-10-24 04:28:11] [info] File uploaded successfully by admin: img_68fb005b32cf87.79171636.png
+[2025-10-24 04:28:11] [info] Deleted old image for item 33
+[2025-10-24 04:28:11] [info] Updated catalog item 33 by user 52
+[2025-10-24 07:40:30] [info] Updated catalog item 33 by user 52
+[2025-10-24 07:45:22] [info] Updated catalog item 33 by user 52
+[2025-10-24 07:55:03] [info] Updated catalog item 33 by user 52
+[2025-10-24 11:26:01] [info] Updated catalog item 16 by user 52
+[2025-10-24 11:26:57] [info] File uploaded successfully by admin: img_68fb6281b49634.32014910.jpg
+[2025-10-24 11:26:57] [info] Updated catalog item 2 by user 52
+[2025-10-24 11:27:09] [info] Updated catalog item 2 by user 52
+[2025-10-24 11:27:23] [info] File uploaded successfully by admin: img_68fb629ba6df36.49401913.jpg
+[2025-10-24 11:27:23] [info] Updated catalog item 20 by user 52
+[2025-10-24 11:27:26] [info] Updated catalog item 20 by user 52
+[2025-10-24 11:27:53] [error] Upload failed - file too large by user 52
+[2025-10-24 11:28:26] [info] File uploaded successfully by admin: img_68fb62dac3a4e0.31089596.jpg
+[2025-10-24 11:28:26] [info] Updated catalog item 4 by user 52
+[2025-10-24 11:28:32] [info] Updated catalog item 4 by user 52

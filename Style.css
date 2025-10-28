@@ -40,7 +40,7 @@ main {
   justify-content: center;
   align-items: center;
   background: #0d83ff;
-  padding: 20px 40px;
+  padding: 5px 15px;
 }
 
 .logo {
@@ -77,7 +77,7 @@ nav button {
 
 /* Active link (highlighted page) */
 .navbar a.active {
-  color: #ffffff;          /* Bright blue text color */
+  color: #f0e050 !important; /* same bright yellow */
   font-weight: 700;        /* Bolder text */
   font-size: 18px;         /* Slightly larger */
 }
@@ -90,13 +90,72 @@ nav button {
   bottom: -4px;            /* slight gap below text */
   width: 100%;
   height: 3px;
-  background: linear-gradient(to right, #fff200, #ffcc00); /* yellow gradient */
+ background: linear-gradient(to right, #fff200, #ffcc00);
   border-radius: 2px;
-  opacity: 0.9;
+  opacity: 0.6;
   animation: fadeUnderline 1s ease-in-out forwards;
 }
+/* ===== Unified Login/Register Links (auth-links) ===== */
+.auth-links {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  position: relative;
+  padding-bottom: 2px;
+}
 
-/* Smooth underline animation */
+/* Animated gradient underline (same as main nav) */
+.auth-links::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0%;
+  height: 3px;
+  background: linear-gradient(to right, #fff200, #ffcc00);
+  border-radius: 2px;
+  opacity: 0;
+  transition: width 0.3s ease, opacity 0.3s ease;
+}
+
+/* Show underline on hover or when active */
+.auth-links:hover::after,
+.auth-links.active::after {
+  width: 100%;
+  opacity: 0.9;
+  animation: fadeUnderline 0.8s ease-in-out forwards;
+}
+
+/* Inner links */
+.auth-links a,
+.auth-links .btn,
+.auth-links .link-inline {
+  color: #fff; /* default white */
+  text-decoration: none;
+  font-size: 17px;
+  transition: color 0.25s ease;
+  padding: 0;
+  margin: 0;
+}
+
+/* Hover or active text color change */
+.auth-links a:hover,
+.auth-links .btn:hover,
+.auth-links .link-inline:hover,
+.auth-links.active a,
+.auth-links.active .btn,
+.auth-links.active .link-inline {
+  color: #f0e050 !important; /* same bright yellow */
+  font-weight: 700;
+}
+
+/* Divider slash (Login / Register) */
+.auth-links .divider {
+  color: #fff;
+  padding: 0 3px;
+}
+
+/* Keyframes for underline animation */
 @keyframes fadeUnderline {
   from {
     width: 0;
@@ -107,7 +166,6 @@ nav button {
     opacity: 0.9;
   }
 }
-
   */
 
 
@@ -120,8 +178,10 @@ body {
  
 
 .logo img {
+  margin-left: -20px;
   display: block;
-  height: 60px; /* Adjust as needed */
+  height: 50px; /* Adjust as needed */
+  width: 200px;
 }
 
 /* ---------- Back to Top Button ---------- */
@@ -259,6 +319,8 @@ body {
       font-size: 16px;
       margin-top: 10px;
       color: rgb(26, 62, 172);
+            margin-bottom: 2px;
+
     }
 
     .testimonial span {

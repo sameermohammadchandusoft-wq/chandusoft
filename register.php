@@ -1,24 +1,47 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 session_start();
-require __DIR__ . '/app/db.php';
-require __DIR__ . '/app/auth.php';
 
+require_once __DIR__ . '/app/db.php';
+require_once __DIR__ . '/app/auth.php'; // must contain redirect() & set_flash()
 
-setup_error_handling('production'); // or 'development'
+// ----------------------------
+// Debug log
+// ----------------------------
+log_info("Register form accessed");
 
+// ----------------------------
+// Generate CSRF token (once)
+// ----------------------------
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
+// ----------------------------
+// Initialize variables
+// ----------------------------
 $errors = [];
 $name = $email = $password = '';
 
-
- 
+// ----------------------------
+// Handle POST request
+// ----------------------------
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
     $name     = trim($_POST['name'] ?? '');
     $email    = trim($_POST['email'] ?? '');
     $password = trim($_POST['password'] ?? '');
+    $csrf     = $_POST['csrf_token'] ?? '';
 
-    // --------------------------
-    // Validation
-    // --------------------------
+    // ---------- CSRF Validation ----------
+    if (empty($csrf) || !hash_equals($_SESSION['csrf_token'], $csrf)) {
+        $errors['general'] = "Invalid CSRF token.";
+        log_error("CSRF token mismatch during registration.");
+    }
+
+    // ---------- Field Validation ----------
     if ($name === '') {
         $errors['name'] = "Name is required.";
     }
@@ -29,60 +52,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors['password'] = "Password must be at least 6 characters.";
     }
 
-    // --------------------------
-    // Proceed if no validation errors
-    // --------------------------
+    // ---------- Check for existing email ----------
     if (empty($errors)) {
-        try {
-            $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
-            $stmt->execute([$email]);
-
-            if ($stmt->fetch()) {
-                $errors['general'] = "Email is already registered.";
-                log_error("Registration Error: Duplicate email attempt - {$email}");
-            } else {
-                $hashed = password_hash($password, PASSWORD_DEFAULT);
-                $role = 'editor';
-
-                $stmt = $pdo->prepare("INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)");
-                $stmt->execute([$name, $email, $hashed, $role]);
-
-                $user_id = $pdo->lastInsertId();
-                // ✅ Don't auto-login — just show success message on login page
-set_flash('success', 'Your account has been created successfully! Please log in.');
-redirect('/login.php');
-exit;
-
-                /*log_error("Registration Success: User {$name} ({$email}) created with role {$role}");*/
-            }
-        } catch (PDOException $e) {
-            log_error("Registration Error: " . $e->getMessage());
-            $errors['general'] = "Something went wrong. Please try again later.";
-        } catch (Exception $e) {
-            log_error("General Error: " . $e->getMessage());
-            $errors['general'] = "Unexpected error. Please contact support.";
+        $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
+        $stmt->execute([$email]);
+        if ($stmt->fetch()) {
+            $errors['general'] = "This email is already registered.";
+            log_error("Duplicate registration attempt for {$email}");
         }
     }
 
-    // --------------------------
-    // Force a page refresh to clear form fields
-    // --------------------------
-    if (!empty($errors)) {
-        // Optional: keep error messages via session flash if you want to show them after reload
-        $_SESSION['form_errors'] = $errors;
+    // ---------- Insert new user ----------
+    if (empty($errors)) {
+        try {
+            $hashed = password_hash($password, PASSWORD_DEFAULT);
+            $role   = 'editor'; // default role
 
-        // 🔁 Redirect to same page to avoid resubmission and clear inputs
-        header("Location: " . $_SERVER['PHP_SELF']);
-        exit;
+            $stmt = $pdo->prepare("INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)");
+            $stmt->execute([$name, $email, $hashed, $role]);
+
+            log_info("User {$name} ({$email}) created successfully");
+
+            set_flash('success', '🎉 Registration successful! Please log in.');
+            redirect('/login');
+            exit;
+
+        } catch (PDOException $e) {
+            log_error("DB Error during registration: " . $e->getMessage());
+            $errors['general'] = "Error inserting user. Try again later.";
+        }
     }
-}
-
-// --------------------------
-// Restore errors if redirected after failure
-// --------------------------
-if (isset($_SESSION['form_errors'])) {
-    $errors = $_SESSION['form_errors'];
-    unset($_SESSION['form_errors']);
 }
 ?>
 <!DOCTYPE html>
@@ -90,53 +89,58 @@ if (isset($_SESSION['form_errors'])) {
 <head>
 <meta charset="UTF-8">
 <title>Register</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="Style.css" />
 <style>
-body { font-family: Arial, sans-serif; margin:40px; background:#f9f9f9; }
-.container { max-width:400px; margin:auto; background:#fff; padding:20px; border-radius:10px; box-shadow:0 2px 5px rgba(0,0,0,0.1); }
-.error { color:red; font-size:0.9em; margin-top:4px; }
-.input-group { margin-bottom:15px; }
-input { width:100%; padding:10px; border:1px solid #ccc; border-radius:5px; }
-input.error-border { border-color:red; }
-button { width:100%; padding:10px; border:none; border-radius:5px; background:#28a745; color:#fff; font-size:16px; cursor:pointer; }
-button:hover { background:#1e7e34; }
-h2{text-align:center;color:#333;}
-p{text-align:center;}
-a{color:#1690e8;text-decoration:none;}
+.container { max-width: 500px; margin: auto; background: #fff; padding: 10px 40px; border-radius: 10px; box-shadow: 0 3px 6px rgba(0,0,0,0.1); }
+h2 { text-align: center; color: #333; margin-bottom: 20px; }
+.error { color: red; font-size: 0.9em; margin-top: 4px; }
+input { width: 95%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; margin-bottom: 10px; }
+input.error-border { border-color: red; }
+button { width: 100%; padding: 10px; border: none; border-radius: 5px; background: #28a745; color: #fff; font-size: 16px; cursor: pointer; }
+button:hover { background: #218838; }
+p { text-align: center; margin-top: 10px; }
+a { color: #1690e8; text-decoration: none; }
+.success { background: #d4edda; color: #155724; padding: 10px; border-radius: 5px; margin-bottom: 15px; }
 </style>
 </head>
 <body>
+    <div id="header"></div>
+  <?php include("header.php"); ?>
 <div class="container">
 <h2>Create Account</h2>
-<?php if (!empty($errors['general'])): ?>
-<p class="error"><?= htmlspecialchars($errors['general']) ?></p>
+
+<!-- Flash success -->
+<?php if ($msg = get_flash('success')): ?>
+    <div class="success"><?= htmlspecialchars($msg) ?></div>
 <?php endif; ?>
-<form method="POST" action="register.php">
-<input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
 
-<div class="input-group">
-<label>Name</label><br>
-<input type="text" name="name" value="<?= htmlspecialchars($name) ?>" class="<?= !empty($errors['name']) ? 'error-border' : '' ?>">
-<?php if (!empty($errors['name'])): ?><div class="error"><?= htmlspecialchars($errors['name']) ?></div><?php endif; ?>
-</div>
+<!-- General errors -->
+<?php if (!empty($errors['general'])): ?>
+    <p class="error"><?= htmlspecialchars($errors['general']) ?></p>
+<?php endif; ?>
 
-<div class="input-group">
-<label>Email</label><br>
-<input type="text" name="email" value="<?= htmlspecialchars($email) ?>" class="<?= !empty($errors['email']) ? 'error-border' : '' ?>">
-<?php if (!empty($errors['email'])): ?><div class="error"><?= htmlspecialchars($errors['email']) ?></div><?php endif; ?>
-</div>
+<form method="POST" action="/register">
+    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
 
-<div class="input-group">
-<label>Password</label><br>
-<input type="password" name="password" class="<?= !empty($errors['password']) ? 'error-border' : '' ?>">
-<?php if (!empty($errors['password'])): ?><div class="error"><?= htmlspecialchars($errors['password']) ?></div><?php endif; ?>
-</div>
+    <label>Name</label>
+    <input type="text" name="name" value="<?= htmlspecialchars($name) ?>" class="<?= !empty($errors['name']) ? 'error-border' : '' ?>">
+    <?php if (!empty($errors['name'])): ?><div class="error"><?= htmlspecialchars($errors['name']) ?></div><?php endif; ?>
 
-<button type="submit">Register</button>
+    <label>Email</label>
+    <input type="text" name="email" value="<?= htmlspecialchars($email) ?>" class="<?= !empty($errors['email']) ? 'error-border' : '' ?>">
+    <?php if (!empty($errors['email'])): ?><div class="error"><?= htmlspecialchars($errors['email']) ?></div><?php endif; ?>
+
+    <label>Password</label>
+    <input type="password" name="password" class="<?= !empty($errors['password']) ? 'error-border' : '' ?>">
+    <?php if (!empty($errors['password'])): ?><div class="error"><?= htmlspecialchars($errors['password']) ?></div><?php endif; ?>
+
+    <button type="submit">Register</button>
 </form>
-<p>Already have an account? <a href="login.php">Login here</a></p>
+
+<p>Already have an account? <a href="/login">Login here</a></p>
 </div>
+<div id="footer"></div>
+  <?php include("footer.php"); ?>
 </body>
 </html>
-
-
-
