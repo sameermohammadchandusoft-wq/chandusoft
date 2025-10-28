@@ -36,8 +36,8 @@
 [2025-10-23 11:33:44] [error] Upload failed - file too large by user 52
 [2025-10-23 12:26:11] [info] File uploaded successfully by root: img_68fa1ee339b387.31338855.jfif
 [2025-10-23 12:27:34] [info] File uploaded successfully by root: img_68fa1f3660cdc9.71530793.jpg
-[2025-10-23 12:29:59] [info] File uploaded successfully by root: img_68fa1fc6de18f1.51691259.jpg
-[2025-10-23 13:27:34] [error] Upload failed - directory not writable: C:\laragon\www\chandusoft\admin/../uploads/2025/10/
+[2025-10-23 12:29:59] [info] File uploaded successfully by root: img_68fa1fc6de18f1.51691259.jpg Upload failed - directory not writable: C:\laragon\www\chandusoft\admin/../uploads/2025/10/
+[2025-10-23 13:27:34] [error]
 [2025-10-23 13:40:03] [info] File uploaded successfully by root: img_68fa3033abc990.84330085.png
 [2025-10-23 14:17:39] [error] Server captcha secret not configured.
 [2025-10-24 04:26:50] [error] Upload failed - file too large by user 52
@@ -48,14 +48,3 @@
 [2025-10-24 07:40:30] [info] Updated catalog item 33 by user 52
 [2025-10-24 07:45:22] [info] Updated catalog item 33 by user 52
 [2025-10-24 07:55:03] [info] Updated catalog item 33 by user 52
-[2025-10-24 11:26:01] [info] Updated catalog item 16 by user 52
-[2025-10-24 11:26:57] [info] File uploaded successfully by admin: img_68fb6281b49634.32014910.jpg
-[2025-10-24 11:26:57] [info] Updated catalog item 2 by user 52
-[2025-10-24 11:27:09] [info] Updated catalog item 2 by user 52
-[2025-10-24 11:27:23] [info] File uploaded successfully by admin: img_68fb629ba6df36.49401913.jpg
-[2025-10-24 11:27:23] [info] Updated catalog item 20 by user 52
-[2025-10-24 11:27:26] [info] Updated catalog item 20 by user 52
-[2025-10-24 11:27:53] [error] Upload failed - file too large by user 52
-[2025-10-24 11:28:26] [info] File uploaded successfully by admin: img_68fb62dac3a4e0.31089596.jpg
-[2025-10-24 11:28:26] [info] Updated catalog item 4 by user 52
-[2025-10-24 11:28:32] [info] Updated catalog item 4 by user 52
