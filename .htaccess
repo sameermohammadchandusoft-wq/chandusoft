@@ -1,12 +1,41 @@
-# Enable URL rewriting
+# =========================
+# Chandusoft Clean URLs
+# =========================
+Options -Indexes
 RewriteEngine On
+RewriteBase /
 
-# Set the base directory (important for local testing)
-RewriteBase /chandusoft/
+# 1️⃣ Serve real files and folders directly
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
 
-# If the request is for an existing file or directory, allow it
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
+# 2️⃣ Clean URLs for static PHP pages
+# (about, contact, register, login, logout)
+RewriteRule ^about$ about.php [L]
+RewriteRule ^contact$ contact.php [L]
+RewriteRule ^services$ services.php [L]
+RewriteRule ^catalog$ catalog.php [L]
+RewriteRule ^catalog-item$ catalog-item.php [L]
+RewriteRule ^catalog-load$ catalog-load.php [L]
+RewriteRule ^register$ register.php [L]
+RewriteRule ^login$ login.php [L]
+RewriteRule ^logout$ logout.php [L]
 
-# Remove .php extension
-RewriteRule ^(.*)$ $1.php [L,QSA]
+# 3️⃣ Clean URLs for ADMIN pages
+RewriteRule ^app/dashboard$ app/dashboard.php [L]
+RewriteRule ^admin/pages$ admin/pages.php [L]
+RewriteRule ^admin/leads$ admin/leads.php [L]
+RewriteRule ^admin/catalog-list$ admin/catalog-list.php [L]
+RewriteRule ^admin/create$ admin/create.php [L]
+RewriteRule ^admin/edit$ admin/edit.php [L]
+RewriteRule ^admin/archive$ admin/archive.php [L]
+RewriteRule ^admin/delete$ admin/delete.php [L]
+RewriteRule ^admin/catalog-list$ admin/catalog-list.php [L]
+RewriteRule ^admin/catalog-edit$ admin/catalog-edit.php [L]
+RewriteRule ^admin/catalog-create$ admin/catalog-create.php [L]
+RewriteRule ^admin/settings$ admin/settings.php [L]
+
+
+# 3️⃣ Everything else → index.php (for dynamic pages)
+RewriteRule ^ index.php [QSA,L]
