@@ -1,8 +1,8 @@
 <?php
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-require __DIR__ .'/vendor/autoload.php'; // Ensure correct path to autoload
- 
+require __DIR__ . '/vendor/autoload.php'; // Ensure correct path to autoload
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // --- DB CONNECTION ---
     $conn = new mysqli("127.0.0.1", "root", "", "chandusoft");
@@ -10,84 +10,80 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         echo "error";
         exit;
     }
- 
+
     // --- SANITIZE INPUT ---
     $name = trim($conn->real_escape_string($_POST['name'] ?? ''));
     $email = trim($conn->real_escape_string($_POST['email'] ?? ''));
     $message = trim($conn->real_escape_string($_POST['message'] ?? ''));
- 
+
     // --- VALIDATE INPUT ---
     if (empty($name) || empty($email) || empty($message) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
         echo "Invalid input.";
         exit;
     }
-// --- INSERT INTO DB ---
-$sql = "INSERT INTO leads (name, email, message) VALUES ('$name', '$email', '$message')";
-if ($conn->query($sql) === TRUE) {
 
-    // --- SEND EMAIL ---
-    $mail = new PHPMailer(true);
-    try {
-        // SMTP config
-        $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com';
-        $mail->SMTPAuth = true;
-        $mail->Username = 'sameer.mohammad.chandusoft@gmail.com'; // your Gmail
-        $mail->Password = 'lomb nugc ispb owij'; // Gmail App password
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port = 587;
+    // --- INSERT INTO DB ---
+    $sql = "INSERT INTO leads (name, email, message) VALUES ('$name', '$email', '$message')";
+    if ($conn->query($sql) === TRUE) {
 
-        // Email headers
-        $mail->setFrom('sameer.mohammad.chandusoft@gmail.com', 'Chandusoft Contact Form');
-        $mail->addAddress('sameer.mohammad.chandusoft@gmail.com', 'Sameer');
-        $mail->addReplyTo($email, $name);
+        // --- SEND EMAIL VIA MAILPIT ---
+        $mail = new PHPMailer(true);
+        try {
+            // MAILPIT SMTP CONFIG
+            $mail->isSMTP();
+            $mail->Host = '127.0.0.1'; // Mailpit runs locally
+            $mail->Port = 1025;        // Default Mailpit SMTP port
+            $mail->SMTPAuth = false;   // No auth needed for Mailpit
+            $mail->SMTPSecure = false; // No TLS/SSL for local use
 
-        // Email content
-        $mail->isHTML(true);
-        $mail->CharSet = 'UTF-8'; // Ensure body handles emojis
+            // Email headers
+            $mail->setFrom('noreply@chandusoft.local', 'Chandusoft Contact Form');
+            $mail->addAddress('test@chandusoft.local', 'Mailpit Inbox');
+            $mail->addReplyTo($email, $name);
 
-        // Encode subject with UTF-8 + Base64 for emojis
-        $subject = "🚀 New Lead Submission";
-        $mail->Subject = "=?UTF-8?B?" . base64_encode($subject) . "?=";
+            // Email content
+            $mail->isHTML(true);
+            $mail->CharSet = 'UTF-8';
+            $subject = "🚀 New Lead Submission";
+            $mail->Subject = "=?UTF-8?B?" . base64_encode($subject) . "?=";
 
-        // Encode body safely
-        $safeName = htmlspecialchars($name, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
-        $safeEmail = htmlspecialchars($email, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
-        $safeMessage = nl2br(htmlspecialchars($message, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'));
+            $safeName = htmlspecialchars($name, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+            $safeEmail = htmlspecialchars($email, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+            $safeMessage = nl2br(htmlspecialchars($message, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'));
 
-        $mail->Body = "
-        <h3>New Lead Submission</h3>
-        <p><strong>Name:</strong> {$safeName}</p>
-        <p><strong>Email:</strong> {$safeEmail}</p>
-        <p><strong>Message:</strong><br>{$safeMessage}</p>
-        ";
+            $mail->Body = "
+            <h3>New Lead Submission</h3>
+            <p><strong>Name:</strong> {$safeName}</p>
+            <p><strong>Email:</strong> {$safeEmail}</p>
+            <p><strong>Message:</strong><br>{$safeMessage}</p>
+            ";
 
-        $mail->send();
-        echo "success";
-        exit;
+            $mail->send();
+            echo "success";
+            exit;
 
-    } catch (Exception $e) {
-        // --- LOG FAILURE ---
-        $logDir = __DIR__ . '/../storage/logs';
-        if (!is_dir($logDir)) {
-            mkdir($logDir, 0777, true);
+        } catch (Exception $e) {
+            // --- LOG FAILURE ---
+            $logDir = __DIR__ . '/../storage/logs';
+            if (!is_dir($logDir)) {
+                mkdir($logDir, 0777, true);
+            }
+
+            $logFile = $logDir . '/app.log';
+            $timestamp = date('Y-m-d H:i:s');
+            $errorMessage = "[$timestamp] Mail send failed for {$email} ({$name}). Error: {$mail->ErrorInfo}\nMessage: {$message}\n\n";
+            file_put_contents($logFile, $errorMessage, FILE_APPEND);
+
+            echo "Mailer Error";
+            exit;
         }
-
-        $logFile = $logDir . '/app.log';
-        $timestamp = date('Y-m-d H:i:s');
-        $errorMessage = "[$timestamp] Mail send failed for {$email} ({$name}). Error: {$mail->ErrorInfo}\nMessage: {$message}\n\n";
-        file_put_contents($logFile, $errorMessage, FILE_APPEND);
-
-        echo "Mailer Error";
+    } else {
+        echo "Database insert error.";
         exit;
     }
-} else {
-    echo "Database insert error.";
-    exit;
-}
-
 }
 ?>
+
 
 
 <!DOCTYPE html>

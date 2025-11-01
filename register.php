@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             log_info("User {$name} ({$email}) created successfully");
 
             set_flash('success', '🎉 Registration successful! Please log in.');
-            redirect('/login');
+            redirect('/login.php');
             exit;
 
         } catch (PDOException $e) {
@@ -138,7 +138,7 @@ a { color: #1690e8; text-decoration: none; }
     <button type="submit">Register</button>
 </form>
 
-<p>Already have an account? <a href="/login">Login here</a></p>
+<p>Already have an account? <a href="/login.php">Login here</a></p>
 </div>
 <div id="footer"></div>
   <?php include("footer.php"); ?>

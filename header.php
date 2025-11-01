@@ -38,11 +38,11 @@ if ($currentSlug === '' || $currentSlug === 'index.php') {
 
  <nav>
     <!-- Static Pages -->
-    <a href="/index" class="btn <?= ($currentSlug === 'index') ? 'active' : '' ?>">Home</a>
-    <a href="/about" class="btn <?= ($currentSlug === 'about') ? 'active' : '' ?>">About</a>
-    <a href="/services" class="btn <?= ($currentSlug === 'services') ? 'active' : '' ?>">Services</a>
-    <a href="/catalog" class="btn <?= ($currentSlug === 'catalog') ? 'active' : '' ?>">Catalogs</a>
-
+    <a href="/index.php" class="btn <?= ($currentSlug === 'index') ? 'active' : '' ?>">Home</a>
+    <a href="/about.php" class="btn <?= ($currentSlug === 'about') ? 'active' : '' ?>">About</a>
+    <a href="/service.php " class="btn <?= ($currentSlug === 'services') ? 'active' : '' ?>">Services</a>
+    <a href="/catalog.php" class="btn <?= ($currentSlug === 'catalog') ? 'active' : '' ?>">Catalogs</a>
+    <a href="/contact.php" class="btn <?= ($currentSlug === 'contact') ? 'active' : '' ?>">Contact</a>
     <!-- Dynamic Pages -->
     <?php foreach ($navPages as $p): ?>
         <a href="/<?= htmlspecialchars($p['slug']) ?>"
@@ -52,7 +52,7 @@ if ($currentSlug === '' || $currentSlug === 'index.php') {
     <?php endforeach; ?>
 
     <!-- Contact + Auth -->
-    <a href="/contact" class="btn <?= ($currentSlug === 'contact') ? 'active' : '' ?>">Contact</a>
+    
 
     <span class="auth-links <?= ($currentSlug === 'login' || $currentSlug === 'register') ? 'active' : '' ?>">
         <a href="/login" class="btn">Login</a>

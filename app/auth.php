@@ -1,38 +1,73 @@
 <?php
 // app/auth.php
-
-// Start session safely
+ 
+// -----------------------------
+// Secure session start
+// -----------------------------
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-
+ 
+require_once __DIR__ . '/db.php'; // ensure $pdo available for DB queries
+ 
+// -----------------------------
+// Auto-login via remember_token
+// -----------------------------
+if (empty($_SESSION['user']) && !empty($_COOKIE['remember_token'])) {
+    $token = $_COOKIE['remember_token'];
+ 
+    try {
+        $stmt = $pdo->prepare("SELECT id, name, email, role, remember_expiry FROM users WHERE remember_token = ?");
+        $stmt->execute([$token]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+ 
+        if ($user && strtotime($user['remember_expiry']) > time()) {
+            // Token valid → restore session
+            login($user['id'], $user['name'], $user['role']);
+ 
+            // Extend expiry (30 more days)
+            $newExpiry = date('Y-m-d H:i:s', strtotime('+30 days'));
+            $stmt = $pdo->prepare("UPDATE users SET remember_expiry = ? WHERE id = ?");
+            $stmt->execute([$newExpiry, $user['id']]);
+ 
+            // Refresh cookie
+            setcookie('remember_token', $token, [
+                'expires' => time() + (86400 * 30),
+                'path' => '/',
+                'secure' => isset($_SERVER['HTTPS']),
+                'httponly' => true,
+                'samesite' => 'Lax'
+            ]);
+        } else {
+            // Invalid or expired token → clear it
+            setcookie('remember_token', '', time() - 3600, '/', '', false, true);
+        }
+    } catch (Exception $e) {
+        error_log("Remember-me auto-login failed: " . $e->getMessage());
+    }
+}
+ 
 /**
  * ------------------------------------------------------
  * login($id, $name, $role)
- * Stores user info in session and regenerates session ID.
  * ------------------------------------------------------
  */
 function login($id, $name, $role = 'user') {
     session_regenerate_id(true);
-
     $_SESSION['user'] = [
         'id'   => $id,
         'name' => htmlspecialchars($name, ENT_QUOTES, 'UTF-8'),
         'role' => $role
     ];
 }
-
+ 
 /**
  * ------------------------------------------------------
  * logout()
- * Clears session and destroys session data.
  * ------------------------------------------------------
  */
 function logout() {
-    // Clear session data
     $_SESSION = [];
-
-    // Destroy session cookie
     if (ini_get('session.use_cookies')) {
         $params = session_get_cookie_params();
         setcookie(session_name(), '', time() - 42000,
@@ -40,52 +75,44 @@ function logout() {
             $params['secure'], $params['httponly']
         );
     }
-
-    // Finally destroy session
+    // Clear remember_token
+    setcookie('remember_token', '', time() - 3600, '/', '', false, true);
     session_destroy();
 }
-
+ 
 /**
  * ------------------------------------------------------
  * current_user()
- * Returns the currently logged-in user or null.
  * ------------------------------------------------------
  */
 function current_user() {
     return $_SESSION['user'] ?? null;
 }
-
+ 
 /**
  * ------------------------------------------------------
  * is_auth()
- * Returns true if user is logged in.
  * ------------------------------------------------------
  */
 function is_auth() {
     return isset($_SESSION['user']);
 }
-
+ 
 /**
  * ------------------------------------------------------
  * require_auth()
- * Protects pages that need authentication.
  * ------------------------------------------------------
  */
 function require_auth() {
     if (!is_auth()) {
-        // Redirect to admin login form
-        header("Location: /login_form.php");
+        header("Location: /login");
         exit;
     }
 }
-
+ 
 /**
  * ------------------------------------------------------
  * can($roles)
- * Role-based permission check.
- * Example:
- *   can('admin')
- *   can(['admin', 'editor'])
  * ------------------------------------------------------
  */
 function can($roles) {
@@ -95,48 +122,42 @@ function can($roles) {
         ? in_array($user_role, $roles)
         : $user_role === $roles;
 }
-
+ 
 /**
  * ------------------------------------------------------
  * redirect($url)
- * Simple helper for redirection.
  * ------------------------------------------------------
  */
 function redirect($url) {
-    header("Location: $url"); // ✅ Correct header function
+    header("Location: $url");
     exit;
 }
-
-
+ 
 /**
- * Set a flash message
+ * Flash messages
  */
 function set_flash($key, $message) {
     $_SESSION['flash_messages'][$key] = $message;
 }
-
+ 
 function get_flash($key) {
     if (!isset($_SESSION['flash_messages'][$key])) return null;
     $msg = $_SESSION['flash_messages'][$key];
     unset($_SESSION['flash_messages'][$key]);
     return $msg;
 }
-
-// ✅ Log login attempts
-/* function log_login_attempt($email, $success)
-{
-    $status = $success ? 'SUCCESS' : 'FAILED';
-    log_error("Login {$status} for email: {$email}");
-}*/
-function log_login_attempt($email, $success)
-{
+ 
+/**
+ * Log login attempts
+ */
+function log_login_attempt($email, $success) {
     if (!$success) { // only log failures
         log_error("Login FAILED for email: {$email}");
     }
 }
-
+ 
 // ------------------------------------------------------
-// Logging Helpers (used by register.php, login, etc.)
+// Logging Helpers
 // ------------------------------------------------------
 if (!function_exists('log_info')) {
     function log_info($message) {
@@ -148,7 +169,7 @@ if (!function_exists('log_info')) {
         file_put_contents($file, $entry, FILE_APPEND);
     }
 }
-
+ 
 if (!function_exists('log_error')) {
     function log_error($message) {
         $file = __DIR__ . '/../storage/logs/app.log';

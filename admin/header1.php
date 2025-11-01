@@ -79,7 +79,9 @@ body {
             <a href="/admin/leads">Leads</a>
             <a href="/admin/pages">Pages</a>
              <a href="/admin/catalog-list">Catalog</a>
+             <a href="/admin/orders">Orders</a>
             <a href="/logout">Logout</a>
+            
            
         </div>
     </div>

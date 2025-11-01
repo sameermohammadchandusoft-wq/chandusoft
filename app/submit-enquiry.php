@@ -1,109 +1,93 @@
 <?php
-require __DIR__ . '/db.php';
-
-// ----------------------
-// CONFIG
-// ----------------------
-$TURNSTILE_SECRET = '0x4AAAAAAB7ii73wAJ7ecUp7fBr4RTvr5N8';
-
-// Enable PDO exceptions
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-// ----------------------
-// ONLY POST REQUESTS
-// ----------------------
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    http_response_code(405);
-    echo json_encode(['success' => false, 'error' => 'Method not allowed.']);
-    exit;
-}
-
-// ----------------------
-// GET POST DATA
-// ----------------------
-$product_id = $_POST['product_id'] ?? '';
-$name = trim($_POST['name'] ?? '');
-$email = trim($_POST['email'] ?? '');
-$message = trim($_POST['message'] ?? '');
-$token = $_POST['cf-turnstile-response'] ?? '';
-
+// ------------------------------------------------------------
+// Chandusoft - Submit Enquiry Endpoint
+// ------------------------------------------------------------
 header('Content-Type: application/json');
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
-// ----------------------
-// BASIC VALIDATIONS
-// ----------------------
-if (!$product_id || !$name || !$email || !$message) {
-    echo json_encode(['success' => false, 'error' => 'Please fill in all required fields.']);
-    exit;
-}
+require_once __DIR__ . '/db.php';
+require_once __DIR__ . '/logger.php';
+require_once __DIR__ . '/env.php'; // ✅ Load .env variables
 
-if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    echo json_encode(['success' => false, 'error' => 'Invalid email address.']);
-    exit;
-}
+setup_error_handling('development'); // Optional
 
-if (empty($token)) {
-    echo json_encode(['success' => false, 'error' => 'CAPTCHA response missing.']);
-    exit;
-}
-
-// ----------------------
-// VERIFY TURNSTILE
-// ----------------------
-$verifyUrl = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
-$data = http_build_query([
-    'secret' => $TURNSTILE_SECRET,
-    'response' => $token,
-    'remoteip' => $_SERVER['REMOTE_ADDR'],
-]);
-
-$options = [
-    'http' => [
-        'header' => "Content-type: application/x-www-form-urlencoded\r\n",
-        'method' => 'POST',
-        'content' => $data,
-        'timeout' => 10,
-    ],
-];
-
-$context = stream_context_create($options);
-$result = @file_get_contents($verifyUrl, false, $context);
-
-if ($result === false) {
-    echo json_encode(['success' => false, 'error' => 'Unable to verify CAPTCHA. Try again later.']);
-    exit;
-}
-
-$resp = json_decode($result, true);
-
-if (empty($resp['success']) || !$resp['success']) {
-    echo json_encode(['success' => false, 'error' => 'CAPTCHA verification failed.']);
-    exit;
-}
-
-// ----------------------
-// VALIDATE PRODUCT EXISTS
-// ----------------------
-$stmt = $pdo->prepare("SELECT id FROM catalog_items WHERE id = ?");
-$stmt->execute([$product_id]);
-
-if (!$stmt->fetch()) {
-    echo json_encode(['success' => false, 'error' => 'Invalid product selected.']);
-    exit;
-}
-
-// ----------------------
-// INSERT ENQUIRY
-// ----------------------
 try {
-    $stmt = $pdo->prepare("
-        INSERT INTO enquiries (product_id, name, email, message, created_at) 
-        VALUES (?, ?, ?, ?, NOW())
-    ");
-    $stmt->execute([$product_id, $name, $email, $message]);
+    // ------------------------------------------------------------
+    // 1️⃣ Verify Turnstile secret exists
+    // ------------------------------------------------------------
+    $secret = $_ENV['TURNSTILE_SECRET'] ?? getenv('TURNSTILE_SECRET');
+    if (empty($secret)) {
+        echo json_encode([
+            'success' => false,
+            'error' => 'Server captcha secret not configured.',
+            'debug_env_keys' => array_keys($_ENV)
+        ]);
+        exit;
+    }
 
-    echo json_encode(['success' => true]);
-} catch (PDOException $ex) {
-    // For debugging: return the exact PDO error
-    echo json_encode(['success' => false, 'error' => $ex->getMessage()]);
+    // ------------------------------------------------------------
+    // 2️⃣ Verify CAPTCHA token
+    // ------------------------------------------------------------
+    $token = $_POST['cf-turnstile-response'] ?? '';
+    if (empty($token)) {
+        echo json_encode(['success' => false, 'error' => 'Captcha missing.']);
+        exit;
+    }
+
+    $verifyUrl = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
+    $response = file_get_contents($verifyUrl, false, stream_context_create([
+        'http' => [
+            'method' => 'POST',
+            'header' => 'Content-type: application/x-www-form-urlencoded',
+            'content' => http_build_query([
+                'secret' => $secret,
+                'response' => $token,
+                'remoteip' => $_SERVER['REMOTE_ADDR'] ?? ''
+            ])
+        ]
+    ]));
+
+    $captchaResult = json_decode($response, true);
+
+    if (empty($captchaResult['success'])) {
+        log_error('Captcha failed: ' . json_encode($captchaResult));
+        echo json_encode(['success' => false, 'error' => 'Captcha verification failed.']);
+        exit;
+    }
+
+    // ------------------------------------------------------------
+    // 3️⃣ Validate and process enquiry
+    // ------------------------------------------------------------
+    $name = trim($_POST['name'] ?? '');
+    $email = trim($_POST['email'] ?? '');
+    $message = trim($_POST['message'] ?? '');
+    $product_id = (int)($_POST['product_id'] ?? 0);
+
+    if ($name === '' || $email === '' || $message === '') {
+        echo json_encode(['success' => false, 'error' => 'All fields are required.']);
+        exit;
+    }
+
+    // ------------------------------------------------------------
+    // 4️⃣ Insert into database
+    // ------------------------------------------------------------
+    $stmt = $pdo->prepare("INSERT INTO enquiries (product_id, name, email, message, created_at) VALUES (?, ?, ?, ?, NOW())");
+    $ok = $stmt->execute([$product_id, $name, $email, $message]);
+
+    if (!$ok) {
+        log_error('DB Insert Failed: ' . json_encode($stmt->errorInfo()));
+        echo json_encode(['success' => false, 'error' => 'Database insert failed.']);
+        exit;
+    }
+
+    // ------------------------------------------------------------
+    // 5️⃣ Success response
+    // ------------------------------------------------------------
+    log_info("New enquiry submitted for product_id=$product_id by $email");
+    echo json_encode(['success' => true, 'message' => '✅ Enquiry saved successfully.']);
+
+} catch (Exception $e) {
+    log_error('Submit enquiry error: ' . $e->getMessage());
+    echo json_encode(['success' => false, 'error' => 'Server error: ' . $e->getMessage()]);
 }

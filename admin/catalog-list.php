@@ -11,6 +11,7 @@ if ($user['role'] !== 'admin') {
     die("Access denied.");
 }
 
+
 $success = "";
 $error = "";
 
@@ -81,7 +82,7 @@ include __DIR__ . '/../admin/header1.php';
                 Archived (<?= $counts['archived'] ?>)
             </a>
         </div>
-        <a href="/catalog-create" class="btn-create">+ Create New Item</a>
+        <a href="/admin/catalog-create" class="btn-create">+ Create New Item</a>
     </div>
 
     <?php if (count($items) > 0): ?>
@@ -117,7 +118,7 @@ include __DIR__ . '/../admin/header1.php';
                         </td>
                         <td><?= htmlspecialchars(date('d M Y', strtotime($item['updated_at']))) ?></td>
                         <td class="actions">
-                            <a href="/catalog-edit?id=<?= $item['id'] ?>" class="btn edit">Edit</a>
+                            <a href="/admin/catalog-edit?id=<?= $item['id'] ?>" class="btn edit">Edit</a>
                             <a href="?action=archive&id=<?= $item['id'] ?>" class="btn archive"
                                onclick="return confirm('Are you sure you want to archive this item?');">Archive</a>
                         </td>

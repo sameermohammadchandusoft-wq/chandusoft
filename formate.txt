@@ -1,0 +1,34 @@
+C:\laragon\www\chandusoft\
+│
+├── index.php
+├── about.php
+├── contact.php
+├── services.php
+├── .htaccess
+├── catalog.php
+├── catalog-item.php
+├── login.php
+├── logout.php
+├── register.php
+├── .env
+├── app\
+│   ├── db.php
+│   ├── auth.php
+│   └── logger.php
+│   ├── helper.php
+│   ├── settings.php
+│   ├── dashboard.php
+│   ├── hash.php
+└── admin\
+    ├── catalog-archive.php
+    ├── pages.php
+    ├── create.php
+    ├── edit.php
+    ├── catalog-store.php
+    ├── catalog-list.php
+    ├── catalog-create.php
+    ├── catalog-edit.php
+    └── catalog-load.php
+    ├── delete.php
+    ├── leads.php
+    └── header1.php.php

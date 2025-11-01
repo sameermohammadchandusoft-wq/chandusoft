@@ -3,17 +3,26 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 session_start();
+
+// ----------------------------------------------------
+// ✅ Load Environment Variables
+// ----------------------------------------------------
+
+// ----------------------------------------------------
+// ✅ Auth & Database
+// ----------------------------------------------------
 require __DIR__ . '/../app/auth.php';
 require_auth();
 require __DIR__ . '/../app/db.php';
-
 
 $user = current_user(); // e.g. ['id'=>1, 'name'=>'root', 'role'=>'admin']
 
 // Dedicated catalog log file
 $logFile = __DIR__ . '/../storage/logs/catalog.log';
 
-// Utility: write to catalog.log without redefining global log_message()
+// ----------------------------------------------------
+// 🪵 Logging Helper
+// ----------------------------------------------------
 function catalog_log($level, $message, $logFile)
 {
     $timestamp = date('Y-m-d H:i:s');
@@ -22,7 +31,7 @@ function catalog_log($level, $message, $logFile)
 }
 
 // ----------------------------------------------------
-// Helper: Resize Image
+// 🖼️ Image Resize Helper
 // ----------------------------------------------------
 function resizeImage($imagePath, $ext, $maxWidth = 1600)
 {
@@ -48,7 +57,7 @@ function resizeImage($imagePath, $ext, $maxWidth = 1600)
     }
 
     $resized = imagecreatetruecolor($newWidth, $newHeight);
-    if ($ext === 'png' || $ext === 'gif') {
+    if (in_array($ext, ['png', 'gif'])) {
         imagecolortransparent($resized, imagecolorallocatealpha($resized, 0, 0, 0, 127));
         imagealphablending($resized, false);
         imagesavealpha($resized, true);
@@ -74,7 +83,7 @@ function resizeImage($imagePath, $ext, $maxWidth = 1600)
 }
 
 // ----------------------------------------------------
-// Helper: Generate WebP
+// 🗜️ Generate WebP Helper
 // ----------------------------------------------------
 function generateWebP($imagePath, $ext)
 {
@@ -101,21 +110,21 @@ function generateWebP($imagePath, $ext)
 }
 
 // ----------------------------------------------------
-// MAIN FORM HANDLER
+// 🧩 MAIN FORM HANDLER
 // ----------------------------------------------------
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $turnstile_secret = getenv('TURNSTILE_SECRET') ?: '';
+    // ✅ Load Turnstile secret from .env
+    $turnstile_secret = $_ENV['TURNSTILE_SECRET'] ?? getenv('TURNSTILE_SECRET') ?? '';
 
-    // ✅ Check secret only when submitting
     if (empty($turnstile_secret)) {
         $errorMsg = "Server captcha secret not configured.";
         catalog_log('error', $errorMsg, $logFile);
-        header("Location: catalog-create.php?error=" . urlencode($errorMsg));
+        header("Location: catalog-create?error=" . urlencode($errorMsg));
         exit;
     }
 
-    // --- CAPTCHA VERIFICATION --- //
+    // ✅ CAPTCHA Verification
     $turnstile_response = $_POST['cf-turnstile-response'] ?? '';
     if (!empty($turnstile_response)) {
         $verify = curl_init('https://challenges.cloudflare.com/turnstile/v0/siteverify');
@@ -132,7 +141,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         curl_close($verify);
         $json = json_decode($result, true);
 
-        if (!isset($json['success']) || $json['success'] !== true) {
+        if (empty($json['success'])) {
             $errorMsg = "Captcha verification failed.";
             catalog_log('error', $errorMsg, $logFile);
             header("Location: catalog-create?error=" . urlencode($errorMsg));
@@ -141,7 +150,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // ----------------------------------------------------
-    // FORM FIELDS
+    // 📦 FORM FIELDS
     // ----------------------------------------------------
     $title = trim($_POST['title'] ?? '');
     $slug = trim($_POST['slug'] ?? '');
@@ -158,6 +167,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $slug = strtolower(preg_replace('/[^a-z0-9]+/i', '-', $title));
     }
 
+    // Ensure slug is unique
     $stmt = $pdo->prepare("SELECT COUNT(*) FROM catalog_items WHERE slug = ?");
     $stmt->execute([$slug]);
     if ($stmt->fetchColumn() > 0) {
@@ -165,7 +175,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // ----------------------------------------------------
-    // IMAGE UPLOAD
+    // 🖼️ IMAGE UPLOAD
     // ----------------------------------------------------
     $image_path = '';
     if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
@@ -187,9 +197,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $month = date('m');
         $uploadDir = __DIR__ . "/../uploads/$year/$month/";
 
-        if (!is_dir($uploadDir)) {
-            mkdir($uploadDir, 0777, true);
-        }
+        if (!is_dir($uploadDir)) mkdir($uploadDir, 0777, true);
 
         if (!is_writable($uploadDir)) {
             $errorMsg = "Upload failed - directory not writable: $uploadDir";
@@ -216,10 +224,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // ----------------------------------------------------
-    // DATABASE INSERT
+    // 💾 DATABASE INSERT
     // ----------------------------------------------------
     try {
-        $stmt = $pdo->prepare("INSERT INTO catalog_items 
+        $stmt = $pdo->prepare("INSERT INTO catalog_items
             (title, slug, price, image_path, short_desc, status, created_at, updated_at)
             VALUES (?, ?, ?, ?, ?, ?, NOW(), NOW())");
         $stmt->execute([$title, $slug, $price, $image_path, $short_desc, $status]);
