@@ -5317,3 +5317,14 @@ Stack trace:
 [2025-11-01 10:15:19] [INFO] [chandusoft.test] [/login.php] User logged in: jaisaichin@gmail.com
 [2025-11-01 10:15:29] [INFO] [chandusoft.test] [/login.php] User logged in: siva@gmail.com
 [2025-11-01 10:37:55] [INFO] [chandusoft.test] [/login.php] User logged in: jaisaichin@gmail.com
+[2025-11-03 04:30:42] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-03 04:30:45] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-03 04:30:48] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[2025-11-03 04:30:49] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[2025-11-03 04:32:40] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[2025-11-03 04:32:53] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[2025-11-03 04:33:23] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-03 04:34:15] [INFO] [chandusoft.test] [/login.php] User logged in: jaisaichin@gmail.com
+[2025-11-03 04:35:10] [INFO] [chandusoft.test] [/login.php] Failed login attempt for non-existing email: Sameer.Mohammed@chandusoft.com
+[2025-11-03 04:35:17] [INFO] [chandusoft.test] [/login.php] User logged in: siva@gmail.com
+[2025-11-03 04:35:33] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
