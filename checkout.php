@@ -4,13 +4,13 @@ require_once __DIR__ . '/app/env.php';
 require_once __DIR__ . '/app/db.php';
 require_once __DIR__ . '/vendor/autoload.php';
 
-// Stripe key setup
+// Stripe setup
 $stripeSecret = getenv('STRIPE_SECRET_KEY');
 if ($stripeSecret) {
     \Stripe\Stripe::setApiKey($stripeSecret);
 }
 
-// PayPal
+// PayPal setup
 $paypalClientId = getenv('PAYPAL_CLIENT_ID');
 $paypalEnabled = !empty($paypalClientId);
 
@@ -68,14 +68,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'payment_method_types' => ['card'],
                     'line_items' => $lineItems,
                     'mode' => 'payment',
-                    'success_url' => $domain . '/checkout_success.php?order=' . urlencode($orderRef),
+                    'success_url' => $domain . '/checkout_success.php?order=' . urlencode($orderRef) . '&method=stripe',
                     'cancel_url'  => $domain . '/checkout_cancel.php?order=' . urlencode($orderRef),
+
                 ]);
 
                 $_SESSION['cart'] = [];
                 header("Location: " . $session->url);
                 exit;
+            } elseif ($gateway === 'paypal') {
+                // ✅ Direct redirect for PayPal handled via JS
+                // Just save order record and let PayPal script handle redirection
             }
+
         } catch (Exception $e) {
             $error = "Checkout failed: " . htmlspecialchars($e->getMessage());
         }
@@ -242,7 +247,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <button type="submit">Pay with Stripe — $<?= number_format($total, 2) ?></button>
     </form>
 
-    <!-- PayPal Button Container -->
     <div id="paypal-button-container" style="margin-top:20px; display:none;"></div>
   </div>
 
@@ -280,6 +284,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       onApprove: (data, actions) => {
         return actions.order.capture().then(details => {
           window.location.href = "checkout_success.php?order=<?= urlencode($orderRef) ?>&method=paypal&payer=" + encodeURIComponent(details.payer.email_address);
+
         });
       }
     }).render('#paypal-button-container');

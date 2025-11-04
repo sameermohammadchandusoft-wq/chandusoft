@@ -98,15 +98,18 @@ $pages = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <td><?= ucfirst($page['status']) ?></td>
                     <td><?= htmlspecialchars($page['updated_at']) ?></td>
                     <td class="actions">
-                        <a class="btn" href="edit?id=<?= $page['id'] ?>">Edit</a>
+                    <a class="btn" href="edit?id=<?= $page['id'] ?>">Edit</a>
 
-                        <?php if($user['role'] === 'admin'): ?>
-                            <?php if($page['status'] !== 'archived'): ?>
-                                <a class="btn2" href="archive?id=<?= $page['id'] ?>">Archive</a>
-                            <?php endif; ?>
-                            <a class="btn3 disabled" href="javascript:void(0)" onclick="return false;">Delete</a>
+                    <?php if ($user['role'] === 'admin'): ?>
+                        <?php if ($page['status'] === 'archived'): ?>
+                            <a class="btn2" href="unarchive?id=<?= $page['id'] ?>">Unarchive</a>
+                        <?php else: ?>
+                            <a class="btn2" href="archive?id=<?= $page['id'] ?>">Archive</a>
                         <?php endif; ?>
-                    </td>
+                        <a class="btn3 disabled" href="javascript:void(0)" onclick="return false;">Delete</a>
+                    <?php endif; ?>
+                </td>
+
                 </tr>
             <?php endforeach; ?>
         <?php else: ?>
