@@ -5385,3 +5385,211 @@ Stack trace:
 [2025-11-04 04:12:36] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
 [2025-11-04 04:26:14] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
 [2025-11-04 04:26:25] [INFO] [chandusoft.test] [/login.php] User logged in: jaisaichin@gmail.com
+[2025-11-04 04:44:01] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-04 04:44:02] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[2025-11-04 04:44:03] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[2025-11-04 04:44:13] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[2025-11-04 05:00:12] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-04 05:00:14] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[2025-11-04 05:00:15] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[2025-11-04 05:00:43] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-04 05:00:45] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[2025-11-04 05:00:46] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[2025-11-04 05:01:11] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-04 05:01:41] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[2025-11-04 05:01:41] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[2025-11-04 05:01:42] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[2025-11-04 05:02:33] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-04 05:02:51] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[2025-11-04 05:02:53] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[2025-11-04 05:03:08] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[2025-11-04 05:04:10] [INFO] [chandusoft.test] [/login.php] User logged in: jaisaichin@gmail.com
+[2025-11-04 05:05:09] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-04 05:17:16] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-04 05:17:18] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[2025-11-04 05:17:32] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[2025-11-04 05:36:37] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-04 05:36:44] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-04 05:36:45] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[2025-11-04 05:36:48] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[2025-11-04 05:39:14] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-04 05:40:07] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-04 05:40:09] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[2025-11-04 05:40:10] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[2025-11-04 05:40:13] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-04 05:40:15] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[2025-11-04 05:40:19] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[2025-11-04 05:47:00] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-04 05:47:10] [INFO] [chandusoft.test] [/login.php] User logged in: jaisaichin@gmail.com
+[2025-11-04 06:16:50] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-04 06:16:53] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[2025-11-04 06:16:54] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[04-Nov-2025 06:54:56 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 171
+[04-Nov-2025 06:54:56 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 171
+[04-Nov-2025 06:54:56 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 171
+[04-Nov-2025 07:10:47 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 265
+[04-Nov-2025 07:10:47 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 268
+[04-Nov-2025 07:10:47 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 265
+[04-Nov-2025 07:10:47 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 268
+[04-Nov-2025 07:10:47 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 265
+[04-Nov-2025 07:10:47 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 268
+[04-Nov-2025 07:24:32 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 189
+[04-Nov-2025 07:24:32 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 192
+[04-Nov-2025 07:24:32 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 189
+[04-Nov-2025 07:24:32 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 192
+[04-Nov-2025 07:24:32 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 189
+[04-Nov-2025 07:24:32 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 192
+[04-Nov-2025 07:25:02 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 265
+[04-Nov-2025 07:25:02 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 268
+[04-Nov-2025 07:25:02 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 265
+[04-Nov-2025 07:25:02 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 268
+[04-Nov-2025 07:25:02 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 265
+[04-Nov-2025 07:25:02 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 268
+[04-Nov-2025 07:32:59 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:32:59 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:32:59 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:32:59 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:32:59 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:32:59 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:32:59 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:32:59 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:32:59 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:32:59 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:32:59 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:32:59 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:33:00 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:33:00 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:33:00 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:33:00 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:33:00 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:33:00 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:33:00 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:33:00 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:33:00 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:33:00 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:33:00 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:33:00 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:33:00 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:33:00 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:33:00 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:33:00 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:33:00 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:33:00 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:33:00 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:33:00 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:33:00 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:33:00 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:33:00 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:33:00 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:33:01 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:33:01 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:33:01 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:33:01 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:33:01 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:33:01 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:33:01 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:33:01 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:33:01 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:33:01 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:33:01 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:33:01 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:33:01 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:33:01 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:33:01 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:33:01 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:33:01 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:33:01 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:33:01 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:33:01 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:33:01 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:33:01 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:33:01 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:33:01 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:33:01 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:33:01 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:33:01 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:33:01 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:33:01 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:33:01 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:33:02 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:33:02 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:33:02 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:33:02 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:33:02 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:33:02 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:33:02 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:33:02 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:33:02 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:33:02 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:33:02 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:33:02 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:33:02 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:33:02 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:33:02 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:33:02 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:33:02 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:33:02 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:33:02 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:33:02 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:33:02 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:33:02 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:33:02 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:33:02 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:33:02 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:33:02 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:33:02 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:33:02 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:33:02 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:33:02 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:33:02 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:33:02 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:33:02 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:33:02 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:33:02 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:33:02 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:51:35 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:51:35 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:51:35 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:51:35 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 07:51:35 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:51:35 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[2025-11-04 07:52:16] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-04 07:53:19] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[2025-11-04 07:53:21] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[04-Nov-2025 07:53:21 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 07:53:21 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[2025-11-04 08:00:26] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[2025-11-04 08:00:28] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[04-Nov-2025 08:00:28 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 08:00:28 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[2025-11-04 08:17:37] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-04 08:17:40] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[2025-11-04 08:17:42] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[04-Nov-2025 08:17:42 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 08:17:42 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[2025-11-04 09:05:04] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-04 09:05:09] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[2025-11-04 09:23:12] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[04-Nov-2025 09:23:13 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 09:23:13 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 09:25:58 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 09:25:58 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 09:25:59 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 09:25:59 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 09:25:59 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 09:25:59 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 09:25:59 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 09:25:59 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 09:26:00 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 09:26:00 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 09:26:00 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 09:26:00 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 09:26:00 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 09:26:00 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[04-Nov-2025 09:26:00 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 09:26:00 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[2025-11-04 10:50:30] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-04 10:50:32] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[2025-11-04 10:50:33] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[04-Nov-2025 10:50:33 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[04-Nov-2025 10:50:33 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281

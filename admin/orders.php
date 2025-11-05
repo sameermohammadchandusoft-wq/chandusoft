@@ -10,28 +10,86 @@ if ($user['role'] !== 'admin') {
     exit('Access denied. Admins only.');
 }
 
-// ---------------------------------------------
-// Search by order_ref or customer_email
-// ---------------------------------------------
-$search = trim($_GET['search'] ?? '');
+// Handle AJAX request
+if (isset($_GET['ajax'])) {
+    $search = trim($_GET['search'] ?? '');
+    $status = trim($_GET['status'] ?? '');
 
-$sql = "
-    SELECT id, order_ref, customer_name, customer_email, total, payment_status, gateway, created_at
-    FROM orders
-";
-$params = [];
+    $sql = "
+        SELECT id, order_ref, customer_name, customer_email, total, payment_status, gateway, created_at
+        FROM orders
+    ";
+    $where = [];
+    $params = [];
 
-if ($search !== '') {
-    $sql .= " WHERE order_ref LIKE ? OR customer_email LIKE ?";
-    $params = ["%$search%", "%$search%"];
+    if ($search !== '') {
+        $where[] = "(order_ref LIKE ? OR customer_email LIKE ?)";
+        $params[] = "%$search%";
+        $params[] = "%$search%";
+    }
+
+    if ($status !== '' && in_array($status, ['paid', 'pending', 'failed'])) {
+        $where[] = "LOWER(payment_status) = ?";
+        $params[] = $status;
+    }
+
+    if ($where) {
+        $sql .= " WHERE " . implode(" AND ", $where);
+    }
+
+    $sql .= " ORDER BY created_at DESC";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute($params);
+    $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    ob_start();
+    if (empty($orders)): ?>
+        <p class="no-orders">No orders found.</p>
+    <?php else: ?>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Order Ref</th>
+                <th>Customer</th>
+                <th>Email</th>
+                <th>Total (₹)</th>
+                <th>Payment</th>
+                <th>Gateway</th>
+                <th>Date</th>
+                <th>View</th>
+            </tr>
+            <?php foreach ($orders as $o): ?>
+            <tr>
+                <td><?= htmlspecialchars($o['id']) ?></td>
+                <td><?= htmlspecialchars($o['order_ref']) ?></td>
+                <td><?= htmlspecialchars($o['customer_name']) ?></td>
+                <td><?= htmlspecialchars($o['customer_email']) ?></td>
+                <td><?= number_format($o['total'], 2) ?></td>
+                <td><span class="status <?= strtolower($o['payment_status']) ?>"><?= htmlspecialchars($o['payment_status']) ?></span></td>
+                <td class="gateway"><?= htmlspecialchars($o['gateway']) ?></td>
+                <td><?= date('d M Y, h:i A', strtotime($o['created_at'])) ?></td>
+                <td><a href="order-view.php?id=<?= $o['id'] ?>" class="view-btn">View</a></td>
+            </tr>
+            <?php endforeach; ?>
+        </table>
+    <?php endif;
+    echo ob_get_clean();
+    exit;
 }
 
-$sql .= " ORDER BY created_at DESC";
-$stmt = $pdo->prepare($sql);
-$stmt->execute($params);
-$orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// Counts for badges
+$countStmt = $pdo->query("
+    SELECT LOWER(payment_status) AS status, COUNT(*) AS count
+    FROM orders
+    GROUP BY LOWER(payment_status)
+");
+$counts = ['paid' => 0, 'pending' => 0, 'failed' => 0];
+$totalCount = 0;
+foreach ($countStmt as $row) {
+    $counts[$row['status']] = (int)$row['count'];
+    $totalCount += $row['count'];
+}
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -55,15 +113,57 @@ body {
 }
 h1 {
     text-align: center;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
     color: #222;
 }
-form {
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+.filters {
+    flex: 1;
+    text-align: left;
+}
+.filters a {
+    display: inline-block;
+    padding: 8px 15px;
+    border-radius: 5px;
+    background: #f0f2f5;
+    color: #333;
+    text-decoration: none;
+    margin: 3px;
+    font-weight: 500;
+    position: relative;
+}
+.filters a.active {
+    background: #007bff;
+    color: #fff;
+}
+.filters a:hover {
+    background: #007bff;
+    color: white;
+}
+.badge {
+    background: #ccc;
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 2px 7px;
+    border-radius: 10px;
+    margin-left: 6px;
+}
+.badge.paid { background: #27ae60; }
+.badge.pending { background: #f39c12; }
+.badge.failed { background: #e74c3c; }
+.search {
+    flex: 1;
     text-align: center;
-    margin-bottom: 25px;
 }
 input[type="text"] {
-    width: 320px;
+    width: 300px;
     padding: 8px 12px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -121,15 +221,6 @@ tr:hover {
     margin-top: 25px;
     font-size: 16px;
 }
-.back-link {
-    display: inline-block;
-    margin-top: 20px;
-    text-decoration: none;
-    color: #333;
-}
-.back-link:hover {
-    text-decoration: underline;
-}
 .view-btn {
     background: #3498db;
     color: white;
@@ -140,51 +231,87 @@ tr:hover {
 .view-btn:hover {
     background: #2c80b4;
 }
+.back-link {
+    display: inline-block;
+    margin-top: 20px;
+    text-decoration: none;
+    color: #333;
+}
+.back-link:hover {
+    text-decoration: underline;
+}
 </style>
 </head>
 <body>
 <div class="container">
     <h1><i class="fa fa-box"></i> Admin Orders</h1>
 
-    <form method="get">
-        <input type="text" name="search" value="<?= htmlspecialchars($search) ?>" placeholder="Search by Email or Order Reference">
-        <button type="submit"><i class="fa fa-search"></i> Search</button>
-    </form>
+    <div class="top-bar">
+        <div class="filters">
+            <a href="#" data-status="" class="active">All 
+                <span class="badge"><?= $totalCount ?></span>
+            </a>
+            <a href="#" data-status="paid">Paid 
+                <span class="badge paid"><?= $counts['paid'] ?></span>
+            </a>
+            <a href="#" data-status="pending">Pending 
+                <span class="badge pending"><?= $counts['pending'] ?></span>
+            </a>
+            <a href="#" data-status="failed">Failed 
+                <span class="badge failed"><?= $counts['failed'] ?></span>
+            </a>
+        </div>
+        <div class="search">
+            <form id="searchForm">
+                <input type="text" name="search" placeholder="Search by Email or Order Reference">
+                <button type="submit"><i class="fa fa-search"></i> Search</button>
+            </form>
+        </div>
+    </div>
 
-    <?php if (empty($orders)): ?>
-        <p class="no-orders">No orders found.</p>
-    <?php else: ?>
-        <table>
-            <tr>
-                <th>ID</th>
-                <th>Order Ref</th>
-                <th>Customer</th>
-                <th>Email</th>
-                <th>Total (₹)</th>
-                <th>Payment</th>
-                <th>Gateway</th>
-                <th>Date</th>
-                <th>View</th>
-            </tr>
-            <?php foreach ($orders as $o): ?>
-            <tr>
-                <td><?= htmlspecialchars($o['id']) ?></td>
-                <td><?= htmlspecialchars($o['order_ref']) ?></td>
-                <td><?= htmlspecialchars($o['customer_name']) ?></td>
-                <td><?= htmlspecialchars($o['customer_email']) ?></td>
-                <td><?= number_format($o['total'], 2) ?></td>
-                <td><span class="status <?= strtolower($o['payment_status']) ?>"><?= htmlspecialchars($o['payment_status']) ?></span></td>
-                <td class="gateway"><?= htmlspecialchars($o['gateway']) ?></td>
-                <td><?= date('d M Y, h:i A', strtotime($o['created_at'])) ?></td>
-                <td><a href="order-view.php?id=<?= $o['id'] ?>" class="view-btn">View</a></td>
-            </tr>
-            <?php endforeach; ?>
-        </table>
-    <?php endif; ?>
+    <div id="orderTable">
+        <!-- Orders load here via AJAX -->
+    </div>
 
     <div style="text-align:center;">
         <a href="/app/dashboard.php" class="back-link"><i class="fa fa-arrow-left"></i> Back to Dashboard</a>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const orderTable = document.getElementById('orderTable');
+    const filters = document.querySelectorAll('.filters a');
+    const searchForm = document.getElementById('searchForm');
+    let currentStatus = '';
+    let currentSearch = '';
+
+    function loadOrders() {
+        const url = `?ajax=1&status=${encodeURIComponent(currentStatus)}&search=${encodeURIComponent(currentSearch)}`;
+        fetch(url)
+            .then(res => res.text())
+            .then(html => orderTable.innerHTML = html);
+    }
+
+    filters.forEach(link => {
+        link.addEventListener('click', e => {
+            e.preventDefault();
+            filters.forEach(l => l.classList.remove('active'));
+            link.classList.add('active');
+            currentStatus = link.dataset.status;
+            loadOrders();
+        });
+    });
+
+    searchForm.addEventListener('submit', e => {
+        e.preventDefault();
+        currentSearch = searchForm.search.value.trim();
+        loadOrders();
+    });
+
+    // Initial load
+    loadOrders();
+});
+</script>
 </body>
 </html>
