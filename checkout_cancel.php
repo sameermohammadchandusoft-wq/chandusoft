@@ -1,30 +1,38 @@
 <?php
+session_start();
 require_once __DIR__ . '/app/db.php';
 
-$orderRef = $_GET['order'] ?? '';
+// Get order reference from URL
+$orderRef = $_GET['order'] ?? null;
 
-if ($orderRef) {
-    // ❌ Update order status to failed
-    $stmt = $pdo->prepare("UPDATE orders SET payment_status = 'failed' WHERE order_ref = ?");
-    $stmt->execute([$orderRef]);
+if (!$orderRef) {
+    die("Invalid Request");
 }
+
+// Fetch order record
+$stmt = $pdo->prepare("SELECT * FROM orders WHERE order_ref = ? LIMIT 1");
+$stmt->execute([$orderRef]);
+$order = $stmt->fetch();
+
+if (!$order) {
+    die("Order not found.");
+}
+
+// If order is still pending, update to failed
+if ($order['payment_status'] === 'pending') {
+    $update = $pdo->prepare("UPDATE orders SET payment_status = 'failed' WHERE order_ref = ?");
+    $update->execute([$orderRef]);
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Payment Failed</title>
-  <style>
-    body {font-family: Poppins, sans-serif; text-align:center; padding:80px; background:#fff5f5;}
-    .box {background:#fff; display:inline-block; padding:40px 50px; border-radius:14px; box-shadow:0 8px 25px rgba(0,0,0,0.1);}
-    h1 {color:#e74c3c;}
-  </style>
+<title>Payment Cancelled</title>
 </head>
-<body>
-  <div class="box">
-    <h1>❌ Payment Failed</h1>
-    <p>Your order <strong><?= htmlspecialchars($orderRef) ?></strong> was not completed.</p>
-    <a href="checkout.php">Try Again</a>
-  </div>
+<body style="font-family: Arial; text-align:center; padding:50px;">
+    <h2>Payment Cancelled</h2>
+    <p>Your payment was cancelled. You can try again anytime.</p>
+    <a href="catalog.php">Return to Shop</a>
 </body>
 </html>

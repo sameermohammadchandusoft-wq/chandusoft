@@ -6,6 +6,12 @@
 RewriteEngine On
 RewriteBase /
 
+
+# ✅ IMPORTANT: Do NOT rewrite these endpoints
+RewriteRule ^stripe-webhook\.php$ - [L]
+RewriteRule ^checkout_success\.php$ - [L]
+RewriteRule ^checkout_cancel\.php$ - [L]
+
 # ------------------------------------------------------------
 # 🔒 1. SECURITY & ACCESS CONTROL
 # ------------------------------------------------------------
@@ -54,7 +60,7 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^admin/([a-zA-Z0-9_-]+)$ admin/$1.php [L,QSA]
 
-# ✅ Clean static pages (about, contact, service)
+# ✅ Clean static pages again (avoid conflict)
 RewriteRule ^(about|contact|register|login|logout|service)$ $1.php [L,QSA]
 
 # ✅ Generic fallback for other PHP pages
@@ -62,8 +68,7 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^([a-zA-Z0-9_-]+)$ $1.php [L,QSA]
 
-# ✅ Dynamic pages (from database)
-# If file doesn't exist → load via pages.php?slug={name}
+# ✅ Dynamic pages (CMS-style)
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^([a-zA-Z0-9_-]+)$ pages.php?slug=$1 [L,QSA]
@@ -114,8 +119,9 @@ AddType image/webp .webp
   Header always set X-Content-Type-Options "nosniff"
   Header always set X-Frame-Options "SAMEORIGIN"
   Header always set X-XSS-Protection "1; mode=block"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
 </IfModule>
-
 # ------------------------------------------------------------
 # 🧩 5. ERROR HANDLING
 # ------------------------------------------------------------

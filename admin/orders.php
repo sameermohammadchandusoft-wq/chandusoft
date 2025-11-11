@@ -10,35 +10,41 @@ if ($user['role'] !== 'admin') {
     exit('Access denied. Admins only.');
 }
 
-// Handle AJAX request
+// ✅ AJAX Orders with Pagination
 if (isset($_GET['ajax'])) {
     $search = trim($_GET['search'] ?? '');
     $status = trim($_GET['status'] ?? '');
+    $page   = max(1, (int)($_GET['page'] ?? 1));
+    $limit  = 20;
+    $offset = ($page - 1) * $limit;
 
-    $sql = "
-        SELECT id, order_ref, customer_name, customer_email, total, payment_status, gateway, created_at
-        FROM orders
-    ";
-    $where = [];
+    $sqlBase = "FROM orders WHERE 1";
     $params = [];
 
     if ($search !== '') {
-        $where[] = "(order_ref LIKE ? OR customer_email LIKE ?)";
+        $sqlBase .= " AND (order_ref LIKE ? OR customer_email LIKE ?)";
         $params[] = "%$search%";
         $params[] = "%$search%";
     }
 
-    if ($status !== '' && in_array($status, ['paid', 'pending', 'failed'])) {
-        $where[] = "LOWER(payment_status) = ?";
+    if ($status !== '' && in_array($status, ['paid', 'pending', 'failed', 'awaiting_upi', 'cod_confirmed'])) {
+        $sqlBase .= " AND LOWER(payment_status) = ?";
         $params[] = $status;
     }
 
-    if ($where) {
-        $sql .= " WHERE " . implode(" AND ", $where);
-    }
+    // Total rows
+    $countStmt = $pdo->prepare("SELECT COUNT(*) $sqlBase");
+    $countStmt->execute($params);
+    $totalRows = $countStmt->fetchColumn();
+    $totalPages = max(1, ceil($totalRows / $limit));
 
-    $sql .= " ORDER BY created_at DESC";
-    $stmt = $pdo->prepare($sql);
+    // Fetch paginated orders
+    $stmt = $pdo->prepare("
+        SELECT id, order_ref, customer_name, customer_email, total, payment_status, gateway, created_at
+        $sqlBase
+        ORDER BY created_at DESC
+        LIMIT $limit OFFSET $offset
+    ");
     $stmt->execute($params);
     $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -60,33 +66,55 @@ if (isset($_GET['ajax'])) {
             </tr>
             <?php foreach ($orders as $o): ?>
             <tr>
-                <td><?= htmlspecialchars($o['id']) ?></td>
-                <td><?= htmlspecialchars($o['order_ref']) ?></td>
-                <td><?= htmlspecialchars($o['customer_name']) ?></td>
-                <td><?= htmlspecialchars($o['customer_email']) ?></td>
+                <td><?= $o['id'] ?></td>
+                <td><?= $o['order_ref'] ?></td>
+                <td><?= $o['customer_name'] ?></td>
+                <td><?= $o['customer_email'] ?></td>
                 <td><?= number_format($o['total'], 2) ?></td>
-                <td><span class="status <?= strtolower($o['payment_status']) ?>"><?= htmlspecialchars($o['payment_status']) ?></span></td>
-                <td class="gateway"><?= htmlspecialchars($o['gateway']) ?></td>
+                <td><span class="status <?= strtolower($o['payment_status']) ?>"><?= $o['payment_status'] ?></span></td>
+                <td class="gateway"><?= $o['gateway'] ?></td>
                 <td><?= date('d M Y, h:i A', strtotime($o['created_at'])) ?></td>
                 <td><a href="order-view.php?id=<?= $o['id'] ?>" class="view-btn">View</a></td>
             </tr>
             <?php endforeach; ?>
         </table>
+
+        <!-- ✅ Pagination -->
+        <div class="pagination" style="text-align:center;margin-top:18px;">
+            <?php if ($page > 1): ?>
+                <a href="#" class="page-btn" data-page="<?= $page-1 ?>" style="padding:6px 12px;margin:2px;border:1px solid #ccc;border-radius:4px;">« Prev</a>
+            <?php endif; ?>
+
+            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                <a href="#" class="page-btn" data-page="<?= $i ?>" style="padding:6px 10px;margin:2px;border:1px solid #ccc;border-radius:4px;<?= $i == $page ? 'background:#007bff;color:#fff;' : '' ?>">
+                    <?= $i ?>
+                </a>
+            <?php endfor; ?>
+
+            <?php if ($page < $totalPages): ?>
+                <a href="#" class="page-btn" data-page="<?= $page+1 ?>" style="padding:6px 12px;margin:2px;border:1px solid #ccc;border-radius:4px;">Next »</a>
+            <?php endif; ?>
+        </div>
+
     <?php endif;
     echo ob_get_clean();
     exit;
 }
 
-// Counts for badges
+// ✅ Counts for Dashboard Filters
 $countStmt = $pdo->query("
     SELECT LOWER(payment_status) AS status, COUNT(*) AS count
     FROM orders
     GROUP BY LOWER(payment_status)
 ");
-$counts = ['paid' => 0, 'pending' => 0, 'failed' => 0];
+
+$statuses = ['paid', 'pending', 'failed', 'awaiting_upi', 'cod_confirmed'];
+$counts = array_fill_keys($statuses, 0);
 $totalCount = 0;
+
 foreach ($countStmt as $row) {
-    $counts[$row['status']] = (int)$row['count'];
+    $s = $row['status'];
+    if (isset($counts[$s])) $counts[$s] = $row['count'];
     $totalCount += $row['count'];
 }
 ?>
@@ -96,7 +124,9 @@ foreach ($countStmt as $row) {
 <meta charset="UTF-8">
 <title>Admin Orders - Chandusoft</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 <style>
+
 body {
     font-family: 'Segoe UI', Arial, sans-serif;
     background: #f4f6f8;
@@ -158,6 +188,8 @@ h1 {
 .badge.paid { background: #27ae60; }
 .badge.pending { background: #f39c12; }
 .badge.failed { background: #e74c3c; }
+.badge.awaiting_upi { background: #9b59b6; }
+.badge.cod_confirmed { background: #16a085; }
 .search {
     flex: 1;
     text-align: center;
@@ -210,6 +242,8 @@ tr:hover {
 .pending { background: #f39c12; }
 .paid { background: #27ae60; }
 .failed { background: #e74c3c; }
+.awaiting_upi { background: #9b59b6; }
+.cod_confirmed { background: #16a085; }
 .gateway {
     text-transform: uppercase;
     font-weight: 600;
@@ -240,7 +274,9 @@ tr:hover {
 .back-link:hover {
     text-decoration: underline;
 }
+ 
 </style>
+
 </head>
 <body>
 <div class="container">
@@ -251,27 +287,21 @@ tr:hover {
             <a href="#" data-status="" class="active">All 
                 <span class="badge"><?= $totalCount ?></span>
             </a>
-            <a href="#" data-status="paid">Paid 
-                <span class="badge paid"><?= $counts['paid'] ?></span>
-            </a>
-            <a href="#" data-status="pending">Pending 
-                <span class="badge pending"><?= $counts['pending'] ?></span>
-            </a>
-            <a href="#" data-status="failed">Failed 
-                <span class="badge failed"><?= $counts['failed'] ?></span>
-            </a>
+            <a href="#" data-status="paid">Paid <span class="badge paid"><?= $counts['paid'] ?></span></a>
+            <a href="#" data-status="pending">Pending <span class="badge pending"><?= $counts['pending'] ?></span></a>
+            <a href="#" data-status="failed">Failed <span class="badge failed"><?= $counts['failed'] ?></span></a>
+            <a href="#" data-status="awaiting_upi">Awaiting UPI <span class="badge awaiting_upi"><?= $counts['awaiting_upi'] ?></span></a>
+            <a href="#" data-status="cod_confirmed">COD Confirmed <span class="badge cod_confirmed"><?= $counts['cod_confirmed'] ?></span></a>
         </div>
         <div class="search">
             <form id="searchForm">
-                <input type="text" name="search" placeholder="Search by Email or Order Reference">
+                <input type="text" name="search" placeholder="Search by Email or Order ID">
                 <button type="submit"><i class="fa fa-search"></i> Search</button>
             </form>
         </div>
     </div>
 
-    <div id="orderTable">
-        <!-- Orders load here via AJAX -->
-    </div>
+    <div id="orderTable"></div>
 
     <div style="text-align:center;">
         <a href="/app/dashboard.php" class="back-link"><i class="fa fa-arrow-left"></i> Back to Dashboard</a>
@@ -283,14 +313,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const orderTable = document.getElementById('orderTable');
     const filters = document.querySelectorAll('.filters a');
     const searchForm = document.getElementById('searchForm');
-    let currentStatus = '';
-    let currentSearch = '';
 
-    function loadOrders() {
-        const url = `?ajax=1&status=${encodeURIComponent(currentStatus)}&search=${encodeURIComponent(currentSearch)}`;
-        fetch(url)
-            .then(res => res.text())
-            .then(html => orderTable.innerHTML = html);
+    let currentStatus = "";
+    let currentSearch = "";
+
+    function loadOrders(page = 1) {
+        const url = `?ajax=1&page=${page}&status=${encodeURIComponent(currentStatus)}&search=${encodeURIComponent(currentSearch)}`;
+        fetch(url).then(res => res.text()).then(html => {
+            orderTable.innerHTML = html;
+            document.querySelectorAll('.page-btn').forEach(btn => {
+                btn.addEventListener('click', e => {
+                    e.preventDefault();
+                    loadOrders(btn.dataset.page);
+                });
+            });
+        });
     }
 
     filters.forEach(link => {
@@ -299,18 +336,17 @@ document.addEventListener('DOMContentLoaded', () => {
             filters.forEach(l => l.classList.remove('active'));
             link.classList.add('active');
             currentStatus = link.dataset.status;
-            loadOrders();
+            loadOrders(1);
         });
     });
 
     searchForm.addEventListener('submit', e => {
         e.preventDefault();
         currentSearch = searchForm.search.value.trim();
-        loadOrders();
+        loadOrders(1);
     });
 
-    // Initial load
-    loadOrders();
+    loadOrders(1);
 });
 </script>
 </body>

@@ -62,7 +62,7 @@ $status = ucfirst($order['payment_status']); // pending / successful / failed
       border-radius: 20px;
       font-weight: 500;
       color: #fff;
-      background: <?= ($order['payment_status'] === 'successful') ? '#28a745' : (($order['payment_status'] === 'failed') ? '#dc3545' : '#ffc107') ?>;
+      background: <?= ($order['payment_status'] === 'paid') ? '#28a745' : (($order['payment_status'] === 'failed') ? '#dc3545' : '#ffc107') ?>;
     }
     a.button {
       display: inline-block;
@@ -91,7 +91,7 @@ $status = ucfirst($order['payment_status']); // pending / successful / failed
 
     <?php if ($order['payment_status'] === 'pending'): ?>
       <p>Your payment is being processed. Please check back later.</p>
-    <?php elseif ($order['payment_status'] === 'successful'): ?>
+    <?php elseif ($order['payment_status'] === 'paid'): ?>
       <p>Thank you! Your payment was successful.</p>
     <?php else: ?>
       <p>Unfortunately, your payment failed or was canceled.</p>

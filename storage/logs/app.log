@@ -5593,3 +5593,346 @@ Stack trace:
 [2025-11-04 10:50:33] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
 [04-Nov-2025 10:50:33 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
 [04-Nov-2025 10:50:33 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[2025-11-05 04:57:03] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-05 04:57:28] [INFO] [chandusoft.test] [/login.php] Invalid password attempt for jaisaichin@gmail.com
+[2025-11-05 04:57:34] [INFO] [chandusoft.test] [/login.php] User logged in: jaisaichin@gmail.com
+[2025-11-05 04:57:50] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-05 04:57:52] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-05 04:57:55] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[2025-11-05 04:57:56] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[05-Nov-2025 04:57:56 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[05-Nov-2025 04:57:56 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[2025-11-05 06:42:41] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-05 06:43:20] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-05 06:43:22] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[2025-11-05 06:45:26] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[2025-11-05 06:45:27] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[05-Nov-2025 06:45:27 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[05-Nov-2025 06:45:27 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[2025-11-05 06:47:18] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-05 06:47:20] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[2025-11-05 06:47:21] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[05-Nov-2025 06:47:21 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[05-Nov-2025 06:47:21 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[2025-11-05 07:15:41] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-05 07:15:42] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[2025-11-05 07:15:43] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[05-Nov-2025 07:15:43 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[05-Nov-2025 07:15:43 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[2025-11-05 07:17:16] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-05 07:17:18] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[2025-11-05 07:17:19] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[05-Nov-2025 07:17:19 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[05-Nov-2025 07:17:19 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[2025-11-05 07:25:20] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-05 07:25:21] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[2025-11-05 07:25:22] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[05-Nov-2025 07:25:23 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[05-Nov-2025 07:25:23 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[2025-11-05 07:27:10] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-05 08:02:51] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[2025-11-05 08:02:52] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[05-Nov-2025 08:02:52 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[05-Nov-2025 08:02:52 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[2025-11-05 09:16:34] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-05 09:17:09] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[2025-11-05 09:17:12] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[05-Nov-2025 09:17:12 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[05-Nov-2025 09:17:12 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[2025-11-05 09:22:03] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-05 09:31:18] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[2025-11-05 09:31:19] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[05-Nov-2025 09:31:19 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[05-Nov-2025 09:31:19 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[2025-11-05 09:31:55] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-05 09:56:55] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[2025-11-05 09:56:57] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[05-Nov-2025 09:56:57 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[05-Nov-2025 09:56:57 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[2025-11-05 10:01:44] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-05 10:01:46] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[2025-11-05 10:01:47] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[05-Nov-2025 10:01:47 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[05-Nov-2025 10:01:47 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[2025-11-05 10:05:32] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-05 10:05:34] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[2025-11-05 10:05:35] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[05-Nov-2025 10:05:35 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[05-Nov-2025 10:05:35 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[2025-11-05 10:06:12] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-05 10:12:03] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[2025-11-05 10:12:05] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[05-Nov-2025 10:12:05 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[05-Nov-2025 10:12:05 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[2025-11-05 10:36:15] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-05 10:36:16] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[2025-11-05 10:36:17] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[05-Nov-2025 10:36:17 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[05-Nov-2025 10:36:17 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[2025-11-05 10:42:33] [INFO] [elliana-saturated-accustomably.ngrok-free.dev] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-05 10:42:47] [INFO] [elliana-saturated-accustomably.ngrok-free.dev] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-05 10:42:48] [INFO] [elliana-saturated-accustomably.ngrok-free.dev] [/catalog-item.php] Catalog item viewed
+[2025-11-05 10:42:50] [INFO] [elliana-saturated-accustomably.ngrok-free.dev] [/catalog-item.php] Catalog item viewed
+[05-Nov-2025 10:42:50 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[05-Nov-2025 10:42:50 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[2025-11-05 11:26:21] [INFO] [elliana-saturated-accustomably.ngrok-free.dev] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-05 11:35:51] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-05 11:35:54] [INFO] [localhost] [/catalog-item.php] Catalog item viewed
+[2025-11-05 11:35:56] [INFO] [localhost] [/catalog-item.php] Catalog item viewed
+[2025-11-05 11:36:00] [INFO] [localhost] [/catalog-item.php] Catalog item viewed
+[2025-11-05 11:36:03] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-05 11:36:04] [INFO] [localhost] [/catalog-item.php] Catalog item viewed
+[2025-11-05 11:36:06] [INFO] [localhost] [/catalog-item.php] Catalog item viewed
+[05-Nov-2025 11:36:06 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[05-Nov-2025 11:36:06 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[2025-11-05 11:50:26] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 03:39:44] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 03:40:10] [INFO] [localhost] [/catalog-item.php] Catalog item viewed
+[2025-11-06 03:40:14] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 03:40:31] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 03:40:48] [INFO] [localhost] [/login.php] User logged in: jaisaichin@gmail.com
+[2025-11-06 03:44:38] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 03:44:42] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 03:46:08] [INFO] [localhost] [/catalog-item.php] Catalog item viewed
+[2025-11-06 03:46:28] [INFO] [localhost] [/catalog-item.php] Catalog item viewed
+[06-Nov-2025 03:46:28 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 278
+[06-Nov-2025 03:46:28 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 281
+[2025-11-06 04:03:48] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 04:04:28] [INFO] [localhost] [/login.php] User logged in: jaisaichin@gmail.com
+[2025-11-06 04:04:54] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 04:12:24] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 04:12:30] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 04:12:32] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 04:13:06] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 04:13:08] [INFO] [localhost] [/catalog-item.php] Catalog item viewed
+[2025-11-06 04:13:11] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 04:13:22] [INFO] [localhost] [/register.php] Register form accessed
+[2025-11-06 04:13:24] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 04:13:52] [ERROR] [localhost] [/catalog.php] Uncaught Exception: Unsupported operand types: string * int in C:\laragon\www\chandusoft\catalog.php:66
+[2025-11-06 04:13:56] [ERROR] [localhost] [/catalog.php] Uncaught Exception: Unsupported operand types: string * int in C:\laragon\www\chandusoft\catalog.php:66
+[2025-11-06 04:14:09] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 04:18:06] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 04:18:09] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 2
+[2025-11-06 04:18:15] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 04:18:18] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 2
+[2025-11-06 04:18:26] [INFO] [localhost] [/catalog-item.php] Catalog item viewed
+[2025-11-06 04:18:30] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 04:19:04] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 04:19:08] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 2
+[2025-11-06 04:19:10] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 3
+[2025-11-06 04:19:12] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 2
+[2025-11-06 04:19:23] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 04:19:25] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 04:20:18] [INFO] [localhost] [/catalog-item.php] Catalog item viewed
+[2025-11-06 04:20:20] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 04:20:23] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 04:38:44] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 04:38:46] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 05:15:53] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 05:15:56] [INFO] [localhost] [/catalog-item.php] Catalog item viewed
+[2025-11-06 05:16:00] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 05:16:04] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 05:16:06] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 05:16:10] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 05:28:09] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 05:33:29] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 05:33:35] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 05:35:52] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 05:35:55] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 05:35:58] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 05:37:45] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 05:37:47] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 05:37:49] [INFO] [localhost] [/catalog-item.php] Catalog item viewed
+[2025-11-06 05:37:51] [INFO] [localhost] [/catalog-item.php] Catalog item viewed
+[06-Nov-2025 05:37:51 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 115
+[06-Nov-2025 05:37:51 UTC] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 116
+[06-Nov-2025 05:37:51 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 118
+[2025-11-06 05:38:03] [INFO] [localhost] [/catalog-item.php] Catalog item viewed
+[2025-11-06 05:38:09] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 05:39:52] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 05:39:54] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 05:44:48] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 05:44:52] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[06-Nov-2025 05:44:54 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 115
+[06-Nov-2025 05:44:54 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 118
+[2025-11-06 05:44:56] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 05:44:57] [INFO] [localhost] [/catalog-item.php] Catalog item viewed
+[2025-11-06 05:44:58] [INFO] [localhost] [/catalog-item.php] Catalog item viewed
+[06-Nov-2025 05:44:58 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 115
+[06-Nov-2025 05:44:58 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 118
+[2025-11-06 05:45:03] [INFO] [localhost] [/catalog-item.php] Catalog item viewed
+[2025-11-06 05:45:05] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[06-Nov-2025 05:45:08 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 115
+[06-Nov-2025 05:45:08 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 118
+[06-Nov-2025 05:45:08 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 115
+[06-Nov-2025 05:45:08 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 118
+[2025-11-06 05:47:53] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 05:47:56] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 2
+[06-Nov-2025 05:48:00 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 115
+[06-Nov-2025 05:48:00 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 118
+[06-Nov-2025 05:48:00 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 115
+[06-Nov-2025 05:48:00 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 118
+[06-Nov-2025 05:48:00 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 115
+[06-Nov-2025 05:48:00 UTC] PHP Deprecated:  urlencode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 118
+[2025-11-06 06:12:51] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 06:12:52] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[06-Nov-2025 06:12:54 UTC] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 116
+[06-Nov-2025 06:12:56 UTC] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\laragon\www\chandusoft\cart.php on line 116
+[2025-11-06 06:17:26] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 06:17:27] [INFO] [localhost] [/catalog-item.php] Catalog item viewed
+[2025-11-06 06:17:30] [INFO] [localhost] [/catalog-item.php] Catalog item viewed
+[2025-11-06 06:18:58] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 06:19:02] [INFO] [localhost] [/catalog-item.php] Catalog item viewed
+[2025-11-06 06:47:22] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 06:53:46] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 06:53:48] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 07:02:31] [ERROR] [localhost] [/stripe-webhook.php] ⚠️ Webhook received but no order_ref found.
+[2025-11-06 07:02:56] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 07:04:56] [ERROR] [localhost] [/stripe-webhook.php] ⚠️ Webhook received but no order_ref found.
+[2025-11-06 07:04:56] [ERROR] [localhost] [/stripe-webhook.php] ⚠️ Webhook received but no order_ref found.
+[2025-11-06 07:04:56] [INFO] [localhost] [/stripe-webhook.php] ✅ Order ORD-C364F497 marked as PAID via webhook
+[2025-11-06 07:06:39] [ERROR] [localhost] [/stripe-webhook.php] ⚠️ Webhook received but no order_ref found.
+[2025-11-06 07:06:39] [ERROR] [localhost] [/stripe-webhook.php] ⚠️ Webhook received but no order_ref found.
+[2025-11-06 07:08:21] [ERROR] [localhost] [/stripe-webhook.php] ⚠️ Webhook received but no order_ref found.
+[2025-11-06 07:12:43] [ERROR] [localhost] [/stripe-webhook.php] ⚠️ Webhook received but no order_ref found.
+[2025-11-06 07:14:37] [ERROR] [localhost] [/stripe-webhook.php] ⚠️ Webhook received but no order_ref found.
+[2025-11-06 07:14:40] [ERROR] [localhost] [/stripe-webhook.php] ⚠️ Webhook received but no order_ref found.
+[2025-11-06 07:17:53] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 07:18:54] [ERROR] [localhost] [/stripe-webhook.php] ⚠️ Webhook received but no order_ref found.
+[2025-11-06 07:18:54] [ERROR] [localhost] [/stripe-webhook.php] ⚠️ Webhook received but no order_ref found.
+[2025-11-06 07:18:55] [INFO] [localhost] [/stripe-webhook.php] ✅ Order ORD-62E68611 marked as PAID via webhook
+[2025-11-06 07:18:59] [ERROR] [localhost] [/stripe-webhook.php] ⚠️ Webhook received but no order_ref found.
+[2025-11-06 07:19:00] [ERROR] [localhost] [/stripe-webhook.php] ⚠️ Webhook received but no order_ref found.
+[2025-11-06 07:19:16] [ERROR] [localhost] [/stripe-webhook.php] ⚠️ Webhook received but no order_ref found.
+[2025-11-06 07:32:56] [ERROR] [localhost] [/stripe-webhook.php] ⚠️ Webhook received but no order_ref found.
+[2025-11-06 07:33:54] [ERROR] [localhost] [/stripe-webhook.php] ⚠️ Webhook received but no order_ref found.
+[2025-11-06 07:34:17] [ERROR] [localhost] [/stripe-webhook.php] ⚠️ Webhook received but no order_ref found.
+[2025-11-06 07:47:12] [ERROR] [localhost] [/stripe-webhook.php] ⚠️ Webhook received but no order_ref found.
+[2025-11-06 07:47:48] [ERROR] [localhost] [/stripe-webhook.php] ⚠️ Webhook received but no order_ref found.
+[2025-11-06 07:48:21] [ERROR] [localhost] [/stripe-webhook.php] ⚠️ Webhook received but no order_ref found.
+[2025-11-06 08:58:33] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 08:59:22] [ERROR] [localhost] [/stripe-webhook.php] ⚠️ Webhook received but no order_ref found.
+[2025-11-06 08:59:22] [INFO] [localhost] [/stripe-webhook.php] ✅ Order ORD-77C1E73F marked as PAID via webhook
+[2025-11-06 08:59:22] [ERROR] [localhost] [/stripe-webhook.php] ⚠️ Webhook received but no order_ref found.
+[2025-11-06 09:00:32] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 09:00:56] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 09:04:31] [INFO] [localhost] [/catalog-item.php] Catalog item viewed
+[2025-11-06 09:05:04] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 09:06:07] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 09:08:17] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 09:08:22] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 09:09:42] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 09:09:44] [INFO] [localhost] [/catalog-item.php] Catalog item viewed
+[2025-11-06 09:09:58] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 2
+[2025-11-06 09:10:01] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 3
+[2025-11-06 09:10:03] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 09:10:29] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 2
+[2025-11-06 09:10:37] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 3
+[2025-11-06 10:35:13] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 10:36:13] [ERROR] [localhost] [/stripe-webhook.php] ⚠️ Webhook received but no order_ref found.
+[2025-11-06 10:36:13] [INFO] [localhost] [/stripe-webhook.php] ✅ Order ORD-07C06C4C marked as PAID via webhook
+[2025-11-06 10:36:13] [ERROR] [localhost] [/stripe-webhook.php] ⚠️ Webhook received but no order_ref found.
+[2025-11-06 11:27:20] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-06 11:27:28] [INFO] [localhost] [/login.php] User logged in: jaisaichin@gmail.com
+[2025-11-07 03:50:09] [INFO] [elliana-saturated-accustomably.ngrok-free.dev] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-07 03:54:17] [INFO] [elliana-saturated-accustomably.ngrok-free.dev] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-07 03:56:47] [INFO] [elliana-saturated-accustomably.ngrok-free.dev] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-07 03:56:49] [INFO] [elliana-saturated-accustomably.ngrok-free.dev] [/catalog-item.php] Catalog item viewed
+[2025-11-07 03:56:51] [INFO] [elliana-saturated-accustomably.ngrok-free.dev] [/catalog-item.php] Catalog item viewed
+[2025-11-07 03:59:03] [INFO] [elliana-saturated-accustomably.ngrok-free.dev] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-07 03:59:40] [ERROR] [elliana-saturated-accustomably.ngrok-free.dev] [/stripe-webhook.php] ⚠️ Webhook received but no order_ref found.
+[2025-11-07 03:59:40] [ERROR] [elliana-saturated-accustomably.ngrok-free.dev] [/stripe-webhook.php] ⚠️ Webhook received but no order_ref found.
+[2025-11-07 03:59:40] [INFO] [elliana-saturated-accustomably.ngrok-free.dev] [/stripe-webhook.php] ✅ Order ORD-CCE58EA9 marked as PAID via webhook
+[2025-11-07 04:21:41] [INFO] [elliana-saturated-accustomably.ngrok-free.dev] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-07 04:23:53] [INFO] [elliana-saturated-accustomably.ngrok-free.dev] [/stripe-webhook.php] ✅ Order ORD-B1841731 marked as PAID via webhook
+[2025-11-07 04:23:53] [ERROR] [elliana-saturated-accustomably.ngrok-free.dev] [/stripe-webhook.php] ⚠️ Webhook received but no order_ref found.
+[2025-11-07 04:23:53] [ERROR] [elliana-saturated-accustomably.ngrok-free.dev] [/stripe-webhook.php] ⚠️ Webhook received but no order_ref found.
+[2025-11-07 04:27:18] [INFO] [elliana-saturated-accustomably.ngrok-free.dev] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-07 04:33:11] [INFO] [elliana-saturated-accustomably.ngrok-free.dev] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-07 04:33:18] [INFO] [elliana-saturated-accustomably.ngrok-free.dev] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-07 04:34:40] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-07 04:34:52] [INFO] [localhost] [/catalog.php] Catalog search | Query: 'Working Employees' | Page: 1
+[2025-11-07 04:34:52] [ERROR] [localhost] [/catalog.php] Catalog page error: SQLSTATE[HY093]: Invalid parameter number
+[2025-11-07 04:41:51] [INFO] [localhost] [/catalog-item.php] Catalog item viewed
+[2025-11-07 04:41:55] [INFO] [localhost] [/catalog-item.php] Catalog item viewed
+[2025-11-07 04:43:06] [INFO] [elliana-saturated-accustomably.ngrok-free.dev] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-07 04:43:24] [INFO] [elliana-saturated-accustomably.ngrok-free.dev] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-07 04:43:29] [INFO] [elliana-saturated-accustomably.ngrok-free.dev] [/catalog-item.php] Catalog item viewed
+[2025-11-07 04:43:43] [INFO] [elliana-saturated-accustomably.ngrok-free.dev] [/catalog-item.php] Catalog item viewed
+[2025-11-07 04:48:05] [INFO] [elliana-saturated-accustomably.ngrok-free.dev] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-07 04:48:42] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-07 05:38:32] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-07 05:38:47] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-07 05:38:59] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-07 05:57:28] [INFO] [elliana-saturated-accustomably.ngrok-free.dev] [/stripe-webhook.php] ✅ Order ORD-7C140F86 marked as PAID via webhook
+[2025-11-07 05:57:28] [ERROR] [elliana-saturated-accustomably.ngrok-free.dev] [/stripe-webhook.php] ⚠️ Webhook received but no order_ref found.
+[2025-11-07 05:57:28] [ERROR] [elliana-saturated-accustomably.ngrok-free.dev] [/stripe-webhook.php] ⚠️ Webhook received but no order_ref found.
+[2025-11-07 05:58:03] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-07 06:03:39] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-07 06:03:41] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-07 06:03:41] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-07 06:04:17] [ERROR] [elliana-saturated-accustomably.ngrok-free.dev] [/stripe-webhook.php] ⚠️ Webhook received but no order_ref found.
+[2025-11-07 06:04:17] [ERROR] [elliana-saturated-accustomably.ngrok-free.dev] [/stripe-webhook.php] ⚠️ Webhook received but no order_ref found.
+[2025-11-07 06:19:32] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-07 06:19:34] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-07 06:19:43] [INFO] [localhost] [/login.php] User logged in: jaisaichin@gmail.com
+[2025-11-07 09:04:48] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-07 09:05:00] [INFO] [localhost] [/login.php] User logged in: jaisaichin@gmail.com
+[2025-11-07 09:42:54] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-07 09:43:01] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 2
+[2025-11-07 09:43:04] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 3
+[2025-11-07 09:43:07] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-07 09:43:08] [INFO] [localhost] [/catalog-item.php] Catalog item viewed
+[2025-11-07 09:43:15] [INFO] [localhost] [/catalog-item.php] Catalog item viewed
+[2025-11-07 09:44:05] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-07 09:44:07] [INFO] [localhost] [/catalog-item.php] Catalog item viewed
+[2025-11-07 09:44:08] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-07 09:44:49] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-07 10:16:05] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-07 11:01:46] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-07 11:05:33] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-07 11:18:20] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-07 11:18:24] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-07 11:18:54] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-07 11:19:18] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-07 11:21:36] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-07 11:24:04] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-07 11:24:09] [INFO] [localhost] [/catalog-item.php] Catalog item viewed
+[2025-11-07 11:24:11] [INFO] [localhost] [/catalog-item.php] Catalog item viewed
+[2025-11-07 11:35:41] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-07 11:59:18] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-07 12:00:12] [INFO] [localhost] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-07 12:00:14] [INFO] [localhost] [/catalog-item.php] Catalog item viewed
+[2025-11-07 12:00:49] [INFO] [localhost] [/catalog-item.php] Catalog item viewed
+[2025-11-10 04:10:02] [INFO] [elliana-saturated-accustomably.ngrok-free.dev] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-10 04:10:07] [INFO] [elliana-saturated-accustomably.ngrok-free.dev] [/catalog.php] Catalog viewed | Page: 2
+[2025-11-10 04:10:10] [INFO] [elliana-saturated-accustomably.ngrok-free.dev] [/catalog.php] Catalog viewed | Page: 3
+[2025-11-10 04:10:36] [INFO] [elliana-saturated-accustomably.ngrok-free.dev] [/login.php] User logged in: jaisaichin@gmail.com
+[2025-11-10 06:05:23] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-10 06:08:23] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 2
+[2025-11-10 06:08:25] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 3
+[2025-11-10 06:08:31] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-10 06:41:55] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-10 06:42:59] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-10 09:28:52] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-10 10:01:11] [INFO] [elliana-saturated-accustomably.ngrok-free.dev] [/stripe-webhook.php] ✅ Order ORD-4BD152C8 marked as PAID via webhook
+[2025-11-10 10:01:11] [ERROR] [elliana-saturated-accustomably.ngrok-free.dev] [/stripe-webhook.php] ⚠️ Webhook received but no order_ref found.
+[2025-11-10 10:01:11] [ERROR] [elliana-saturated-accustomably.ngrok-free.dev] [/stripe-webhook.php] ⚠️ Webhook received but no order_ref found.
+[2025-11-10 10:02:08] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-10 10:12:15] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-10 10:33:13] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-10 10:38:27] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-10 10:54:33] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-10 10:55:15] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-10 10:55:33] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-10 10:57:26] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-10 10:57:27] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-10 10:57:35] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-10 10:58:22] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-10 10:58:22] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-10 10:58:23] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-10 10:58:26] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-10 11:08:50] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-10 11:32:50] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-10 11:32:54] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-10 11:40:08] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
