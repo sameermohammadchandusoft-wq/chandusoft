@@ -3,6 +3,8 @@
 // app/env.php — Safe & consistent .env loader
 // ------------------------------------------------------------
 
+
+
 if (!defined('APP_ROOT')) {
     define('APP_ROOT', dirname(__DIR__));
 }
@@ -49,5 +51,28 @@ foreach ($lines as $line) {
 function env(string $key, $default = null): ?string {
     $value = $_ENV[$key] ?? $_SERVER[$key] ?? getenv($key);
     return ($value !== false && $value !== null && $value !== '') ? $value : $default;
+}
+
+
+// ------------------------------------------------------------
+// Force HTTPS if FORCE_HTTPS=true
+// ------------------------------------------------------------
+if (env('FORCE_HTTPS', 'false') === 'true') {
+
+    $isHttps =
+        (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ||
+        (isset($_SERVER['SERVER_PORT']) && (int)$_SERVER['SERVER_PORT'] === 443) ||
+        (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') ||
+        (isset($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] === 'on');
+
+    if (!$isHttps) {
+        $host = $_SERVER['HTTP_HOST'] ?? '';
+        $uri  = $_SERVER['REQUEST_URI'] ?? '/';
+        $url  = 'https://' . $host . $uri;
+
+        // Permanent redirect
+        header('Location: ' . $url, true, 301);
+        exit;
+    }
 }
 

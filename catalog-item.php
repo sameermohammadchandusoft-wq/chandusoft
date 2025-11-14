@@ -132,9 +132,14 @@ $turnstileSiteKey = $_ENV['TURNSTILE_SITEKEY'] ?? getenv('TURNSTILE_SITEKEY') ??
     <div class="enquiry-form">
       <h2>Enquire about this product</h2>
 
-      <form id="enquiryForm" action="app/submit-enquiry.php" method="POST" style="max-width:400px;margin:auto;">
-        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
-        <input type="hidden" name="product_id" value="<?= htmlspecialchars($product['id']) ?>">
+     <form id="enquiryForm" action="app/submit-enquiry.php" method="POST" style="max-width:400px;margin:auto;">
+    
+    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
+    <input type="hidden" name="product_id" value="<?= htmlspecialchars($product['id']) ?>">
+
+    <!-- FIX -->
+    <input type="hidden" id="cf-response" name="cf-turnstile-response">
+
 
         <div class="form-group">
           <label>Your Name</label>
@@ -169,9 +174,12 @@ $turnstileSiteKey = $_ENV['TURNSTILE_SITEKEY'] ?? getenv('TURNSTILE_SITEKEY') ??
 <script>
 let turnstileResponse = null;
 
-function onTurnstileSuccess(token) {
-  turnstileResponse = token;
-}
+window.onTurnstileSuccess = function (token) {
+    turnstileResponse = token;
+    document.getElementById('cf-response').value = token; // Save token!
+};
+
+
 
 document.getElementById('enquiryForm').addEventListener('submit', async function(e) {
   e.preventDefault();

@@ -4,9 +4,18 @@
 // -----------------------------
 // Secure session start
 // -----------------------------
+
+// -----------------------------
+// Secure session start
+// -----------------------------
 if (session_status() === PHP_SESSION_NONE) {
-    session_start();
+    ini_set('session.cookie_secure', 1);       // HTTPS only
+    ini_set('session.cookie_httponly', 1);     // No JS access
+    ini_set('session.cookie_samesite', 'Lax'); // Prevent CSRF
+      session_start();
 }
+
+ 
  
 require_once __DIR__ . '/db.php'; // ensure $pdo available for DB queries
  
@@ -32,12 +41,13 @@ if (empty($_SESSION['user']) && !empty($_COOKIE['remember_token'])) {
  
             // Refresh cookie
             setcookie('remember_token', $token, [
-                'expires' => time() + (86400 * 30),
-                'path' => '/',
-                'secure' => isset($_SERVER['HTTPS']),
-                'httponly' => true,
-                'samesite' => 'Lax'
-            ]);
+            'expires' => time() + (86400 * 30),
+            'path' => '/',
+            'secure' => isset($_SERVER['HTTPS']),
+            'httponly' => true,
+            'samesite' => 'Lax'
+        ]);
+
         } else {
             // Invalid or expired token → clear it
             setcookie('remember_token', '', time() - 3600, '/', '', false, true);

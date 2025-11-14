@@ -44,7 +44,7 @@ UNLOCK TABLES;
 
 --
 -- Table structure for table `catalog_items`
---
+---
 
 DROP TABLE IF EXISTS `catalog_items`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;

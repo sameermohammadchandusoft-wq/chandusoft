@@ -1,15 +1,17 @@
 <?php
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
- 
+
 session_start();
+require __DIR__ . '/../app/env.php';   // <-- REQUIRED!!
 require __DIR__ . '/../app/auth.php';
 require_auth();
 require __DIR__ . '/../app/db.php';
- 
+
 $user = current_user();
-$turnstile_sitekey = getenv('TURNSTILE_SITEKEY') ?: ''; // Optional site key
+$turnstile_sitekey = env('TURNSTILE_SITEKEY', '');
 ?>
+
 <?php include __DIR__ . '/header1.php'; ?>
  
 <div class="dashboard-container">
@@ -45,9 +47,10 @@ $turnstile_sitekey = getenv('TURNSTILE_SITEKEY') ?: ''; // Optional site key
         </select>
  
         <!-- Show Turnstile widget only if sitekey is configured -->
-        <?php if (!empty($turnstile_sitekey)): ?>
-            <div class="cf-turnstile" data-sitekey="<?= htmlspecialchars($turnstile_sitekey) ?>"></div>
-        <?php endif; ?>
+      <?php if (!empty($turnstile_sitekey)): ?>
+    <div class="cf-turnstile" data-sitekey="<?= htmlspecialchars($turnstile_sitekey) ?>"></div>
+<?php endif; ?>
+
  
         <button type="submit">Create Item</button>
     </form>

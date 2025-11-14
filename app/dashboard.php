@@ -36,97 +36,165 @@ $leads = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <style>
 /* ======== DASHBOARD STYLES ======== */
+/* ===============================
+   MODERN PREMIUM DASHBOARD STYLE
+   =============================== */
+
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: #f4f6f8;
-  margin: 0;
-  padding: 0;
-  color: #333;
+    font-family: "Inter", "Segoe UI", Arial, sans-serif;
+    background: linear-gradient(135deg, #eef2f7, #dfe7f1);
+    margin: 0;
+    padding: 0;
+    color: #2c3e50;
 }
 
+/* Container */
 .dashboard-container {
-  max-width: 1000px;
-  margin: 60px auto;
-  padding: 30px;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    max-width: 1100px;
+    margin: 60px auto;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+    animation: fadeIn 0.6s ease-in-out;
 }
 
+/* Heading */
 .dashboard-container h1 {
-  font-size: 28px;
-  margin-bottom: 25px;
-  border-bottom: 3px solid #007bff;
-  display: inline-block;
-  padding-bottom: 6px;
+    font-size: 32px;
+    color: #1a3c6e;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 35px;
 }
 
+.dashboard-container h1::before {
+    content: "📊";
+    font-size: 34px;
+}
+
+/* STATS CARD SECTION */
 .stats {
-  background: #f9fafc;
-  padding: 15px 20px;
-  border-radius: 10px;
-  margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    gap: 25px;
+    margin-bottom: 35px;
+    flex-wrap: wrap;
 }
 
-.stats ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  gap: 30px;
+.stat-card {
+    flex: 1;
+    padding: 22px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #ffffff, #f6f9fc);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    text-align: center;
+    transition: 0.3s ease;
+    border: 1px solid #e8edf3;
+    min-width: 260px;
 }
 
-.stats li {
-  font-size: 16px;
-  background: #fff;
-  padding: 10px 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-  border-left: 4px solid #007bff;
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
 }
 
+.stat-title {
+    font-size: 15px;
+    color: #6c7c93;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.stat-number {
+    font-size: 30px;
+    font-weight: 800;
+    color: #0056d6;
+}
+
+/* LEADS TABLE TITLE */
+.dashboard-container h3 {
+    margin-top: 10px;
+    margin-bottom: 15px;
+    font-size: 22px;
+    color: #12345a;
+    font-weight: 700;
+    border-left: 5px solid #007bff;
+    padding-left: 10px;
+}
+
+/* TABLE STYLE */
 table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 15px;
-  background: #fff;
-  border-radius: 8px;
-  overflow: hidden;
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
 }
 
-table th, table td {
-  padding: 12px 15px;
-  text-align: left;
-}
-
-table th {
-  background: #007bff;
-  color: #fff;
-  font-weight: 600;
-}
-
-table tr:nth-child(even) {
-  background: #f2f5f9;
+table tr {
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(6px);
+    box-shadow: 0 3px 12px rgba(0,0,0,0.05);
+    transition: 0.3s ease;
 }
 
 table tr:hover {
-  background: #e8f0fe;
-  transition: background 0.3s;
+    transform: scale(1.02);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.09);
+}
+
+table th {
+    background: #1f4f8f;
+    color: #fff;
+    font-weight: 600;
+    padding: 15px;
+    text-align: left;
+    font-size: 14px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 
 table td {
-  font-size: 15px;
+    padding: 15px;
+    font-size: 15px;
+    color: #2c3e50;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 
-@media (max-width: 768px) {
-  .stats ul {
-    flex-direction: column;
-    gap: 15px;
-  }
-  table th, table td {
-    font-size: 14px;
-  }
+/* Empty message */
+table td[colspan] {
+    text-align: center;
+    color: #777;
+    background: #fafafa;
 }
+
+/* Animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .stats {
+        flex-direction: column;
+    }
+
+    table td, table th {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .dashboard-container {
+        padding: 25px;
+    }
+}
+
 </style>
 </head>
 <body>

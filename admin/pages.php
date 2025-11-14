@@ -1,15 +1,49 @@
 <?php
 session_start();
-require __DIR__ . '/../app/auth.php';
-require_auth();
 require __DIR__ . '/../app/db.php';
 
+// ------------------------------------------------------------
+// Detect whether this is a frontend or admin request
+// ------------------------------------------------------------
+$is_admin = str_contains($_SERVER['REQUEST_URI'], '/admin/pages');
+
+// ------------------------------------------------------------
+// 🌐 FRONTEND DYNAMIC PAGE RENDER
+// ------------------------------------------------------------
+if (!$is_admin && isset($_GET['slug'])) {
+    $slug = $_GET['slug'];
+    $stmt = $pdo->prepare("SELECT * FROM pages WHERE slug = ? AND status = 'published' LIMIT 1");
+    $stmt->execute([$slug]);
+    $page = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$page) {
+        http_response_code(404);
+        include __DIR__ . '/../404.php';
+        exit;
+    }
+
+    // Include your public site header/footer here
+    include __DIR__ . '/../header.php';
+    echo "<main class='page-container'>";
+    echo "<h1>" . htmlspecialchars($page['title']) . "</h1>";
+    echo "<div class='page-body'>" . $page['content'] . "</div>";
+    echo "</main>";
+    include __DIR__ . '/../footer.php';
+    exit;
+}
+
+// ------------------------------------------------------------
+// 🧭 ADMIN DASHBOARD MODE (Existing Logic)
+// ------------------------------------------------------------
+require __DIR__ . '/../app/auth.php';
+require_auth();
 $user = current_user();
 require __DIR__ . '/header1.php'; // Admin Navbar
 
-// ----------------------------------------------------
-// Handle search and filter logic
-// ----------------------------------------------------
+// ============================================================
+// Your existing admin dashboard code continues below
+// ============================================================
+
 $search = $_GET['search'] ?? '';
 $filter = $_GET['filter'] ?? '';
 $whereClauses = [];
@@ -34,17 +68,13 @@ if (!empty($whereClauses)) {
     $whereSQL = "WHERE " . implode(" AND ", $whereClauses);
 }
 
-// ----------------------------------------------------
-// Fetch Counts for filters
-// ----------------------------------------------------
+// Counts
 $totalCount = $pdo->query("SELECT COUNT(*) FROM pages")->fetchColumn();
 $publishedCount = $pdo->query("SELECT COUNT(*) FROM pages WHERE status='published'")->fetchColumn();
 $draftCount = $pdo->query("SELECT COUNT(*) FROM pages WHERE status='draft'")->fetchColumn();
 $archivedCount = $pdo->query("SELECT COUNT(*) FROM pages WHERE status='archived'")->fetchColumn();
 
-// ----------------------------------------------------
-// Fetch pages list
-// ----------------------------------------------------
+// Fetch pages
 if (!empty($params)) {
     $stmt = $pdo->prepare("SELECT * FROM pages $whereSQL ORDER BY updated_at DESC");
     $stmt->execute($params);
@@ -54,7 +84,7 @@ if (!empty($params)) {
 $pages = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
-<!-- ✅ Dashboard Container -->
+<!-- ✅ Admin Dashboard View -->
 <div class="dashboard-container">
     <h1>Pages</h1>
 
@@ -98,18 +128,17 @@ $pages = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <td><?= ucfirst($page['status']) ?></td>
                     <td><?= htmlspecialchars($page['updated_at']) ?></td>
                     <td class="actions">
-                    <a class="btn" href="edit?id=<?= $page['id'] ?>">Edit</a>
+                        <a class="btn" href="edit?id=<?= $page['id'] ?>">Edit</a>
 
-                    <?php if ($user['role'] === 'admin'): ?>
-                        <?php if ($page['status'] === 'archived'): ?>
-                            <a class="btn2" href="unarchive?id=<?= $page['id'] ?>">Unarchive</a>
-                        <?php else: ?>
-                            <a class="btn2" href="archive?id=<?= $page['id'] ?>">Archive</a>
+                        <?php if ($user['role'] === 'admin'): ?>
+                            <?php if ($page['status'] === 'archived'): ?>
+                                <a class="btn2" href="unarchive?id=<?= $page['id'] ?>">Unarchive</a>
+                            <?php else: ?>
+                                <a class="btn2" href="archive?id=<?= $page['id'] ?>">Archive</a>
+                            <?php endif; ?>
+                            <a class="btn3 disabled" href="javascript:void(0)" onclick="return false;">Delete</a>
                         <?php endif; ?>
-                        <a class="btn3 disabled" href="javascript:void(0)" onclick="return false;">Delete</a>
-                    <?php endif; ?>
-                </td>
-
+                    </td>
                 </tr>
             <?php endforeach; ?>
         <?php else: ?>
@@ -117,6 +146,8 @@ $pages = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <?php endif; ?>
     </table>
 </div>
+
+
 
 <!-- ✅ Embedded CSS -->
 <style>
