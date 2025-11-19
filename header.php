@@ -59,9 +59,10 @@ if ($currentSlug === '' || $currentSlug === 'index.php') {
         <!-- Login + Register -->
         <span class="auth-links">
             <a href="/login" class="btn">Login</a>
-            <span class="divider">/</span>
-            <a href="/register" class="btn">Register</a>
+            
         </span>
+        
+      
 
         <!-- 🛒 CART ICON -->
         <a href="/cart.php" class="btn cart-btn" style="margin-left:10px; position:relative;">

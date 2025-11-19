@@ -10,8 +10,11 @@ if ($user['role'] !== 'admin') {
     exit('Access denied. Admins only.');
 }
 
-// ✅ AJAX Orders with Pagination
+/* ============================================================
+   AJAX Request Handler - Paginated Orders Fetch
+============================================================ */
 if (isset($_GET['ajax'])) {
+
     $search = trim($_GET['search'] ?? '');
     $status = trim($_GET['status'] ?? '');
     $page   = max(1, (int)($_GET['page'] ?? 1));
@@ -32,13 +35,13 @@ if (isset($_GET['ajax'])) {
         $params[] = $status;
     }
 
-    // Total rows
+    // Total Rows
     $countStmt = $pdo->prepare("SELECT COUNT(*) $sqlBase");
     $countStmt->execute($params);
     $totalRows = $countStmt->fetchColumn();
     $totalPages = max(1, ceil($totalRows / $limit));
 
-    // Fetch paginated orders
+    // Fetch Orders
     $stmt = $pdo->prepare("
         SELECT id, order_ref, customer_name, customer_email, total, payment_status, gateway, created_at
         $sqlBase
@@ -48,64 +51,81 @@ if (isset($_GET['ajax'])) {
     $stmt->execute($params);
     $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+    /* AJAX Output */
     ob_start();
+
     if (empty($orders)): ?>
-        <p class="no-orders">No orders found.</p>
+        <div class="empty-block">No orders found.</div>
+
     <?php else: ?>
-        <table>
-            <tr>
-                <th>ID</th>
-                <th>Order Ref</th>
-                <th>Customer</th>
-                <th>Email</th>
-                <th>Total (₹)</th>
-                <th>Payment</th>
-                <th>Gateway</th>
-                <th>Date</th>
-                <th>View</th>
-            </tr>
+        <table class="mac-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Order Ref</th>
+                    <th>Customer</th>
+                    <th>Email</th>
+                    <th>Total (₹)</th>
+                    <th>Status</th>
+                    <th>Gateway</th>
+                    <th>Date</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
             <?php foreach ($orders as $o): ?>
-            <tr>
-                <td><?= $o['id'] ?></td>
-                <td><?= $o['order_ref'] ?></td>
-                <td><?= $o['customer_name'] ?></td>
-                <td><?= $o['customer_email'] ?></td>
-                <td><?= number_format($o['total'], 2) ?></td>
-                <td><span class="status <?= strtolower($o['payment_status']) ?>"><?= $o['payment_status'] ?></span></td>
-                <td class="gateway"><?= $o['gateway'] ?></td>
-                <td><?= date('d M Y, h:i A', strtotime($o['created_at'])) ?></td>
-                <td><a href="order-view.php?id=<?= $o['id'] ?>" class="view-btn">View</a></td>
-            </tr>
+                <tr>
+                    <td><?= $o['id'] ?></td>
+                    <td><?= $o['order_ref'] ?></td>
+                    <td><?= $o['customer_name'] ?></td>
+                    <td><?= $o['customer_email'] ?></td>
+                    <td><?= number_format($o['total'], 2) ?></td>
+
+                    <td>
+                        <span class="badge <?= strtolower($o['payment_status']) ?>">
+                            <?= $o['payment_status'] ?>
+                        </span>
+                    </td>
+
+                    <td><?= $o['gateway'] ?></td>
+                    <td><?= date('d M Y, h:i A', strtotime($o['created_at'])) ?></td>
+
+                    <td>
+                        <a href="order-view.php?id=<?= $o['id'] ?>" class="view-btn">View</a>
+                    </td>
+                </tr>
             <?php endforeach; ?>
+            </tbody>
         </table>
 
         <!-- Pagination -->
-        <div class="pagination" style="text-align:center;margin-top:18px;">
+        <div class="pagination">
             <?php if ($page > 1): ?>
-                <a href="#" class="page-btn" data-page="<?= $page-1 ?>">« Prev</a>
+                <a href="#" class="page-btn" data-page="<?= $page - 1 ?>">‹</a>
             <?php endif; ?>
 
             <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                <a href="#" class="page-btn" data-page="<?= $i ?>" <?= $i == $page ? 'style="background:#007bff;color:#fff;"' : '' ?>>
-                    <?= $i ?>
-                </a>
+                <a href="#" class="page-btn <?= $i == $page ? 'active' : '' ?>" data-page="<?= $i ?>"><?= $i ?></a>
             <?php endfor; ?>
 
             <?php if ($page < $totalPages): ?>
-                <a href="#" class="page-btn" data-page="<?= $page+1 ?>">Next »</a>
+                <a href="#" class="page-btn" data-page="<?= $page + 1 ?>">›</a>
             <?php endif; ?>
         </div>
 
     <?php endif;
+
     echo ob_get_clean();
     exit;
 }
 
-// Counts for Dashboard Filters
+/* ============================================================
+   COUNT FILTERS
+============================================================ */
 $countStmt = $pdo->query("
     SELECT LOWER(payment_status) AS status, COUNT(*) AS count
-    FROM orders
-    GROUP BY LOWER(payment_status)
+    FROM orders GROUP BY LOWER(payment_status)
 ");
 
 $statuses = ['paid', 'pending', 'failed', 'awaiting_upi', 'cod_confirmed'];
@@ -113,344 +133,296 @@ $counts = array_fill_keys($statuses, 0);
 $totalCount = 0;
 
 foreach ($countStmt as $row) {
-    $s = $row['status'];
-    if (isset($counts[$s])) $counts[$s] = $row['count'];
-    $totalCount += $row['count'];
+    if (isset($counts[$row['status']])) {
+        $counts[$row['status']] = $row['count'];
+        $totalCount += $row['count'];
+    }
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>Admin Orders - Chandusoft</title>
+<title>Orders - Chandusoft</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
+/* MACOS PRO ADMIN STYLE UI */
 body {
-    font-family: 'Segoe UI', Arial, sans-serif;
-    background: #f4f6f8;
-    margin: 0;
-    padding: 0;
+    background:#f1f2f4;
+    margin:0;
+    padding:0;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", Arial, sans-serif;
 }
+/* Better header spacing (keeps navbar visible and clean) */
+.page-header {
+    margin-top: 20px;
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+.page-header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1c1c1e;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
 
 .container {
-    max-width: 1100px;
-    margin: 40px auto;
-    background: #fff;
-    border-radius: 10px;
-    padding: 30px 40px;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+    max-width: 1200px;
+    margin: 35px auto;
+    padding: 30px;
+    background: #ffffffdd;
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
 }
 
+/* Title */
 h1 {
-    text-align: center;
-    margin-bottom: 25px;
-    color: #222;
+    margin:0 0 20px 0;
     font-size: 26px;
+    font-weight: 600;
+    color: #1c1c1e;
+    text-align: center;
 }
 
-/* -------------------------
-   TOP BAR
--------------------------- */
+/* -------- FILTER BAR ---------- */
 .top-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-}
-
-/* -------------------------
-   FILTER BUTTONS
--------------------------- */
-.filters {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    margin-bottom:20px;
 }
 
 .filters a {
-    padding: 8px 14px;
-    border-radius: 6px;
-    background: #eef1f5;
-    margin: 4px;
-    text-decoration: none;
-    color: #333;
-    font-size: 14px;
-    transition: 0.2s;
-    border: 1px solid #d5d8dd;
+    padding:7px 16px;
+    border-radius:10px;
+    background:#f2f3f5;
+    text-decoration:none;
+    color:#444;
+    margin-right:8px;
+    border:1px solid #ddd;
+    font-size:14px;
+    transition:0.2s;
 }
 
-.filters a:hover {
-    background: #dbe7ff;
-}
-
+.filters a:hover { background:#e6e7e8; }
 .filters a.active {
-    background: #007bff;
-    color: white;
-    border-color: #007bff;
+    background:#007aff;
+    color:white;
+    border-color:#007aff;
 }
 
-.badge {
-    padding: 3px 7px;
-    border-radius: 8px;
-    background: #555;
-    color: #fff;
-    margin-left: 4px;
-    font-size: 11px;
-    font-weight: bold;
+.badge-count {
+    background:#444;
+    padding:3px 7px;
+    border-radius:10px;
+    color:white;
+    margin-left:4px;
+    font-size:11px;
 }
 
-/* -------------------------
-   DROPDOWN
--------------------------- */
+/* Dropdown */
 #quickStatus {
-    padding: 8px 14px;
-    border-radius: 6px;
-    border: 1px solid #bbb;
-    font-size: 14px;
-    background: #fff;
-    margin: 4px 10px;
-    cursor: pointer;
-    outline: none;
-    transition: 0.2s;
+    padding:8px 14px;
+    border-radius:10px;
+    border:1px solid #ccc;
+    background:white;
+    outline:none;
 }
 
-#quickStatus:hover {
-    border-color: #007bff;
+/* -------- SEARCH -------- */
+.search input {
+    padding:9px 14px;
+    border-radius:10px;
+    border:1px solid #ccc;
+    width:260px;
+    font-size:14px;
+    outline:none;
 }
-
-/* -------------------------
-   SEARCH BAR
--------------------------- */
-.search input[type="text"] {
-    padding: 9px 14px;
-    width: 260px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    outline: none;
-    font-size: 14px;
-    transition: 0.2s;
-}
-
-.search input[type="text"]:focus {
-    border-color: #007bff;
-}
-
 .search button {
-    padding: 9px 14px;
-    border-radius: 6px;
-    border: none;
-    background: #007bff;
-    color: #fff;
-    cursor: pointer;
-    font-size: 14px;
-    margin-left: 6px;
-    transition: 0.2s;
+    padding:9px 14px;
+    background:#007aff;
+    border:none;
+    color:white;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:600;
 }
 
-.search button:hover {
-    background: #005ecb;
+/* -------- TABLE -------- */
+.mac-table {
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+    border-radius:14px;
+    overflow:hidden;
 }
 
-/* -------------------------
-   TABLE
--------------------------- */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 15px;
+.mac-table thead {
+    background:#f6f7f8;
 }
 
-th {
-    background: #f2f4f7;
-    padding: 12px;
-    font-size: 13px;
-    color: #555;
-    text-transform: uppercase;
-    border-bottom: 2px solid #e6e6e6;
+.mac-table th {
+    padding:12px;
+    text-align:left;
+    font-size:13px;
+    color:#555;
+    border-bottom:1px solid #e3e3e3;
 }
 
-td {
-    padding: 12px;
-    border-bottom: 1px solid #eee;
-    font-size: 14px;
-    text-align: center;
+.mac-table td {
+    padding:12px;
+    font-size:14px;
+    border-bottom:1px solid #f1f1f1;
 }
 
-tr:hover {
-    background: #f7faff;
+.mac-table tr:hover {
+    background:#f9f9f9;
 }
 
-.status {
-    padding: 4px 10px;
-    border-radius: 6px;
-    color: #fff;
-    font-size: 13px;
-    text-transform: capitalize;
+/* Status badges */
+.badge {
+    padding:5px 12px;
+    border-radius:20px;
+    color:white;
+    font-size:12px;
+    font-weight:600;
 }
+.badge.paid { background:#34c759; }
+.badge.pending { background:#f0a500; }
+.badge.failed { background:#ff453a; }
+.badge.awaiting_upi { background:#af52de; }
+.badge.cod_confirmed { background:#0a84ff; }
 
-/* Payment color tags */
-.status.paid { background: #27ae60; }
-.status.pending { background: #f39c12; }
-.status.failed { background: #e74c3c; }
-.status.awaiting_upi { background: #9b59b6; }
-.status.cod_confirmed { background: #16a085; }
-
+/* View Button */
 .view-btn {
-    background: #3498db;
-    padding: 6px 12px;
-    border-radius: 5px;
-    text-decoration: none;
-    color: #fff;
-    transition: 0.2s;
+    padding:7px 14px;
+    border-radius:10px;
+    background:#007aff;
+    color:white;
+    text-decoration:none;
+    font-size:13px;
+    font-weight:600;
+    transition:0.2s;
+}
+.view-btn:hover { background:#005ecb; }
+
+/* Empty */
+.empty-block {
+    padding:20px;
+    text-align:center;
+    font-size:16px;
+    color:#666;
 }
 
-.view-btn:hover {
-    background: #2a7ebf;
+/* -------- PAGINATION -------- */
+.pagination {
+    margin-top:18px;
+    text-align:center;
 }
-
-/* -------------------------
-   PAGINATION
--------------------------- */
-.pagination a {
-    padding: 8px 14px;
-    margin: 3px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    text-decoration: none;
-    color: #333;
-    transition: 0.2s;
+.page-btn {
+    padding:8px 14px;
+    margin:3px;
+    background:white;
+    border:1px solid #ccc;
+    border-radius:10px;
+    text-decoration:none;
+    color:#333;
+    font-size:14px;
 }
-
-.pagination a:hover {
-    background: #007bff;
-    color: #fff;
+.page-btn:hover { background:#007aff; color:white; }
+.page-btn.active {
+    background:#007aff;
+    color:white;
+    border-color:#007aff;
 }
-
-/* -------------------------
-   NO ORDERS
--------------------------- */
-.no-orders {
-    text-align: center;
-    color: #555;
-    font-size: 16px;
-    padding: 20px;
-}
-
-/* -------------------------
-   RESPONSIVE FIXES
--------------------------- */
-@media(max-width: 768px) {
-    .top-bar {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 15px;
-    }
-
-    .search input {
-        width: 100%;
-        margin-bottom: 10px;
-    }
-}
-
 </style>
 </head>
 
 <body>
 <div class="container">
-    <h1><i class="fa fa-box"></i> Admin Orders</h1>
+
+    <div class="page-header">
+    <h1><i class="fa fa-box"></i> Orders</h1>
+</div>
+
 
     <div class="top-bar">
-        <div class="filters">
 
-            <!-- ALL -->
+        <div class="filters">
             <a href="#" data-status="" class="active">
-                All <span class="badge"><?= $totalCount ?></span>
+                All <span class="badge-count"><?= $totalCount ?></span>
             </a>
 
-            <!-- Dropdown for Paid + Pending -->
-            <select id="quickStatus" style="
-                padding: 7px 12px;
-                border-radius: 5px;
-                border: 1px solid #aaa;
-                font-size: 15px;
-                margin-left: 10px;
-            ">
-                <option value="">-- Quick Filters --</option>
+            <select id="quickStatus">
+                <option value="">Quick Filters</option>
                 <option value="paid">Paid (<?= $counts['paid'] ?>)</option>
                 <option value="pending">Pending (<?= $counts['pending'] ?>)</option>
-                <option value="failed">Paid (<?= $counts['failed'] ?>)</option>
-                <option value="awaiting_upi">Pending (<?= $counts['awaiting_upi'] ?>)</option>
-                <option value="cod_confirmed">Pending (<?= $counts['pendcod_confirmeding'] ?>)</option>
-
+                <option value="failed">Failed (<?= $counts['failed'] ?>)</option>
+                <option value="awaiting_upi">Awaiting UPI (<?= $counts['awaiting_upi'] ?>)</option>
+                <option value="cod_confirmed">COD Confirmed (<?= $counts['cod_confirmed'] ?>)</option>
             </select>
+        </div>
 
         <div class="search">
             <form id="searchForm">
-                <input type="text" name="search" placeholder="Search by Email or Order ID">
-                <button type="submit"><i class="fa fa-search"></i> Search</button>
+                <input type="text" name="search" placeholder="Search Email or Order Ref">
+                <button type="submit"><i class="fa fa-search"></i></button>
             </form>
         </div>
     </div>
 
     <div id="orderTable"></div>
-
-    <div style="text-align:center;margin-top:20px;">
-        <a href="/app/dashboard.php" class="back-link"><i class="fa fa-arrow-left"></i> Back to Dashboard</a>
-    </div>
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-    const orderTable = document.getElementById('orderTable');
-    const filters = document.querySelectorAll('.filters a');
-    const quickStatus = document.getElementById('quickStatus');
-    const searchForm = document.getElementById('searchForm');
+document.addEventListener("DOMContentLoaded", () => {
+    const orderTable = document.getElementById("orderTable");
+    const filters = document.querySelectorAll(".filters a");
+    const dropdown = document.getElementById("quickStatus");
+    const searchForm = document.getElementById("searchForm");
 
     let currentStatus = "";
     let currentSearch = "";
 
     function loadOrders(page = 1) {
-        const url = `?ajax=1&page=${page}&status=${encodeURIComponent(currentStatus)}&search=${encodeURIComponent(currentSearch)}`;
-        fetch(url).then(res => res.text()).then(html => {
-            orderTable.innerHTML = html;
-
-            document.querySelectorAll('.page-btn').forEach(btn => {
-                btn.addEventListener('click', e => {
-                    e.preventDefault();
-                    loadOrders(btn.dataset.page);
+        fetch(`?ajax=1&page=${page}&status=${currentStatus}&search=${currentSearch}`)
+            .then(res => res.text())
+            .then(html => {
+                orderTable.innerHTML = html;
+                document.querySelectorAll(".page-btn").forEach(btn => {
+                    btn.addEventListener("click", e => {
+                        e.preventDefault();
+                        loadOrders(btn.dataset.page);
+                    });
                 });
             });
-        });
     }
 
-    // Button filters
     filters.forEach(link => {
-        link.addEventListener('click', e => {
+        link.addEventListener("click", e => {
             e.preventDefault();
+            filters.forEach(l => l.classList.remove("active"));
+            link.classList.add("active");
 
-            filters.forEach(l => l.classList.remove('active'));
-            link.classList.add('active');
-
-            quickStatus.value = ""; // reset dropdown
-
-            currentStatus = link.dataset.status;
+            dropdown.value = "";
+            currentStatus = link.dataset.status || "";
             loadOrders(1);
         });
     });
 
-    // Dropdown filter
-    quickStatus.addEventListener('change', () => {
-        currentStatus = quickStatus.value;
-
-        filters.forEach(l => l.classList.remove('active')); // remove active from buttons
-
+    dropdown.addEventListener("change", () => {
+        currentStatus = dropdown.value;
+        filters.forEach(l => l.classList.remove("active"));
         loadOrders(1);
     });
 
-    // Search
-    searchForm.addEventListener('submit', e => {
+    searchForm.addEventListener("submit", e => {
         e.preventDefault();
         currentSearch = searchForm.search.value.trim();
         loadOrders(1);

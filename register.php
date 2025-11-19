@@ -88,59 +88,174 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Register</title>
+<title>Create Account</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="Style.css" />
+
 <style>
-.container { max-width: 500px; margin: auto; background: #fff; padding: 10px 40px; border-radius: 10px; box-shadow: 0 3px 6px rgba(0,0,0,0.1); }
-h2 { text-align: center; color: #333; margin-bottom: 20px; }
-.error { color: red; font-size: 0.9em; margin-top: 4px; }
-input { width: 95%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; margin-bottom: 10px; }
-input.error-border { border-color: red; }
-button { width: 100%; padding: 10px; border: none; border-radius: 5px; background: #28a745; color: #fff; font-size: 16px; cursor: pointer; }
-button:hover { background: #218838; }
-p { text-align: center; margin-top: 10px; }
-a { color: #1690e8; text-decoration: none; }
-.success { background: #d4edda; color: #155724; padding: 10px; border-radius: 5px; margin-bottom: 15px; }
+body {
+    font-family: "Inter", sans-serif;
+    background: #f5f7fa;
+    margin: 0;
+}
+
+.register-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 70px;
+}
+
+.register-card {
+    width: 380px;
+    background: #fff;
+    padding: 40px 35px;
+    border-radius: 12px;
+    box-shadow: 0px 6px 25px rgba(0,0,0,0.08);
+    text-align: center;
+}
+
+/* Avatar circle */
+.avatar {
+    width: 65px;
+    height: 65px;
+    margin: auto;
+    background: #2d82f7;
+    border-radius: 50%;
+    margin-bottom: 20px;
+}
+
+/* Titles */
+.register-card h3 {
+    margin: 5px 0 8px;
+    font-size: 22px;
+    color: #333;
+}
+.register-card p {
+    color: #777;
+    font-size: 14px;
+}
+
+/* Inputs */
+.input-box {
+    text-align: left;
+    margin-top: 20px;
+}
+.input-box label {
+    font-size: 14px;
+    color: #444;
+}
+.input-box input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    outline: none;
+    background: transparent;
+    font-size: 14px;
+}
+.input-box input:focus {
+    border-bottom-color: #2d82f7;
+}
+
+/* Error styling */
+.error-msg {
+    color: red;
+    font-size: 13px;
+    margin-top: 5px;
+}
+.success {
+    background: #c7f5d4;
+    color: #155724;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+}
+
+/* Button */
+.register-btn {
+    width: 100%;
+    padding: 12px;
+    background: #2d82f7;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+.register-btn:hover {
+    background: #1c6adb;
+}
+
+/* Bottom text */
+.bottom-text {
+    margin-top: 15px;
+    font-size: 14px;
+}
+.bottom-text a {
+    color: #2d82f7;
+}
 </style>
 </head>
+
 <body>
-    <div id="header"></div>
-  <?php include("header.php"); ?>
-<div class="container">
-<h2>Create Account</h2>
 
-<!-- Flash success -->
-<?php if ($msg = get_flash('success')): ?>
-    <div class="success"><?= htmlspecialchars($msg) ?></div>
-<?php endif; ?>
+<div class="register-wrapper">
+    <div class="register-card">
 
-<!-- General errors -->
-<?php if (!empty($errors['general'])): ?>
-    <p class="error"><?= htmlspecialchars($errors['general']) ?></p>
-<?php endif; ?>
+        <div class="avatar"></div>
 
-<form method="POST" action="/register">
-    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
+        <h3>Create account</h3>
+        <p>Join us and start using your account</p>
 
-    <label>Name</label>
-    <input type="text" name="name" value="<?= htmlspecialchars($name) ?>" class="<?= !empty($errors['name']) ? 'error-border' : '' ?>">
-    <?php if (!empty($errors['name'])): ?><div class="error"><?= htmlspecialchars($errors['name']) ?></div><?php endif; ?>
+        <!-- Flash message -->
+        <?php if ($msg = get_flash('success')): ?>
+            <div class="success"><?= htmlspecialchars($msg) ?></div>
+        <?php endif; ?>
 
-    <label>Email</label>
-    <input type="text" name="email" value="<?= htmlspecialchars($email) ?>" class="<?= !empty($errors['email']) ? 'error-border' : '' ?>">
-    <?php if (!empty($errors['email'])): ?><div class="error"><?= htmlspecialchars($errors['email']) ?></div><?php endif; ?>
+        <!-- General error -->
+        <?php if (!empty($errors['general'])): ?>
+            <p class="error-msg"><?= htmlspecialchars($errors['general']) ?></p>
+        <?php endif; ?>
 
-    <label>Password</label>
-    <input type="password" name="password" class="<?= !empty($errors['password']) ? 'error-border' : '' ?>">
-    <?php if (!empty($errors['password'])): ?><div class="error"><?= htmlspecialchars($errors['password']) ?></div><?php endif; ?>
+        <form method="POST" action="/register.php">
+            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
 
-    <button type="submit">Register</button>
-</form>
+            <!-- Name -->
+            <div class="input-box">
+                <label>Name</label>
+                <input type="text" name="name" value="<?= htmlspecialchars($name) ?>">
+                <?php if (!empty($errors['name'])): ?>
+                    <p class="error-msg"><?= htmlspecialchars($errors['name']) ?></p>
+                <?php endif; ?>
+            </div>
 
-<p>Already have an account? <a href="/login.php">Login here</a></p>
+            <!-- Email -->
+            <div class="input-box">
+                <label>Email</label>
+                <input type="text" name="email" value="<?= htmlspecialchars($email) ?>">
+                <?php if (!empty($errors['email'])): ?>
+                    <p class="error-msg"><?= htmlspecialchars($errors['email']) ?></p>
+                <?php endif; ?>
+            </div>
+
+            <!-- Password -->
+            <div class="input-box">
+                <label>Password</label>
+                <input type="password" name="password">
+                <?php if (!empty($errors['password'])): ?>
+                    <p class="error-msg"><?= htmlspecialchars($errors['password']) ?></p>
+                <?php endif; ?>
+            </div>
+
+            <button class="register-btn">Create account</button>
+        </form>
+
+        <p class="bottom-text">
+            Already have an account?
+            <a href="/login.php">Sign in</a>
+        </p>
+    </div>
 </div>
-<div id="footer"></div>
-  <?php include("footer.php"); ?>
+
 </body>
 </html>

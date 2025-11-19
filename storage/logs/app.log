@@ -6094,3 +6094,37 @@ Stack trace:
 [2025-11-14 05:21:05] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
 [2025-11-14 05:26:37] [INFO] [elliana-saturated-accustomably.ngrok-free.dev] [/catalog-item.php] Catalog item viewed
 [2025-11-14 05:41:14] [INFO] [elliana-saturated-accustomably.ngrok-free.dev] [/catalog-item.php] Catalog item viewed
+[2025-11-14 12:04:25] [INFO] [elliana-saturated-accustomably.ngrok-free.dev] [/catalog-item.php] Catalog item viewed
+[2025-11-14 12:04:29] [INFO] [elliana-saturated-accustomably.ngrok-free.dev] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-14 12:04:37] [INFO] [elliana-saturated-accustomably.ngrok-free.dev] [/login.php] User logged in: jaisaichin@gmail.com
+[2025-11-15 03:43:37] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-15 03:43:50] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-15 03:44:15] [INFO] [chandusoft.test] [/login.php] User logged in: jaisaichin@gmail.com
+[2025-11-15 05:23:48] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-15 05:23:52] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[2025-11-15 05:23:57] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-15 05:26:01] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-15 05:26:49] [INFO] [chandusoft.test] [/register.php] Register form accessed
+[2025-11-15 05:26:54] [INFO] [chandusoft.test] [/register.php] Register form accessed
+[2025-11-15 05:26:58] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-15 05:44:27] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-15 06:05:56] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-15 06:07:26] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-15 06:07:32] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-15 06:09:08] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-15 06:09:47] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-15 06:48:14] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-15 06:48:22] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-15 06:48:25] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[2025-11-15 10:43:33] [INFO] [chandusoft.test] [/catalog-item.php] Catalog item viewed
+[2025-11-15 10:43:47] [INFO] [chandusoft.test] [/app/submit-enquiry.php] Enquiry submitted for product_id=34 by Sameer.Mohammed@chandusoft.com
+[2025-11-15 10:45:24] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-17 03:43:29] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-17 03:46:18] [INFO] [chandusoft.test] [/login.php] User logged in: jaisaichin@gmail.com
+[2025-11-18 04:23:55] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-18 05:26:54] [INFO] [chandusoft.test] [/register.php] Register form accessed
+[2025-11-18 05:31:46] [INFO] [chandusoft.test] [/register.php] Register form accessed
+[2025-11-18 05:33:43] [INFO] [chandusoft.test] [/register.php] Register form accessed
+[2025-11-18 11:55:53] [INFO] [chandusoft.test] [/register.php] Register form accessed
+[2025-11-18 12:00:49] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1
+[2025-11-19 02:56:16] [INFO] [chandusoft.test] [/catalog.php] Catalog viewed | Page: 1

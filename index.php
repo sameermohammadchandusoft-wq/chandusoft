@@ -9,7 +9,8 @@
 
 <body>
   <!-- ✅ Header -->
-  <div id="header"><?php include "header.php"; ?></div>
+  
+    <?php include "header.php"; ?>
 
   <?php
   require __DIR__ . '/app/db.php';

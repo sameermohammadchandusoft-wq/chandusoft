@@ -8,17 +8,18 @@ require __DIR__ . '/../app/auth.php';
 require_auth();
 
 require __DIR__ . '/../app/db.php';
-require __DIR__ . '/../admin/header1.php'; // ✅ Navbar with Welcome + role
-$user = current_user(); // ✅ logged-in user
+require __DIR__ . '/../admin/header1.php';
+$user = current_user();
 
-// -----------------------------
-// Fetch dashboard stats
-// -----------------------------
-$totalLeads = $pdo->query("SELECT COUNT(*) FROM leads")->fetchColumn();
-$publishedPages = $pdo->query("SELECT COUNT(*) FROM pages WHERE status='published'")->fetchColumn();
-$draftPages = $pdo->query("SELECT COUNT(*) FROM pages WHERE status='draft'")->fetchColumn();
+// ============================
+// FETCH STATS
+// ============================
+$totalLeads       = $pdo->query("SELECT COUNT(*) FROM leads")->fetchColumn();
+$publishedPages   = $pdo->query("SELECT COUNT(*) FROM pages WHERE status='published'")->fetchColumn();
+$draftPages       = $pdo->query("SELECT COUNT(*) FROM pages WHERE status='draft'")->fetchColumn();
+$catalogCount     = $pdo->query("SELECT COUNT(*) FROM catalog_items")->fetchColumn();
 
-// ✅ Fetch latest 5 leads (safe fallback)
+// Latest 5 Leads
 try {
     $stmt = $pdo->query("SELECT name, email, message, created_at, ip_address FROM leads ORDER BY id DESC LIMIT 5");
 } catch (PDOException $e) {
@@ -28,212 +29,207 @@ $leads = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dashboard</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
 <style>
-/* ======== DASHBOARD STYLES ======== */
-/* ===============================
-   MODERN PREMIUM DASHBOARD STYLE
-   =============================== */
-
+/* ============================
+    macOS PRO ADMIN UI
+============================ */
 body {
-    font-family: "Inter", "Segoe UI", Arial, sans-serif;
-    background: linear-gradient(135deg, #eef2f7, #dfe7f1);
+    background: #f2f3f5;
     margin: 0;
-    padding: 0;
-    color: #2c3e50;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", Arial;
 }
 
-/* Container */
-.dashboard-container {
-    max-width: 1100px;
-    margin: 60px auto;
-    padding: 40px;
-    background: rgba(255, 255, 255, 0.85);
+/* MAIN CONTAINER */
+.mac-container {
+    max-width: 1200px;
+    margin: 50px auto;
+    background: #ffffffdd;
+    padding: 35px;
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
     backdrop-filter: blur(10px);
-    border-radius: 18px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
-    animation: fadeIn 0.6s ease-in-out;
 }
 
 /* Heading */
-.dashboard-container h1 {
+.mac-title {
     font-size: 32px;
-    color: #1a3c6e;
-    text-transform: uppercase;
-    letter-spacing: 1px;
     font-weight: 700;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 35px;
+    color: #1c1c1e;
+    text-align: center;
+    margin-bottom: 30px;
 }
 
-.dashboard-container h1::before {
-    content: "📊";
-    font-size: 34px;
-}
-
-/* STATS CARD SECTION */
+/* ============================
+   STAT CARDS
+============================ */
 .stats {
     display: flex;
     justify-content: space-between;
-    gap: 25px;
-    margin-bottom: 35px;
+    gap: 22px;
     flex-wrap: wrap;
 }
 
 .stat-card {
     flex: 1;
-    padding: 22px;
+    min-width: 240px;
+    padding: 25px;
+    background: white;
     border-radius: 14px;
-    background: linear-gradient(135deg, #ffffff, #f6f9fc);
-    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
-    text-align: center;
-    transition: 0.3s ease;
-    border: 1px solid #e8edf3;
-    min-width: 260px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+    transition: 0.25s;
+    border: 1px solid #e6e6e6;
 }
 
 .stat-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
 }
 
 .stat-title {
+    color: #6a6a6c;
     font-size: 15px;
-    color: #6c7c93;
-    margin-bottom: 10px;
     font-weight: 600;
+    margin-bottom: 8px;
 }
 
 .stat-number {
-    font-size: 30px;
+    font-size: 32px;
     font-weight: 800;
-    color: #0056d6;
+    color: #007aff;
 }
 
-/* LEADS TABLE TITLE */
-.dashboard-container h3 {
-    margin-top: 10px;
-    margin-bottom: 15px;
+/* ============================
+   LAST 5 LEADS TABLE
+============================ */
+.mac-subtitle {
     font-size: 22px;
-    color: #12345a;
     font-weight: 700;
-    border-left: 5px solid #007bff;
-    padding-left: 10px;
+    color: #1d2a44;
+    margin-top: 35px;
+    border-left: 5px solid #007aff;
+    padding-left: 12px;
 }
 
-/* TABLE STYLE */
-table {
+.mac-card-table {
+    margin-top: 15px;
+    background: #ffffffdd;
+    padding: 0;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.mac-table {
     width: 100%;
-    border-collapse: separate;
-    border-spacing: 0 10px;
+    border-collapse: collapse;
 }
 
-table tr {
-    background: rgba(255, 255, 255, 0.75);
-    backdrop-filter: blur(6px);
-    box-shadow: 0 3px 12px rgba(0,0,0,0.05);
-    transition: 0.3s ease;
-}
-
-table tr:hover {
-    transform: scale(1.02);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.09);
-}
-
-table th {
-    background: #1f4f8f;
-    color: #fff;
-    font-weight: 600;
-    padding: 15px;
+.mac-table th {
+    background: #f6f7f8;
+    padding: 14px;
+    color: #555;
     text-align: left;
     font-size: 14px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    border-bottom: 1px solid #e1e1e1;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
 }
 
-table td {
-    padding: 15px;
+.mac-table td {
+    padding: 14px;
     font-size: 15px;
-    color: #2c3e50;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    border-bottom: 1px solid #f1f1f1;
 }
 
-/* Empty message */
-table td[colspan] {
+.mac-table tr:hover {
+    background: #f9f9fc;
+}
+
+.mac-empty {
+    padding: 20px;
     text-align: center;
-    color: #777;
-    background: #fafafa;
+    color: #666;
 }
 
-/* Animation */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to   { opacity: 1; transform: translateY(0); }
+@media(max-width: 768px) {
+    .stats { flex-direction: column; }
 }
-
-/* Responsive */
-@media (max-width: 768px) {
-    .stats {
-        flex-direction: column;
-    }
-
-    table td, table th {
-        font-size: 14px;
-        padding: 10px;
-    }
-
-    .dashboard-container {
-        padding: 25px;
-    }
-}
-
 </style>
+
 </head>
 <body>
 
-<div class="dashboard-container">
-    <h1>Dashboard</h1>
+<div class="mac-container">
 
+    <h1 class="mac-title">Dashboard</h1>
+
+    <!-- ============================
+        STAT CARDS
+    ============================= -->
     <div class="stats">
-        <ul>
-            <li>Total Leads: <?= $totalLeads ?></li>
-            <li>Pages Published: <?= $publishedPages ?></li>
-            <li>Pages Draft: <?= $draftPages ?></li>
-        </ul>
+
+        <div class="stat-card">
+            <div class="stat-title">Total Leads</div>
+            <div class="stat-number"><?= $totalLeads ?></div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-title">Published Pages</div>
+            <div class="stat-number"><?= $publishedPages ?></div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-title">Draft Pages</div>
+            <div class="stat-number"><?= $draftPages ?></div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-title">Catalog Items</div>
+            <div class="stat-number"><?= $catalogCount ?></div>
+        </div>
+
     </div>
 
-    <h3>Last 5 Leads</h3>
-    <table>
-        <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Message</th>
-            <th>Created</th>
-            <th>IP</th>
-        </tr>
+    <!-- ============================
+        LEADS TABLE
+    ============================= -->
+    <h2 class="mac-subtitle">Last 5 Leads</h2>
 
-        <?php if ($leads): ?>
-            <?php foreach ($leads as $lead): ?>
+    <div class="mac-card-table">
+        <table class="mac-table">
+            <thead>
                 <tr>
-                    <td><?= htmlspecialchars($lead['name']) ?></td>
-                    <td><?= htmlspecialchars($lead['email']) ?></td>
-                    <td><?= htmlspecialchars(substr($lead['message'], 0, 25)) ?><?= strlen($lead['message']) > 25 ? '...' : '' ?></td>
-                    <td><?= htmlspecialchars($lead['created_at']) ?></td>
-                    <td><?= htmlspecialchars($lead['ip_address'] ?? '-') ?></td>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Message</th>
+                    <th>Created</th>
+                    <th>IP</th>
                 </tr>
-            <?php endforeach; ?>
-        <?php else: ?>
-            <tr><td colspan="5" style="text-align:center;">No leads found.</td></tr>
-        <?php endif; ?>
-    </table>
+            </thead>
+
+            <tbody>
+            <?php if ($leads): ?>
+                <?php foreach ($leads as $lead): ?>
+                    <tr>
+                        <td><?= htmlspecialchars($lead['name']) ?></td>
+                        <td><?= htmlspecialchars($lead['email']) ?></td>
+                        <td><?= htmlspecialchars(substr($lead['message'], 0, 25)) ?><?= strlen($lead['message']) > 25 ? '…' : '' ?></td>
+                        <td><?= htmlspecialchars($lead['created_at']) ?></td>
+                        <td><?= htmlspecialchars($lead['ip_address'] ?? '-') ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <tr><td colspan="5" class="mac-empty">No leads found.</td></tr>
+            <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+
 </div>
 
 </body>

@@ -1,15 +1,21 @@
+# ============================================================
+# Chandusoft Optimized .htaccess
+# Clean URLs • HTTPS • Security • API/PHP Exceptions
+# ============================================================
+
 # ------------------------------------
 # Enable Rewrite Engine
 # ------------------------------------
 RewriteEngine On
 RewriteBase /
- 
+
 # ------------------------------------
-# Force HTTPS
+# Force HTTPS (skip localhost)
 # ------------------------------------
 RewriteCond %{HTTPS} !=on
+RewriteCond %{HTTP_HOST} !^localhost
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
- 
+
 # ------------------------------------
 # Security Headers
 # ------------------------------------
@@ -18,37 +24,48 @@ Header always set X-Content-Type-Options "nosniff"
 Header always set X-XSS-Protection "1; mode=block"
 Header always set Referrer-Policy "no-referrer-when-downgrade"
 Header always set Content-Security-Policy "default-src 'self' https: data: blob:; img-src 'self' https: data:; script-src 'self' https: 'unsafe-inline'; style-src 'self' https: 'unsafe-inline';"
- 
+
 # ------------------------------------
 # Disable Directory Browsing
 # ------------------------------------
 Options -Indexes
- RewriteEngine On
+
+# ------------------------------------
+# IMPORTANT: Allow certain PHP files to run normally
+# ------------------------------------
+
+# Stripe webhook
 RewriteRule ^stripe-webhook\.php$ - [L]
+
+# Contact page should process POST normally
+RewriteRule ^contact\.php$ - [L]
+
+# Product enquiry endpoint
+RewriteRule ^app/submit-enquiry\.php$ - [L]
+
+# Any other backend API routes inside /app
+RewriteRule ^app/(.*)\.php$ - [L]
+
 # ------------------------------------
 # Remove .php from URLs (external redirect)
 # ------------------------------------
 RewriteCond %{THE_REQUEST} \s/+(.+?)\.php[\s?]
 RewriteRule ^ %1 [R=301,L]
- 
+
 # ------------------------------------
-# Serve existing files/folders normally
+# Serve existing files / folders directly
 # ------------------------------------
 RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^ - [L]
- 
+
 # ------------------------------------
-# Map clean URLs to .php internally
+# Internally map clean URLs → .php
 # ------------------------------------
 RewriteCond %{REQUEST_FILENAME}.php -f
 RewriteRule ^(.+)$ $1.php [L,QSA]
- 
+
 # ------------------------------------
 # Default fallback → index.php
 # ------------------------------------
 RewriteRule ^ index.php [QSA,L]
- # ===============================================
-# 🚫 Prevent redirect for Stripe webhook
-# ===============================================
-

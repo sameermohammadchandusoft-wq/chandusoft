@@ -94,6 +94,27 @@ th {
     font-size: 13px;
     text-transform: capitalize;
 }
+.status-dropdown {
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+.save-btn {
+    padding: 6px 12px;
+    margin-left: 8px;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.save-btn:hover {
+    background: #005ec5;
+}
+
 .pending { background: #f39c12; }
 .paid { background: #27ae60; }
 .failed { background: #e74c3c; }
@@ -129,8 +150,43 @@ th {
         <h2>Order Summary</h2>
         <table class="summary-table">
             <tr><td><strong>Order Ref:</strong></td><td><?= htmlspecialchars($order['order_ref']) ?></td></tr>
-            <tr><td><strong>Status:</strong></td>
-                <td><span class="status <?= strtolower($order['payment_status']) ?>"><?= htmlspecialchars($order['payment_status']) ?></span></td></tr>
+            <tr>
+    <td><strong>Status:</strong></td>
+    <td>
+
+        <?php if (strtolower($order['payment_status']) === 'paid'): ?>
+
+            <!-- Show PAID as fixed text, no dropdown -->
+            <span class="status paid">Paid</span>
+
+        <?php else: ?>
+
+            <form id="statusForm">
+                <input type="hidden" name="order_id" value="<?= $order['id'] ?>">
+
+                <select name="status" id="statusSelect" class="status-dropdown">
+                    <?php 
+                    // Allowed statuses (paid removed)
+                    $statuses = ['paid','pending', 'failed', 'awaiting_upi', 'cod_confirmed'];
+
+                    foreach ($statuses as $s): ?>
+                        <option value="<?= $s ?>" 
+                            <?= strtolower($order['payment_status']) === $s ? 'selected' : '' ?>>
+                            <?= ucfirst(str_replace('_', ' ', $s)) ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+
+                <button type="submit" class="save-btn">Save</button>
+                <span id="statusMsg" style="margin-left:10px;font-size:14px;"></span>
+            </form>
+
+        <?php endif; ?>
+
+    </td>
+</tr>
+
+
             <tr><td><strong>Total:</strong></td><td>₹<?= number_format($order['total'], 2) ?></td></tr>
             <tr><td><strong>Payment Gateway:</strong></td><td class="gateway"><?= htmlspecialchars($order['gateway']) ?></td></tr>
             <tr><td><strong>Date:</strong></td><td><?= date('d M Y, h:i A', strtotime($order['created_at'])) ?></td></tr>
@@ -181,5 +237,36 @@ th {
 </a>
 
 </div>
+<script>
+document.getElementById("statusForm").addEventListener("submit", function(e){
+    e.preventDefault();
+
+    const msg = document.getElementById("statusMsg");
+    msg.style.color = "black";
+    msg.textContent = "Updating...";
+
+    fetch("update-order-status.php", {
+        method: "POST",
+        body: new FormData(this)
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            msg.style.color = "green";
+            msg.textContent = "✓ Updated";
+        } else {
+            msg.style.color = "red";
+            msg.textContent = "✗ " + data.error;
+        }
+    })
+    .catch(err => {
+        msg.style.color = "red";
+        msg.textContent = "✗ Network error";
+        console.error(err);
+    });
+});
+</script>
+
 </body>
 </html>
+

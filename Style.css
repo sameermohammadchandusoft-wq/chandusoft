@@ -13,20 +13,6 @@ body {
 
  
 
-.header {
-  background: #0d83ff;
-  display: flex;
-  justify-content: space-between; /* Logo left, nav right */
-  align-items: center;            /* Vertically aligned */
-  padding: 5px 40px;
-  position: fixed;   /* Sticky */
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 1000;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
  
 /* Main Content */
 main {
