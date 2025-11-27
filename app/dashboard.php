@@ -27,7 +27,6 @@ try {
 }
 $leads = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -55,7 +54,7 @@ body {
     backdrop-filter: blur(10px);
 }
 
-/* Heading */
+/* Title */
 .mac-title {
     font-size: 32px;
     font-weight: 700;
@@ -160,7 +159,6 @@ body {
     .stats { flex-direction: column; }
 }
 </style>
-
 </head>
 <body>
 
@@ -168,9 +166,7 @@ body {
 
     <h1 class="mac-title">Dashboard</h1>
 
-    <!-- ============================
-        STAT CARDS
-    ============================= -->
+    <!-- STAT CARDS -->
     <div class="stats">
 
         <div class="stat-card">
@@ -195,9 +191,7 @@ body {
 
     </div>
 
-    <!-- ============================
-        LEADS TABLE
-    ============================= -->
+    <!-- LEADS TABLE -->
     <h2 class="mac-subtitle">Last 5 Leads</h2>
 
     <div class="mac-card-table">

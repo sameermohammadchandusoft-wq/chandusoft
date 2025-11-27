@@ -29,3 +29,34 @@ Array
         )
 
 )
+Array
+(
+    [POST] => Array
+        (
+            [csrf_token] => 8f36e4095142533deb8eb9149c0147683cb3937c412cd6c744318f73d7bd5ea5
+            [product_id] => 34
+            [cf-turnstile-response] => 0.lz1OBRCWrVP-k8-Yj6qtzna22vcI-f3tE5WDQ9jjCKPv2EmHoghRqOugrBLx5chXiBUjtH88D7N5Oad3FKYWqS3n06R5RcMlYKXs4vImwo0sftbae4pMfyxCF7ydMmJ7Xy220vQuYApTYt4TWLvU0_7oqOyHj-6zSJ3Pv_IVTNlygPbVucX0LS4GF5xUjXqrjxemJ49Z-AoxhjaPK4C0x4duUQSCLl31nhDxdZfflw-t1KDz-GdU2_cFeBJTmJ9vWZ4mOjK3Az7xITm6uHYOYKHVIfEBnFNlpD5JfwPdfDH3C00QBkYqXPf75KTJKCJyosgZxZXDn-xheALsk1x4YwPyQsiUw9Fl5g-wHxYycGY757hRXawPAep9C_YjjN_2RJrtKbPlceaovSSubKY-3F9TO107prW-aoHh6SWtl_muwtL7DUV0tfzNu9bWWyZ5F6tTaD2yU0vHyxcOqCEbIHtLN93pnPHjVwBuvjvVvLJ5BtMz6h1so3vFxxxgT6VrvwOmFTZAG745dsTQ-scYBbJZl2VyizCvOv_qobzpEe2QOj3LxbCRo65Z-YZrqzSWKwQtkUHafGO3v1YS80vbV9ntIHv4wqv1RqszksxySPEpw_Jj0P2SgAxKliVFOk9tcTSj-vjgRb-7XeUZdB9cB6ykj9zAefN5ETj68tx-9sn8soD3HPNFPxsJHtXcQ1NNqUSWNr__vUfn9fa5nTCjVSPrN0P-ocg1s0SHWsVS498RECn5YOIyxm3qm2Q8GSEkjuOGsh6tyDl3gK2aOO8pRjAdpIarmZGMNPTk1R4pJtTgDS7-Oqw1C5hY1B8HkNc-Jr-f0NpORh-STtD-QDNR71svFanDvCSBRU1cxltivtD54PuFV5XykD-e3ilu6EwKRkYA07BqSaxXBzJsYwwyHnv_px9VymMLdMNIKipeBi4.meKK05LaceqthDW9wkl7Sw.da8495d798625426bab19bf07da513fbc18e6ce6dae1d1b1c1b11a5ef3733c5d
+            [name] => Siva
+            [email] => Sameer.Mohammed@chandusoft.com
+            [message] => zfgdfgs
+        )
+
+    [captcha_response] => Array
+        (
+            [action] => 
+            [cdata] => 
+            [challenge_ts] => 2025-11-25T06:13:45.586Z
+            [error-codes] => Array
+                (
+                )
+
+            [hostname] => chandusoft.test
+            [metadata] => Array
+                (
+                    [interactive] => 
+                )
+
+            [success] => 1
+        )
+
+)

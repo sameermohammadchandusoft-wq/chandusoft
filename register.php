@@ -5,29 +5,22 @@ ini_set('display_errors', 1);
 session_start();
 
 require_once __DIR__ . '/app/db.php';
-require_once __DIR__ . '/app/auth.php'; // must contain redirect() & set_flash()
+require_once __DIR__ . '/app/auth.php'; // redirect(), set_flash(), get_flash()
+require_once __DIR__ . '/app/logger.php';
 
-// ----------------------------
-// Debug log
-// ----------------------------
-log_info("Register form accessed");
-
-// ----------------------------
-// Generate CSRF token (once)
-// ----------------------------
+// -----------------------------------------------------------
+// Generate CSRF token
+// -----------------------------------------------------------
 if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
 
-// ----------------------------
-// Initialize variables
-// ----------------------------
 $errors = [];
 $name = $email = $password = '';
 
-// ----------------------------
-// Handle POST request
-// ----------------------------
+// -----------------------------------------------------------
+// Handle POST Request
+// -----------------------------------------------------------
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $name     = trim($_POST['name'] ?? '');
@@ -35,13 +28,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = trim($_POST['password'] ?? '');
     $csrf     = $_POST['csrf_token'] ?? '';
 
-    // ---------- CSRF Validation ----------
+    // CSRF Validation
     if (empty($csrf) || !hash_equals($_SESSION['csrf_token'], $csrf)) {
-        $errors['general'] = "Invalid CSRF token.";
-        log_error("CSRF token mismatch during registration.");
+        $errors['general'] = "Security token mismatch. Please refresh the page.";
+        log_error("CSRF Error on Registration.");
     }
 
-    // ---------- Field Validation ----------
+    // Field validation
     if ($name === '') {
         $errors['name'] = "Name is required.";
     }
@@ -52,34 +45,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors['password'] = "Password must be at least 6 characters.";
     }
 
-    // ---------- Check for existing email ----------
+    // Check if email exists
     if (empty($errors)) {
         $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
         $stmt->execute([$email]);
         if ($stmt->fetch()) {
             $errors['general'] = "This email is already registered.";
-            log_error("Duplicate registration attempt for {$email}");
+            log_error("Duplicate registration attempt: {$email}");
         }
     }
 
-    // ---------- Insert new user ----------
+    // Insert new user
     if (empty($errors)) {
         try {
             $hashed = password_hash($password, PASSWORD_DEFAULT);
-            $role   = 'editor'; // default role
+            $role = 'editor'; // default role
 
             $stmt = $pdo->prepare("INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)");
             $stmt->execute([$name, $email, $hashed, $role]);
 
-            log_info("User {$name} ({$email}) created successfully");
+            log_info("User registered - {$name} ({$email})");
 
             set_flash('success', '🎉 Registration successful! Please log in.');
             redirect('/login.php');
             exit;
-
         } catch (PDOException $e) {
-            log_error("DB Error during registration: " . $e->getMessage());
-            $errors['general'] = "Error inserting user. Try again later.";
+            log_error("DB Error: " . $e->getMessage());
+            $errors['general'] = "Something went wrong. Please try again later.";
         }
     }
 }
@@ -92,28 +84,90 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
+/* ---------------------------------------------------------
+   FUTURISTIC TECH ANIMATED BACKGROUND (same as Login Page)
+--------------------------------------------------------- */
+
 body {
-    font-family: "Inter", sans-serif;
-    background: #f5f7fa;
     margin: 0;
+    padding: 0;
+    font-family: "Inter", sans-serif;
+
+    /* Dark blue nebula feel */
+    background: radial-gradient(circle at center, #0a0f24, #000);
+    background-size: cover;
+
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    overflow: hidden;
+    position: relative;
 }
+
+/* Floating glowing particles */
+body::before {
+    content: "";
+    position: absolute;
+    width: 180%;
+    height: 180%;
+    background-image: radial-gradient(rgba(0,180,255,0.4) 2px, transparent 2px);
+    background-size: 50px 50px;
+    animation: particleFloat 18s linear infinite;
+}
+
+/* Neon tech grid lines moving downward */
+body::after {
+    content: "";
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background-image:
+        linear-gradient(90deg, rgba(0,150,255,0.08) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(0,150,255,0.08) 1px, transparent 1px);
+    background-size: 90px 90px;
+    animation: gridMove 10s linear infinite;
+    opacity: 0.45;
+}
+
+/* Background Animations */
+@keyframes particleFloat {
+    from { transform: translateY(0); }
+    to   { transform: translateY(-200px); }
+}
+
+@keyframes gridMove {
+    from { transform: translateY(0); }
+    to   { transform: translateY(120px); }
+}
+
+
+/* ---------------------------------------------------------
+   EXISTING REGISTER FORM STYLING (kept same)
+--------------------------------------------------------- */
 
 .register-wrapper {
     display: flex;
     justify-content: center;
-    margin-top: 70px;
+    width: 100%;
+    position: relative;
+    z-index: 10; /* Keep form above animation */
 }
 
 .register-card {
     width: 380px;
-    background: #fff;
+    background: rgba(255, 255, 255, 0.15);
     padding: 40px 35px;
-    border-radius: 12px;
-    box-shadow: 0px 6px 25px rgba(0,0,0,0.08);
+    border-radius: 20px;
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    box-shadow: 0px 10px 30px rgba(0,0,0,0.3);
     text-align: center;
 }
 
-/* Avatar circle */
 .avatar {
     width: 65px;
     height: 65px;
@@ -123,54 +177,61 @@ body {
     margin-bottom: 20px;
 }
 
-/* Titles */
 .register-card h3 {
     margin: 5px 0 8px;
     font-size: 22px;
-    color: #333;
+    font-weight: 600;
+    color: #fff;
 }
+
 .register-card p {
-    color: #777;
+    color: #d1d5db;
     font-size: 14px;
 }
 
-/* Inputs */
 .input-box {
     text-align: left;
     margin-top: 20px;
 }
+
 .input-box label {
     font-size: 14px;
-    color: #444;
+    color: #e5e7eb;
 }
+
 .input-box input {
     width: 100%;
     padding: 10px;
     border: none;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 2px solid rgba(255,255,255,0.3);
     outline: none;
     background: transparent;
     font-size: 14px;
-}
-.input-box input:focus {
-    border-bottom-color: #2d82f7;
+    color: #fff;
 }
 
-/* Error styling */
+.input-box input::placeholder {
+    color: #ccc;
+}
+
+.input-box input:focus {
+    border-bottom-color: #60a5fa;
+}
+
 .error-msg {
-    color: red;
+    color: #ff6b6b;
     font-size: 13px;
     margin-top: 5px;
 }
+
 .success {
-    background: #c7f5d4;
-    color: #155724;
+    background: rgba(199, 245, 212, 0.3);
+    color: #b6ffcd;
     padding: 10px;
     border-radius: 6px;
     margin-bottom: 15px;
 }
 
-/* Button */
 .register-btn {
     width: 100%;
     padding: 12px;
@@ -181,19 +242,24 @@ body {
     font-size: 15px;
     margin-top: 20px;
     cursor: pointer;
-}
-.register-btn:hover {
-    background: #1c6adb;
+    transition: 0.25s ease;
 }
 
-/* Bottom text */
+.register-btn:hover {
+    background: #1c6adb;
+    box-shadow: 0 6px 12px rgba(45,130,247,0.4);
+}
+
 .bottom-text {
     margin-top: 15px;
     font-size: 14px;
+    color: #e5e7eb;
 }
+
 .bottom-text a {
-    color: #2d82f7;
+    color: #60a5fa;
 }
+
 </style>
 </head>
 
@@ -207,20 +273,19 @@ body {
         <h3>Create account</h3>
         <p>Join us and start using your account</p>
 
-        <!-- Flash message -->
+        <!-- Success Message -->
         <?php if ($msg = get_flash('success')): ?>
             <div class="success"><?= htmlspecialchars($msg) ?></div>
         <?php endif; ?>
 
-        <!-- General error -->
+        <!-- General Error -->
         <?php if (!empty($errors['general'])): ?>
             <p class="error-msg"><?= htmlspecialchars($errors['general']) ?></p>
         <?php endif; ?>
 
-        <form method="POST" action="/register.php">
+        <form method="POST">
             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
 
-            <!-- Name -->
             <div class="input-box">
                 <label>Name</label>
                 <input type="text" name="name" value="<?= htmlspecialchars($name) ?>">
@@ -229,7 +294,6 @@ body {
                 <?php endif; ?>
             </div>
 
-            <!-- Email -->
             <div class="input-box">
                 <label>Email</label>
                 <input type="text" name="email" value="<?= htmlspecialchars($email) ?>">
@@ -238,7 +302,6 @@ body {
                 <?php endif; ?>
             </div>
 
-            <!-- Password -->
             <div class="input-box">
                 <label>Password</label>
                 <input type="password" name="password">
